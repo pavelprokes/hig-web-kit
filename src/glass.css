@@ -1,0 +1,157 @@
+/* Liquid Glass material for the floating control layer (bars, floating buttons, menus, sheets, alerts).
+   Rules: never on content (cards, rows), never glass on glass, tint only the primary action.
+   Requires hig.css. Optional JS: initGlass() from hig-web-kit/glass (refraction, press light, adaptivity). */
+
+.hig-glass {
+  --hig-mx: 50%;
+  --hig-my: 50%;
+  position: relative;
+  isolation: isolate;
+  border-radius: 999px;
+  background: var(--hig-glass-tint);
+  color: var(--hig-glass-label);
+  -webkit-backdrop-filter: blur(var(--hig-glass-blur)) saturate(var(--hig-glass-saturate)) brightness(1.04);
+          backdrop-filter: blur(var(--hig-glass-blur)) saturate(var(--hig-glass-saturate)) brightness(1.04);
+  box-shadow: var(--hig-glass-shadow),
+    inset 0 1px 0 0 var(--hig-glass-rim),
+    inset 0 -1px 0 0 var(--hig-glass-rim-dim),
+    inset 0 0 0 .5px var(--hig-glass-rim-dim);
+  transition: scale var(--hig-duration) var(--hig-ease-spring), background-color .25s var(--hig-ease-out), color .25s var(--hig-ease-out);
+}
+/* angled specular rim: lit top-left, dim bottom-right */
+.hig-glass::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(135deg, var(--hig-glass-rim), transparent 38%, transparent 62%, var(--hig-glass-rim-dim));
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+/* illumination from the touch point (position set by glass.js) */
+.hig-glass::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(90px circle at var(--hig-mx) var(--hig-my), rgb(255 255 255 / .5), transparent 65%);
+  opacity: 0; transition: opacity .45s var(--hig-ease-out);
+}
+.hig-glass > * { position: relative; z-index: 2; }
+.hig-glass.is-pressed::after { opacity: 1; transition-duration: .06s; }
+.hig-glass.is-lit::after { opacity: .3; }
+.hig-glass.hig-press-scale.is-pressed { scale: 1.08; } /* glass scales UP when pressed */
+
+/* Variants */
+.hig-glass--large {
+  background: var(--hig-glass-tint-large);
+  -webkit-backdrop-filter: blur(var(--hig-glass-blur-large)) saturate(180%);
+          backdrop-filter: blur(var(--hig-glass-blur-large)) saturate(180%);
+}
+.hig-glass--clear { /* only over photos/video, with .hig-media-dim behind it */
+  background: var(--hig-glass-tint-clear);
+  color: #fff;
+  font-weight: 600;
+  --hig-glass-rim: rgb(255 255 255 / .55);
+  --hig-glass-rim-dim: rgb(255 255 255 / .12);
+  -webkit-backdrop-filter: blur(var(--hig-glass-blur-clear)) saturate(150%) brightness(1.05);
+          backdrop-filter: blur(var(--hig-glass-blur-clear)) saturate(150%) brightness(1.05);
+}
+.hig-glass--tint { /* the one primary action */
+  background: color-mix(in oklab, var(--hig-accent-fill) 85%, transparent);
+  color: var(--hig-on-accent);
+  --hig-glass-rim: rgb(255 255 255 / .55);
+}
+.hig-glass--on-dark { /* small glass over dark content (set by adaptGlass) */
+  --hig-glass-tint: rgb(28 28 32 / .38);
+  --hig-glass-label: #fff;
+  --hig-glass-rim: rgb(255 255 255 / .32);
+  --hig-glass-rim-dim: rgb(255 255 255 / .1);
+}
+[data-hig-mode="aa"] .hig-glass--on-dark { --hig-glass-tint: rgb(28 28 32 / .72); }
+[data-hig-mode="aa"] .hig-glass--tint { background: var(--hig-accent-fill); }
+
+/* Real edge refraction — Chromium only, enabled by initGlass() via html.hig-refract */
+html.hig-refract .hig-glass[data-hig-refract] {
+  -webkit-backdrop-filter: var(--hig-refract) blur(.6px) saturate(185%) brightness(1.05);
+          backdrop-filter: var(--hig-refract) blur(.6px) saturate(185%) brightness(1.05);
+}
+[data-hig-mode="aa"].hig-refract .hig-glass[data-hig-refract] {
+  -webkit-backdrop-filter: var(--hig-refract) blur(var(--hig-glass-blur)) saturate(185%);
+          backdrop-filter: var(--hig-refract) blur(var(--hig-glass-blur)) saturate(185%);
+}
+
+/* Localized 35 % dimming under clear glass on media */
+.hig-media-dim { position: relative; }
+.hig-media-dim::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgb(0 0 0 / .35), transparent 45%);
+}
+
+/* Scroll edge effect — soft (default) and hard. Visible once content is under the bar (data-hig-scrolled). */
+.hig-scroll-edge {
+  position: fixed; left: 0; right: 0; z-index: 20; pointer-events: none;
+  opacity: 0; transition: opacity .3s var(--hig-ease-out);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.hig-scroll-edge--top {
+  top: 0; height: calc(env(safe-area-inset-top, 0px) + 84px);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--hig-bg) 78%, transparent), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent); mask-image: linear-gradient(to bottom, #000 45%, transparent);
+}
+.hig-scroll-edge--bottom {
+  bottom: 0; height: calc(env(safe-area-inset-bottom, 0px) + 96px); opacity: 1;
+  background: linear-gradient(to top, color-mix(in srgb, var(--hig-bg) 70%, transparent), transparent);
+  -webkit-mask-image: linear-gradient(to top, #000 40%, transparent); mask-image: linear-gradient(to top, #000 40%, transparent);
+}
+[data-hig-scrolled] .hig-scroll-edge--top { opacity: 1; }
+.hig-scroll-edge.is-on-dark { background: linear-gradient(to bottom, rgb(0 0 0 / .35), transparent); }
+.hig-scroll-edge--bottom.is-on-dark { background: linear-gradient(to top, rgb(0 0 0 / .35), transparent); }
+.hig-scroll-edge--hard {
+  background: color-mix(in srgb, var(--hig-bg) 92%, transparent);
+  -webkit-mask-image: none; mask-image: none;
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: .5px solid var(--hig-sep);
+}
+
+/* Appear by ramping blur, not opacity (menus, popovers) */
+@keyframes hig-glass-in {
+  from { scale: .3 .15; border-radius: 999px; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); }
+}
+.hig-glass-enter { animation: hig-glass-in .5s var(--hig-ease-spring) both; }
+
+/* ── Accessibility ── */
+/* Reduce Transparency → frosted, near-opaque */
+@media (prefers-reduced-transparency: reduce) {
+  :root:not([data-hig-transparency="standard"]) :is(.hig-glass, .hig-glass--large, .hig-glass--clear) {
+    background: color-mix(in srgb, var(--hig-bg-elevated) 94%, transparent); color: var(--hig-label);
+    -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px);
+  }
+  :root:not([data-hig-transparency="standard"]) .hig-glass--tint { background: var(--hig-accent-fill); color: var(--hig-on-accent); }
+  :root:not([data-hig-transparency="standard"]) .hig-scroll-edge { background: var(--hig-bg); -webkit-mask-image: none; mask-image: none; }
+}
+:root[data-hig-transparency="reduce"] :is(.hig-glass, .hig-glass--large, .hig-glass--clear) {
+  background: color-mix(in srgb, var(--hig-bg-elevated) 94%, transparent); color: var(--hig-label);
+  -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px);
+}
+:root[data-hig-transparency="reduce"] .hig-glass--tint { background: var(--hig-accent-fill); color: var(--hig-on-accent); }
+:root[data-hig-transparency="reduce"] .hig-scroll-edge { background: var(--hig-bg); -webkit-mask-image: none; mask-image: none; }
+
+/* Increase Contrast → solid surface with a visible border (palette swap comes from hig.css) */
+@media (prefers-contrast: more) {
+  :root:not([data-hig-contrast="standard"]) .hig-glass {
+    -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1.5px var(--hig-label);
+  }
+  :root:not([data-hig-contrast="standard"]) .hig-glass::before { display: none; }
+}
+:root[data-hig-contrast="more"] .hig-glass { -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1.5px var(--hig-label); }
+:root[data-hig-contrast="more"] .hig-glass::before { display: none; }
+:root[data-hig-contrast="more"] .hig-glass--on-dark { --hig-glass-tint: #000; --hig-glass-label: #fff; }
+
+/* Reduce Motion → no gel / scale / springs */
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-hig-motion="standard"]) .hig-glass { transition-duration: .01ms; }
+  :root:not([data-hig-motion="standard"]) .hig-glass.is-pressed { scale: 1; }
+  :root:not([data-hig-motion="standard"]) .hig-glass-enter { animation: none; }
+}
+:root[data-hig-motion="reduce"] .hig-glass { transition-duration: .01ms; }
+:root[data-hig-motion="reduce"] .hig-glass.is-pressed { scale: 1; }
+:root[data-hig-motion="reduce"] .hig-glass-enter { animation: none; }
+
+@media (forced-colors: active) {
+  .hig-glass { border: 1px solid ButtonText; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}

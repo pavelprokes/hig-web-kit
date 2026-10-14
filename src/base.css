@@ -1,0 +1,32 @@
+/* Optional page defaults. Skip this file when a framework (antd, MUI, Bootstrap…) already owns the base styles. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Focused elements never hide under floating bars (WCAG 2.4.11 Focus Not Obscured) */
+  scroll-padding-block: calc(env(safe-area-inset-top, 0px) + 72px) calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+/* iOS Safari: follow the user's Dynamic Type size */
+@supports (font: -apple-system-body) {
+  html { font: -apple-system-body; }
+}
+body {
+  margin: 0;
+  background: var(--hig-bg);
+  color: var(--hig-label);
+  font: var(--hig-text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+:where(a) { color: var(--hig-link); }
+:where(:focus-visible) { outline: 3px solid var(--hig-focus-ring); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--hig-accent) 30%, transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-hig-motion="standard"]) *, :root:not([data-hig-motion="standard"]) *::before, :root:not([data-hig-motion="standard"]) *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important;
+  }
+}
+:root[data-hig-motion="reduce"] *, :root[data-hig-motion="reduce"] *::before, :root[data-hig-motion="reduce"] *::after {
+  animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important;
+}

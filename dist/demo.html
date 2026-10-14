@@ -1,0 +1,2778 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>hig-web-kit demo</title>
+<meta name="description" content="Apple HIG and Liquid Glass for the web, with an opt-in WCAG 2.2 AA mode.">
+<style>
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/* Usage: <html> (optional) data-hig-mode="aa" · data-hig-scheme="light|dark" · data-hig-contrast="more|standard" */
+
+:root {
+  --hig-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --hig-font-rounded: ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  --hig-font-serif: ui-serif, "New York", Georgia, serif;
+  --hig-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --hig-radius-xs: 6px;
+  --hig-radius-sm: 8px;
+  --hig-radius-md: 12px;
+  --hig-radius-field: 14px;
+  --hig-radius-lg: 20px;
+  --hig-radius-card: 26px;
+  --hig-radius-menu: 26px;
+  --hig-radius-alert: 32px;
+  --hig-radius-window: 34px;
+  --hig-radius-capsule: 999px;
+  --hig-space-1: 0.25rem;
+  --hig-space-2: 0.5rem;
+  --hig-space-3: 0.75rem;
+  --hig-space-4: 1rem;
+  --hig-space-5: 1.25rem;
+  --hig-space-6: 1.5rem;
+  --hig-space-8: 2rem;
+  --hig-space-10: 2.5rem;
+  --hig-space-12: 3rem;
+  --hig-size-tap: 44px;
+  --hig-size-tap-min: 28px;
+  --hig-size-tap-desktop: 28px;
+  --hig-size-tap-desktop-min: 20px;
+  --hig-size-control-xs: 28px;
+  --hig-size-control-sm: 32px;
+  --hig-size-control-md: 44px;
+  --hig-size-control-lg: 52px;
+  --hig-size-control-xl: 64px;
+  --hig-size-row: 44px;
+  --hig-size-row-lg: 52px;
+  --hig-size-tabbar: 62px;
+  --hig-size-gutter: 16px;
+  --hig-size-gutter-regular: 20px;
+  --hig-size-readable: 672px;
+  --hig-ease-spring: linear(0, .009, .035 2.1%, .141 4.4%, .723 12.9%, .938 16.7%, 1.017 19.4%, 1.067, 1.087 24.2%, 1.085 26.5%, 1.067 29.5%, .987 41.8%, .971 45.8%, .996 62.7%, 1);
+  --hig-ease-out: cubic-bezier(.22, 1, .36, 1);
+  --hig-duration-fast: 150ms;
+  --hig-duration: 450ms;
+  --hig-glass-blur: 6px;
+  --hig-glass-blur-large: 22px;
+  --hig-glass-blur-clear: 2px;
+  --hig-glass-saturate: 190%;
+  --hig-text-large-title: 700 2.125rem/1.206 var(--hig-font-sans);
+  --hig-text-title-1: 700 1.75rem/1.214 var(--hig-font-sans);
+  --hig-text-title-2: 700 1.375rem/1.273 var(--hig-font-sans);
+  --hig-text-title-3: 600 1.25rem/1.250 var(--hig-font-sans);
+  --hig-text-headline: 600 1.0625rem/1.294 var(--hig-font-sans);
+  --hig-text-body: 400 1.0625rem/1.294 var(--hig-font-sans);
+  --hig-text-callout: 400 1rem/1.313 var(--hig-font-sans);
+  --hig-text-subhead: 400 0.9375rem/1.333 var(--hig-font-sans);
+  --hig-text-footnote: 400 0.8125rem/1.385 var(--hig-font-sans);
+  --hig-text-caption-1: 400 0.75rem/1.333 var(--hig-font-sans);
+  --hig-text-caption-2: 400 0.6875rem/1.182 var(--hig-font-sans);
+  --hig-text-mac-large-title: 400 1.625rem/1.231 var(--hig-font-sans);
+  --hig-text-mac-title-1: 400 1.375rem/1.182 var(--hig-font-sans);
+  --hig-text-mac-title-2: 400 1.0625rem/1.294 var(--hig-font-sans);
+  --hig-text-mac-title-3: 400 0.9375rem/1.333 var(--hig-font-sans);
+  --hig-text-mac-headline: 700 0.8125rem/1.231 var(--hig-font-sans);
+  --hig-text-mac-body: 400 0.8125rem/1.231 var(--hig-font-sans);
+  --hig-text-mac-callout: 400 0.75rem/1.250 var(--hig-font-sans);
+  --hig-text-mac-subhead: 400 0.6875rem/1.273 var(--hig-font-sans);
+  --hig-text-mac-footnote: 400 0.625rem/1.300 var(--hig-font-sans);
+  --hig-text-mac-caption-1: 400 0.625rem/1.300 var(--hig-font-sans);
+  --hig-text-mac-caption-2: 500 0.625rem/1.300 var(--hig-font-sans);
+}
+
+/* ── Apple mode (default) ── */
+:root:not([data-hig-mode="aa"]):not([data-hig-scheme="dark"]):not([data-hig-contrast="more"]) {
+  --hig-bg: #ffffff;
+  --hig-bg-2: #f2f2f7;
+  --hig-bg-3: #ffffff;
+  --hig-grouped-bg: #f2f2f7;
+  --hig-grouped-bg-2: #ffffff;
+  --hig-grouped-bg-3: #f2f2f7;
+  --hig-bg-elevated: #ffffff;
+  --hig-bg-elevated-2: #f2f2f7;
+  --hig-label: #000000;
+  --hig-label-2: #3c3c4399;
+  --hig-label-3: #3c3c434d;
+  --hig-label-4: #3c3c432e;
+  --hig-placeholder: #3c3c434d;
+  --hig-link: #0088ff;
+  --hig-sep: #3c3c434a;
+  --hig-sep-opaque: #c6c6c8;
+  --hig-fill: #78788033;
+  --hig-fill-2: #78788029;
+  --hig-fill-3: #7676801f;
+  --hig-fill-4: #74748014;
+  --hig-red: #ff383c;
+  --hig-orange: #ff8d28;
+  --hig-yellow: #ffcc00;
+  --hig-green: #34c759;
+  --hig-mint: #00c8b3;
+  --hig-teal: #00c3d0;
+  --hig-cyan: #00c0e8;
+  --hig-blue: #0088ff;
+  --hig-indigo: #6155f5;
+  --hig-purple: #cb30e0;
+  --hig-pink: #ff2d55;
+  --hig-brown: #ac7f5e;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #aeaeb2;
+  --hig-gray-3: #c7c7cc;
+  --hig-gray-4: #d1d1d6;
+  --hig-gray-5: #e5e5ea;
+  --hig-gray-6: #f2f2f7;
+  --hig-accent: #0088ff;
+  --hig-accent-fill: #0088ff;
+  --hig-accent-text: #0088ff;
+  --hig-on-accent: #ffffff;
+  --hig-destructive-fill: #ff383c;
+  --hig-destructive-text: #ff383c;
+  --hig-on-destructive: #ffffff;
+  --hig-success-text: #34c759;
+  --hig-warning-text: #ff8d28;
+  --hig-switch-on: #34c759;
+  --hig-control-border: #00000000;
+  --hig-focus-ring: #0088ff80;
+  --hig-glass-tint: #ffffff6b;
+  --hig-glass-tint-large: #fafafc9e;
+  --hig-glass-tint-clear: #ffffff14;
+  --hig-glass-rim: #ffffffbf;
+  --hig-glass-rim-dim: #ffffff2e;
+  --hig-glass-label: #000000db;
+  --hig-glass-shadow-color: #0000001a;
+  --hig-scrim: #00000038;
+  color-scheme: light;
+}
+:root:not([data-hig-mode="aa"])[data-hig-scheme="dark"]:not([data-hig-contrast="more"]) {
+  --hig-bg: #000000;
+  --hig-bg-2: #1c1c1e;
+  --hig-bg-3: #2c2c2e;
+  --hig-grouped-bg: #000000;
+  --hig-grouped-bg-2: #1c1c1e;
+  --hig-grouped-bg-3: #2c2c2e;
+  --hig-bg-elevated: #1c1c1e;
+  --hig-bg-elevated-2: #2c2c2e;
+  --hig-label: #ffffff;
+  --hig-label-2: #ebebf599;
+  --hig-label-3: #ebebf54d;
+  --hig-label-4: #ebebf529;
+  --hig-placeholder: #ebebf54d;
+  --hig-link: #0091ff;
+  --hig-sep: #54545899;
+  --hig-sep-opaque: #38383a;
+  --hig-fill: #7878805c;
+  --hig-fill-2: #78788052;
+  --hig-fill-3: #7676803d;
+  --hig-fill-4: #7676802e;
+  --hig-red: #ff4245;
+  --hig-orange: #ff9230;
+  --hig-yellow: #ffd600;
+  --hig-green: #30d158;
+  --hig-mint: #00dac3;
+  --hig-teal: #00d2e0;
+  --hig-cyan: #3cd3fe;
+  --hig-blue: #0091ff;
+  --hig-indigo: #6d7cff;
+  --hig-purple: #db34f2;
+  --hig-pink: #ff375f;
+  --hig-brown: #b78a66;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #636366;
+  --hig-gray-3: #48484a;
+  --hig-gray-4: #3a3a3c;
+  --hig-gray-5: #2c2c2e;
+  --hig-gray-6: #1c1c1e;
+  --hig-accent: #0091ff;
+  --hig-accent-fill: #0091ff;
+  --hig-accent-text: #0091ff;
+  --hig-on-accent: #ffffff;
+  --hig-destructive-fill: #ff4245;
+  --hig-destructive-text: #ff4245;
+  --hig-on-destructive: #ffffff;
+  --hig-success-text: #30d158;
+  --hig-warning-text: #ff9230;
+  --hig-switch-on: #30d158;
+  --hig-control-border: #00000000;
+  --hig-focus-ring: #0091ff99;
+  --hig-glass-tint: #28282c66;
+  --hig-glass-tint-large: #1e1e229e;
+  --hig-glass-tint-clear: #ffffff14;
+  --hig-glass-rim: #ffffff4d;
+  --hig-glass-rim-dim: #ffffff14;
+  --hig-glass-label: #ffffffeb;
+  --hig-glass-shadow-color: #00000073;
+  --hig-scrim: #00000073;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+:root:not([data-hig-mode="aa"]):not([data-hig-scheme="light"]):not([data-hig-contrast="more"]) {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf599;
+    --hig-label-3: #ebebf54d;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf54d;
+    --hig-link: #0091ff;
+    --hig-sep: #54545899;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff4245;
+    --hig-orange: #ff9230;
+    --hig-yellow: #ffd600;
+    --hig-green: #30d158;
+    --hig-mint: #00dac3;
+    --hig-teal: #00d2e0;
+    --hig-cyan: #3cd3fe;
+    --hig-blue: #0091ff;
+    --hig-indigo: #6d7cff;
+    --hig-purple: #db34f2;
+    --hig-pink: #ff375f;
+    --hig-brown: #b78a66;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #0091ff;
+    --hig-accent-fill: #0091ff;
+    --hig-accent-text: #0091ff;
+    --hig-on-accent: #ffffff;
+    --hig-destructive-fill: #ff4245;
+    --hig-destructive-text: #ff4245;
+    --hig-on-destructive: #ffffff;
+    --hig-success-text: #30d158;
+    --hig-warning-text: #ff9230;
+    --hig-switch-on: #30d158;
+    --hig-control-border: #00000000;
+    --hig-focus-ring: #0091ff99;
+    --hig-glass-tint: #28282c66;
+    --hig-glass-tint-large: #1e1e229e;
+    --hig-glass-tint-clear: #ffffff14;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffffeb;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+:root:not([data-hig-mode="aa"]):not([data-hig-scheme="dark"])[data-hig-contrast="more"] {
+  --hig-bg: #ffffff;
+  --hig-bg-2: #f2f2f7;
+  --hig-bg-3: #ffffff;
+  --hig-grouped-bg: #f2f2f7;
+  --hig-grouped-bg-2: #ffffff;
+  --hig-grouped-bg-3: #f2f2f7;
+  --hig-bg-elevated: #ffffff;
+  --hig-bg-elevated-2: #f2f2f7;
+  --hig-label: #000000;
+  --hig-label-2: #3c3c43d9;
+  --hig-label-3: #3c3c4399;
+  --hig-label-4: #3c3c432e;
+  --hig-placeholder: #3c3c4399;
+  --hig-link: #1e6ef4;
+  --hig-sep: #3c3c4399;
+  --hig-sep-opaque: #c6c6c8;
+  --hig-fill: #78788033;
+  --hig-fill-2: #78788029;
+  --hig-fill-3: #7676801f;
+  --hig-fill-4: #74748014;
+  --hig-red: #e9152d;
+  --hig-orange: #c55300;
+  --hig-yellow: #a16a00;
+  --hig-green: #008932;
+  --hig-mint: #008575;
+  --hig-teal: #008198;
+  --hig-cyan: #007eae;
+  --hig-blue: #1e6ef4;
+  --hig-indigo: #564ade;
+  --hig-purple: #b02fc2;
+  --hig-pink: #e7124d;
+  --hig-brown: #956d51;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #aeaeb2;
+  --hig-gray-3: #c7c7cc;
+  --hig-gray-4: #d1d1d6;
+  --hig-gray-5: #e5e5ea;
+  --hig-gray-6: #f2f2f7;
+  --hig-accent: #1e6ef4;
+  --hig-accent-fill: #1e6ef4;
+  --hig-accent-text: #1e6ef4;
+  --hig-on-accent: #ffffff;
+  --hig-destructive-fill: #e9152d;
+  --hig-destructive-text: #e9152d;
+  --hig-on-destructive: #ffffff;
+  --hig-success-text: #008932;
+  --hig-warning-text: #c55300;
+  --hig-switch-on: #008932;
+  --hig-control-border: #6e6e73;
+  --hig-focus-ring: #1e6ef4;
+  --hig-glass-tint: #ffffff;
+  --hig-glass-tint-large: #ffffff;
+  --hig-glass-tint-clear: #00000099;
+  --hig-glass-rim: #ffffffbf;
+  --hig-glass-rim-dim: #ffffff2e;
+  --hig-glass-label: #000000;
+  --hig-glass-shadow-color: #0000001a;
+  --hig-scrim: #00000038;
+  color-scheme: light;
+}
+@media (prefers-contrast: more) {
+:root:not([data-hig-mode="aa"]):not([data-hig-scheme="dark"]):not([data-hig-contrast="standard"]) {
+    --hig-bg: #ffffff;
+    --hig-bg-2: #f2f2f7;
+    --hig-bg-3: #ffffff;
+    --hig-grouped-bg: #f2f2f7;
+    --hig-grouped-bg-2: #ffffff;
+    --hig-grouped-bg-3: #f2f2f7;
+    --hig-bg-elevated: #ffffff;
+    --hig-bg-elevated-2: #f2f2f7;
+    --hig-label: #000000;
+    --hig-label-2: #3c3c43d9;
+    --hig-label-3: #3c3c4399;
+    --hig-label-4: #3c3c432e;
+    --hig-placeholder: #3c3c4399;
+    --hig-link: #1e6ef4;
+    --hig-sep: #3c3c4399;
+    --hig-sep-opaque: #c6c6c8;
+    --hig-fill: #78788033;
+    --hig-fill-2: #78788029;
+    --hig-fill-3: #7676801f;
+    --hig-fill-4: #74748014;
+    --hig-red: #e9152d;
+    --hig-orange: #c55300;
+    --hig-yellow: #a16a00;
+    --hig-green: #008932;
+    --hig-mint: #008575;
+    --hig-teal: #008198;
+    --hig-cyan: #007eae;
+    --hig-blue: #1e6ef4;
+    --hig-indigo: #564ade;
+    --hig-purple: #b02fc2;
+    --hig-pink: #e7124d;
+    --hig-brown: #956d51;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #aeaeb2;
+    --hig-gray-3: #c7c7cc;
+    --hig-gray-4: #d1d1d6;
+    --hig-gray-5: #e5e5ea;
+    --hig-gray-6: #f2f2f7;
+    --hig-accent: #1e6ef4;
+    --hig-accent-fill: #1e6ef4;
+    --hig-accent-text: #1e6ef4;
+    --hig-on-accent: #ffffff;
+    --hig-destructive-fill: #e9152d;
+    --hig-destructive-text: #e9152d;
+    --hig-on-destructive: #ffffff;
+    --hig-success-text: #008932;
+    --hig-warning-text: #c55300;
+    --hig-switch-on: #008932;
+    --hig-control-border: #6e6e73;
+    --hig-focus-ring: #1e6ef4;
+    --hig-glass-tint: #ffffff;
+    --hig-glass-tint-large: #ffffff;
+    --hig-glass-tint-clear: #00000099;
+    --hig-glass-rim: #ffffffbf;
+    --hig-glass-rim-dim: #ffffff2e;
+    --hig-glass-label: #000000;
+    --hig-glass-shadow-color: #0000001a;
+    --hig-scrim: #00000038;
+    color-scheme: light;
+  }
+}
+:root:not([data-hig-mode="aa"])[data-hig-scheme="dark"][data-hig-contrast="more"] {
+  --hig-bg: #000000;
+  --hig-bg-2: #1c1c1e;
+  --hig-bg-3: #2c2c2e;
+  --hig-grouped-bg: #000000;
+  --hig-grouped-bg-2: #1c1c1e;
+  --hig-grouped-bg-3: #2c2c2e;
+  --hig-bg-elevated: #1c1c1e;
+  --hig-bg-elevated-2: #2c2c2e;
+  --hig-label: #ffffff;
+  --hig-label-2: #ebebf5d9;
+  --hig-label-3: #ebebf599;
+  --hig-label-4: #ebebf529;
+  --hig-placeholder: #ebebf599;
+  --hig-link: #5cb8ff;
+  --hig-sep: #ebebf580;
+  --hig-sep-opaque: #38383a;
+  --hig-fill: #7878805c;
+  --hig-fill-2: #78788052;
+  --hig-fill-3: #7676803d;
+  --hig-fill-4: #7676802e;
+  --hig-red: #ff6165;
+  --hig-orange: #ffa056;
+  --hig-yellow: #fedf43;
+  --hig-green: #4ad968;
+  --hig-mint: #54dfcb;
+  --hig-teal: #3bddec;
+  --hig-cyan: #6dd9ff;
+  --hig-blue: #5cb8ff;
+  --hig-indigo: #a7aaff;
+  --hig-purple: #ea8dff;
+  --hig-pink: #ff8ac4;
+  --hig-brown: #dba679;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #636366;
+  --hig-gray-3: #48484a;
+  --hig-gray-4: #3a3a3c;
+  --hig-gray-5: #2c2c2e;
+  --hig-gray-6: #1c1c1e;
+  --hig-accent: #5cb8ff;
+  --hig-accent-fill: #5cb8ff;
+  --hig-accent-text: #5cb8ff;
+  --hig-on-accent: #000000;
+  --hig-destructive-fill: #ff6165;
+  --hig-destructive-text: #ff6165;
+  --hig-on-destructive: #000000;
+  --hig-success-text: #4ad968;
+  --hig-warning-text: #ffa056;
+  --hig-switch-on: #4ad968;
+  --hig-control-border: #aeaeb2;
+  --hig-focus-ring: #5cb8ff;
+  --hig-glass-tint: #000000;
+  --hig-glass-tint-large: #000000;
+  --hig-glass-tint-clear: #00000099;
+  --hig-glass-rim: #ffffff4d;
+  --hig-glass-rim-dim: #ffffff14;
+  --hig-glass-label: #ffffff;
+  --hig-glass-shadow-color: #00000073;
+  --hig-scrim: #00000073;
+  color-scheme: dark;
+}
+@media (prefers-contrast: more) {
+:root:not([data-hig-mode="aa"])[data-hig-scheme="dark"]:not([data-hig-contrast="standard"]) {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf5d9;
+    --hig-label-3: #ebebf599;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf599;
+    --hig-link: #5cb8ff;
+    --hig-sep: #ebebf580;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff6165;
+    --hig-orange: #ffa056;
+    --hig-yellow: #fedf43;
+    --hig-green: #4ad968;
+    --hig-mint: #54dfcb;
+    --hig-teal: #3bddec;
+    --hig-cyan: #6dd9ff;
+    --hig-blue: #5cb8ff;
+    --hig-indigo: #a7aaff;
+    --hig-purple: #ea8dff;
+    --hig-pink: #ff8ac4;
+    --hig-brown: #dba679;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #5cb8ff;
+    --hig-accent-fill: #5cb8ff;
+    --hig-accent-text: #5cb8ff;
+    --hig-on-accent: #000000;
+    --hig-destructive-fill: #ff6165;
+    --hig-destructive-text: #ff6165;
+    --hig-on-destructive: #000000;
+    --hig-success-text: #4ad968;
+    --hig-warning-text: #ffa056;
+    --hig-switch-on: #4ad968;
+    --hig-control-border: #aeaeb2;
+    --hig-focus-ring: #5cb8ff;
+    --hig-glass-tint: #000000;
+    --hig-glass-tint-large: #000000;
+    --hig-glass-tint-clear: #00000099;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+@media (prefers-color-scheme: dark) {
+:root:not([data-hig-mode="aa"]):not([data-hig-scheme="light"])[data-hig-contrast="more"] {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf5d9;
+    --hig-label-3: #ebebf599;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf599;
+    --hig-link: #5cb8ff;
+    --hig-sep: #ebebf580;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff6165;
+    --hig-orange: #ffa056;
+    --hig-yellow: #fedf43;
+    --hig-green: #4ad968;
+    --hig-mint: #54dfcb;
+    --hig-teal: #3bddec;
+    --hig-cyan: #6dd9ff;
+    --hig-blue: #5cb8ff;
+    --hig-indigo: #a7aaff;
+    --hig-purple: #ea8dff;
+    --hig-pink: #ff8ac4;
+    --hig-brown: #dba679;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #5cb8ff;
+    --hig-accent-fill: #5cb8ff;
+    --hig-accent-text: #5cb8ff;
+    --hig-on-accent: #000000;
+    --hig-destructive-fill: #ff6165;
+    --hig-destructive-text: #ff6165;
+    --hig-on-destructive: #000000;
+    --hig-success-text: #4ad968;
+    --hig-warning-text: #ffa056;
+    --hig-switch-on: #4ad968;
+    --hig-control-border: #aeaeb2;
+    --hig-focus-ring: #5cb8ff;
+    --hig-glass-tint: #000000;
+    --hig-glass-tint-large: #000000;
+    --hig-glass-tint-clear: #00000099;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+:root:not([data-hig-mode="aa"]):not([data-hig-scheme="light"]):not([data-hig-contrast="standard"]) {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf5d9;
+    --hig-label-3: #ebebf599;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf599;
+    --hig-link: #5cb8ff;
+    --hig-sep: #ebebf580;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff6165;
+    --hig-orange: #ffa056;
+    --hig-yellow: #fedf43;
+    --hig-green: #4ad968;
+    --hig-mint: #54dfcb;
+    --hig-teal: #3bddec;
+    --hig-cyan: #6dd9ff;
+    --hig-blue: #5cb8ff;
+    --hig-indigo: #a7aaff;
+    --hig-purple: #ea8dff;
+    --hig-pink: #ff8ac4;
+    --hig-brown: #dba679;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #5cb8ff;
+    --hig-accent-fill: #5cb8ff;
+    --hig-accent-text: #5cb8ff;
+    --hig-on-accent: #000000;
+    --hig-destructive-fill: #ff6165;
+    --hig-destructive-text: #ff6165;
+    --hig-on-destructive: #000000;
+    --hig-success-text: #4ad968;
+    --hig-warning-text: #ffa056;
+    --hig-switch-on: #4ad968;
+    --hig-control-border: #aeaeb2;
+    --hig-focus-ring: #5cb8ff;
+    --hig-glass-tint: #000000;
+    --hig-glass-tint-large: #000000;
+    --hig-glass-tint-clear: #00000099;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+
+/* ── WCAG 2.2 AA mode ── */
+:root[data-hig-mode="aa"]:not([data-hig-scheme="dark"]):not([data-hig-contrast="more"]) {
+  --hig-bg: #ffffff;
+  --hig-bg-2: #f2f2f7;
+  --hig-bg-3: #ffffff;
+  --hig-grouped-bg: #f2f2f7;
+  --hig-grouped-bg-2: #ffffff;
+  --hig-grouped-bg-3: #f2f2f7;
+  --hig-bg-elevated: #ffffff;
+  --hig-bg-elevated-2: #f2f2f7;
+  --hig-label: #000000;
+  --hig-label-2: #3c3c43c7;
+  --hig-label-3: #3c3c434d;
+  --hig-label-4: #3c3c432e;
+  --hig-placeholder: #3c3c43c7;
+  --hig-link: #0062cc;
+  --hig-sep: #3c3c434a;
+  --hig-sep-opaque: #c6c6c8;
+  --hig-fill: #78788033;
+  --hig-fill-2: #78788029;
+  --hig-fill-3: #7676801f;
+  --hig-fill-4: #74748014;
+  --hig-red: #ff383c;
+  --hig-orange: #ff8d28;
+  --hig-yellow: #ffcc00;
+  --hig-green: #34c759;
+  --hig-mint: #00c8b3;
+  --hig-teal: #00c3d0;
+  --hig-cyan: #00c0e8;
+  --hig-blue: #0088ff;
+  --hig-indigo: #6155f5;
+  --hig-purple: #cb30e0;
+  --hig-pink: #ff2d55;
+  --hig-brown: #ac7f5e;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #aeaeb2;
+  --hig-gray-3: #c7c7cc;
+  --hig-gray-4: #d1d1d6;
+  --hig-gray-5: #e5e5ea;
+  --hig-gray-6: #f2f2f7;
+  --hig-accent: #0071e3;
+  --hig-accent-fill: #0071e3;
+  --hig-accent-text: #0062cc;
+  --hig-on-accent: #ffffff;
+  --hig-destructive-fill: #d70015;
+  --hig-destructive-text: #c4001a;
+  --hig-on-destructive: #ffffff;
+  --hig-success-text: #007a2e;
+  --hig-warning-text: #a34f00;
+  --hig-switch-on: #008932;
+  --hig-control-border: #767680;
+  --hig-focus-ring: #0062cc;
+  --hig-glass-tint: #ffffffb8;
+  --hig-glass-tint-large: #fafafcdb;
+  --hig-glass-tint-clear: #0000008c;
+  --hig-glass-rim: #ffffffbf;
+  --hig-glass-rim-dim: #ffffff2e;
+  --hig-glass-label: #000000e6;
+  --hig-glass-shadow-color: #0000001a;
+  --hig-scrim: #00000038;
+  color-scheme: light;
+}
+:root[data-hig-mode="aa"][data-hig-scheme="dark"]:not([data-hig-contrast="more"]) {
+  --hig-bg: #000000;
+  --hig-bg-2: #1c1c1e;
+  --hig-bg-3: #2c2c2e;
+  --hig-grouped-bg: #000000;
+  --hig-grouped-bg-2: #1c1c1e;
+  --hig-grouped-bg-3: #2c2c2e;
+  --hig-bg-elevated: #1c1c1e;
+  --hig-bg-elevated-2: #2c2c2e;
+  --hig-label: #ffffff;
+  --hig-label-2: #ebebf59e;
+  --hig-label-3: #ebebf54d;
+  --hig-label-4: #ebebf529;
+  --hig-placeholder: #ebebf59e;
+  --hig-link: #5cb8ff;
+  --hig-sep: #54545899;
+  --hig-sep-opaque: #38383a;
+  --hig-fill: #7878805c;
+  --hig-fill-2: #78788052;
+  --hig-fill-3: #7676803d;
+  --hig-fill-4: #7676802e;
+  --hig-red: #ff4245;
+  --hig-orange: #ff9230;
+  --hig-yellow: #ffd600;
+  --hig-green: #30d158;
+  --hig-mint: #00dac3;
+  --hig-teal: #00d2e0;
+  --hig-cyan: #3cd3fe;
+  --hig-blue: #0091ff;
+  --hig-indigo: #6d7cff;
+  --hig-purple: #db34f2;
+  --hig-pink: #ff375f;
+  --hig-brown: #b78a66;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #636366;
+  --hig-gray-3: #48484a;
+  --hig-gray-4: #3a3a3c;
+  --hig-gray-5: #2c2c2e;
+  --hig-gray-6: #1c1c1e;
+  --hig-accent: #3a9fff;
+  --hig-accent-fill: #0066cc;
+  --hig-accent-text: #5cb8ff;
+  --hig-on-accent: #ffffff;
+  --hig-destructive-fill: #d70015;
+  --hig-destructive-text: #ff8a8c;
+  --hig-on-destructive: #ffffff;
+  --hig-success-text: #30d158;
+  --hig-warning-text: #ff9f43;
+  --hig-switch-on: #30d158;
+  --hig-control-border: #8e8e93;
+  --hig-focus-ring: #5cb8ff;
+  --hig-glass-tint: #28282cb8;
+  --hig-glass-tint-large: #1e1e22db;
+  --hig-glass-tint-clear: #0000008c;
+  --hig-glass-rim: #ffffff4d;
+  --hig-glass-rim-dim: #ffffff14;
+  --hig-glass-label: #ffffff;
+  --hig-glass-shadow-color: #00000073;
+  --hig-scrim: #00000073;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+:root[data-hig-mode="aa"]:not([data-hig-scheme="light"]):not([data-hig-contrast="more"]) {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf59e;
+    --hig-label-3: #ebebf54d;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf59e;
+    --hig-link: #5cb8ff;
+    --hig-sep: #54545899;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff4245;
+    --hig-orange: #ff9230;
+    --hig-yellow: #ffd600;
+    --hig-green: #30d158;
+    --hig-mint: #00dac3;
+    --hig-teal: #00d2e0;
+    --hig-cyan: #3cd3fe;
+    --hig-blue: #0091ff;
+    --hig-indigo: #6d7cff;
+    --hig-purple: #db34f2;
+    --hig-pink: #ff375f;
+    --hig-brown: #b78a66;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #3a9fff;
+    --hig-accent-fill: #0066cc;
+    --hig-accent-text: #5cb8ff;
+    --hig-on-accent: #ffffff;
+    --hig-destructive-fill: #d70015;
+    --hig-destructive-text: #ff8a8c;
+    --hig-on-destructive: #ffffff;
+    --hig-success-text: #30d158;
+    --hig-warning-text: #ff9f43;
+    --hig-switch-on: #30d158;
+    --hig-control-border: #8e8e93;
+    --hig-focus-ring: #5cb8ff;
+    --hig-glass-tint: #28282cb8;
+    --hig-glass-tint-large: #1e1e22db;
+    --hig-glass-tint-clear: #0000008c;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+:root[data-hig-mode="aa"]:not([data-hig-scheme="dark"])[data-hig-contrast="more"] {
+  --hig-bg: #ffffff;
+  --hig-bg-2: #f2f2f7;
+  --hig-bg-3: #ffffff;
+  --hig-grouped-bg: #f2f2f7;
+  --hig-grouped-bg-2: #ffffff;
+  --hig-grouped-bg-3: #f2f2f7;
+  --hig-bg-elevated: #ffffff;
+  --hig-bg-elevated-2: #f2f2f7;
+  --hig-label: #000000;
+  --hig-label-2: #3c3c43e0;
+  --hig-label-3: #3c3c4399;
+  --hig-label-4: #3c3c432e;
+  --hig-placeholder: #3c3c43e0;
+  --hig-link: #0055b3;
+  --hig-sep: #3c3c4399;
+  --hig-sep-opaque: #c6c6c8;
+  --hig-fill: #78788033;
+  --hig-fill-2: #78788029;
+  --hig-fill-3: #7676801f;
+  --hig-fill-4: #74748014;
+  --hig-red: #ff383c;
+  --hig-orange: #ff8d28;
+  --hig-yellow: #ffcc00;
+  --hig-green: #34c759;
+  --hig-mint: #00c8b3;
+  --hig-teal: #00c3d0;
+  --hig-cyan: #00c0e8;
+  --hig-blue: #0088ff;
+  --hig-indigo: #6155f5;
+  --hig-purple: #cb30e0;
+  --hig-pink: #ff2d55;
+  --hig-brown: #ac7f5e;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #aeaeb2;
+  --hig-gray-3: #c7c7cc;
+  --hig-gray-4: #d1d1d6;
+  --hig-gray-5: #e5e5ea;
+  --hig-gray-6: #f2f2f7;
+  --hig-accent: #0055b3;
+  --hig-accent-fill: #0055b3;
+  --hig-accent-text: #0055b3;
+  --hig-on-accent: #ffffff;
+  --hig-destructive-fill: #b80018;
+  --hig-destructive-text: #b80018;
+  --hig-on-destructive: #ffffff;
+  --hig-success-text: #006b28;
+  --hig-warning-text: #8f4500;
+  --hig-switch-on: #007a2e;
+  --hig-control-border: #545458;
+  --hig-focus-ring: #0055b3;
+  --hig-glass-tint: #ffffff;
+  --hig-glass-tint-large: #ffffff;
+  --hig-glass-tint-clear: #0000008c;
+  --hig-glass-rim: #ffffffbf;
+  --hig-glass-rim-dim: #ffffff2e;
+  --hig-glass-label: #000000;
+  --hig-glass-shadow-color: #0000001a;
+  --hig-scrim: #00000038;
+  color-scheme: light;
+}
+@media (prefers-contrast: more) {
+:root[data-hig-mode="aa"]:not([data-hig-scheme="dark"]):not([data-hig-contrast="standard"]) {
+    --hig-bg: #ffffff;
+    --hig-bg-2: #f2f2f7;
+    --hig-bg-3: #ffffff;
+    --hig-grouped-bg: #f2f2f7;
+    --hig-grouped-bg-2: #ffffff;
+    --hig-grouped-bg-3: #f2f2f7;
+    --hig-bg-elevated: #ffffff;
+    --hig-bg-elevated-2: #f2f2f7;
+    --hig-label: #000000;
+    --hig-label-2: #3c3c43e0;
+    --hig-label-3: #3c3c4399;
+    --hig-label-4: #3c3c432e;
+    --hig-placeholder: #3c3c43e0;
+    --hig-link: #0055b3;
+    --hig-sep: #3c3c4399;
+    --hig-sep-opaque: #c6c6c8;
+    --hig-fill: #78788033;
+    --hig-fill-2: #78788029;
+    --hig-fill-3: #7676801f;
+    --hig-fill-4: #74748014;
+    --hig-red: #ff383c;
+    --hig-orange: #ff8d28;
+    --hig-yellow: #ffcc00;
+    --hig-green: #34c759;
+    --hig-mint: #00c8b3;
+    --hig-teal: #00c3d0;
+    --hig-cyan: #00c0e8;
+    --hig-blue: #0088ff;
+    --hig-indigo: #6155f5;
+    --hig-purple: #cb30e0;
+    --hig-pink: #ff2d55;
+    --hig-brown: #ac7f5e;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #aeaeb2;
+    --hig-gray-3: #c7c7cc;
+    --hig-gray-4: #d1d1d6;
+    --hig-gray-5: #e5e5ea;
+    --hig-gray-6: #f2f2f7;
+    --hig-accent: #0055b3;
+    --hig-accent-fill: #0055b3;
+    --hig-accent-text: #0055b3;
+    --hig-on-accent: #ffffff;
+    --hig-destructive-fill: #b80018;
+    --hig-destructive-text: #b80018;
+    --hig-on-destructive: #ffffff;
+    --hig-success-text: #006b28;
+    --hig-warning-text: #8f4500;
+    --hig-switch-on: #007a2e;
+    --hig-control-border: #545458;
+    --hig-focus-ring: #0055b3;
+    --hig-glass-tint: #ffffff;
+    --hig-glass-tint-large: #ffffff;
+    --hig-glass-tint-clear: #0000008c;
+    --hig-glass-rim: #ffffffbf;
+    --hig-glass-rim-dim: #ffffff2e;
+    --hig-glass-label: #000000;
+    --hig-glass-shadow-color: #0000001a;
+    --hig-scrim: #00000038;
+    color-scheme: light;
+  }
+}
+:root[data-hig-mode="aa"][data-hig-scheme="dark"][data-hig-contrast="more"] {
+  --hig-bg: #000000;
+  --hig-bg-2: #1c1c1e;
+  --hig-bg-3: #2c2c2e;
+  --hig-grouped-bg: #000000;
+  --hig-grouped-bg-2: #1c1c1e;
+  --hig-grouped-bg-3: #2c2c2e;
+  --hig-bg-elevated: #1c1c1e;
+  --hig-bg-elevated-2: #2c2c2e;
+  --hig-label: #ffffff;
+  --hig-label-2: #ebebf5d9;
+  --hig-label-3: #ebebf599;
+  --hig-label-4: #ebebf529;
+  --hig-placeholder: #ebebf5d9;
+  --hig-link: #8ccfff;
+  --hig-sep: #ebebf580;
+  --hig-sep-opaque: #38383a;
+  --hig-fill: #7878805c;
+  --hig-fill-2: #78788052;
+  --hig-fill-3: #7676803d;
+  --hig-fill-4: #7676802e;
+  --hig-red: #ff4245;
+  --hig-orange: #ff9230;
+  --hig-yellow: #ffd600;
+  --hig-green: #30d158;
+  --hig-mint: #00dac3;
+  --hig-teal: #00d2e0;
+  --hig-cyan: #3cd3fe;
+  --hig-blue: #0091ff;
+  --hig-indigo: #6d7cff;
+  --hig-purple: #db34f2;
+  --hig-pink: #ff375f;
+  --hig-brown: #b78a66;
+  --hig-gray: #8e8e93;
+  --hig-gray-2: #636366;
+  --hig-gray-3: #48484a;
+  --hig-gray-4: #3a3a3c;
+  --hig-gray-5: #2c2c2e;
+  --hig-gray-6: #1c1c1e;
+  --hig-accent: #5cb8ff;
+  --hig-accent-fill: #5cb8ff;
+  --hig-accent-text: #8ccfff;
+  --hig-on-accent: #000000;
+  --hig-destructive-fill: #ff8a8c;
+  --hig-destructive-text: #ffa3a5;
+  --hig-on-destructive: #000000;
+  --hig-success-text: #4ad968;
+  --hig-warning-text: #ffb36b;
+  --hig-switch-on: #4ad968;
+  --hig-control-border: #c7c7cc;
+  --hig-focus-ring: #8ccfff;
+  --hig-glass-tint: #000000;
+  --hig-glass-tint-large: #000000;
+  --hig-glass-tint-clear: #0000008c;
+  --hig-glass-rim: #ffffff4d;
+  --hig-glass-rim-dim: #ffffff14;
+  --hig-glass-label: #ffffff;
+  --hig-glass-shadow-color: #00000073;
+  --hig-scrim: #00000073;
+  color-scheme: dark;
+}
+@media (prefers-contrast: more) {
+:root[data-hig-mode="aa"][data-hig-scheme="dark"]:not([data-hig-contrast="standard"]) {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf5d9;
+    --hig-label-3: #ebebf599;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf5d9;
+    --hig-link: #8ccfff;
+    --hig-sep: #ebebf580;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff4245;
+    --hig-orange: #ff9230;
+    --hig-yellow: #ffd600;
+    --hig-green: #30d158;
+    --hig-mint: #00dac3;
+    --hig-teal: #00d2e0;
+    --hig-cyan: #3cd3fe;
+    --hig-blue: #0091ff;
+    --hig-indigo: #6d7cff;
+    --hig-purple: #db34f2;
+    --hig-pink: #ff375f;
+    --hig-brown: #b78a66;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #5cb8ff;
+    --hig-accent-fill: #5cb8ff;
+    --hig-accent-text: #8ccfff;
+    --hig-on-accent: #000000;
+    --hig-destructive-fill: #ff8a8c;
+    --hig-destructive-text: #ffa3a5;
+    --hig-on-destructive: #000000;
+    --hig-success-text: #4ad968;
+    --hig-warning-text: #ffb36b;
+    --hig-switch-on: #4ad968;
+    --hig-control-border: #c7c7cc;
+    --hig-focus-ring: #8ccfff;
+    --hig-glass-tint: #000000;
+    --hig-glass-tint-large: #000000;
+    --hig-glass-tint-clear: #0000008c;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+@media (prefers-color-scheme: dark) {
+:root[data-hig-mode="aa"]:not([data-hig-scheme="light"])[data-hig-contrast="more"] {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf5d9;
+    --hig-label-3: #ebebf599;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf5d9;
+    --hig-link: #8ccfff;
+    --hig-sep: #ebebf580;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff4245;
+    --hig-orange: #ff9230;
+    --hig-yellow: #ffd600;
+    --hig-green: #30d158;
+    --hig-mint: #00dac3;
+    --hig-teal: #00d2e0;
+    --hig-cyan: #3cd3fe;
+    --hig-blue: #0091ff;
+    --hig-indigo: #6d7cff;
+    --hig-purple: #db34f2;
+    --hig-pink: #ff375f;
+    --hig-brown: #b78a66;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #5cb8ff;
+    --hig-accent-fill: #5cb8ff;
+    --hig-accent-text: #8ccfff;
+    --hig-on-accent: #000000;
+    --hig-destructive-fill: #ff8a8c;
+    --hig-destructive-text: #ffa3a5;
+    --hig-on-destructive: #000000;
+    --hig-success-text: #4ad968;
+    --hig-warning-text: #ffb36b;
+    --hig-switch-on: #4ad968;
+    --hig-control-border: #c7c7cc;
+    --hig-focus-ring: #8ccfff;
+    --hig-glass-tint: #000000;
+    --hig-glass-tint-large: #000000;
+    --hig-glass-tint-clear: #0000008c;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+:root[data-hig-mode="aa"]:not([data-hig-scheme="light"]):not([data-hig-contrast="standard"]) {
+    --hig-bg: #000000;
+    --hig-bg-2: #1c1c1e;
+    --hig-bg-3: #2c2c2e;
+    --hig-grouped-bg: #000000;
+    --hig-grouped-bg-2: #1c1c1e;
+    --hig-grouped-bg-3: #2c2c2e;
+    --hig-bg-elevated: #1c1c1e;
+    --hig-bg-elevated-2: #2c2c2e;
+    --hig-label: #ffffff;
+    --hig-label-2: #ebebf5d9;
+    --hig-label-3: #ebebf599;
+    --hig-label-4: #ebebf529;
+    --hig-placeholder: #ebebf5d9;
+    --hig-link: #8ccfff;
+    --hig-sep: #ebebf580;
+    --hig-sep-opaque: #38383a;
+    --hig-fill: #7878805c;
+    --hig-fill-2: #78788052;
+    --hig-fill-3: #7676803d;
+    --hig-fill-4: #7676802e;
+    --hig-red: #ff4245;
+    --hig-orange: #ff9230;
+    --hig-yellow: #ffd600;
+    --hig-green: #30d158;
+    --hig-mint: #00dac3;
+    --hig-teal: #00d2e0;
+    --hig-cyan: #3cd3fe;
+    --hig-blue: #0091ff;
+    --hig-indigo: #6d7cff;
+    --hig-purple: #db34f2;
+    --hig-pink: #ff375f;
+    --hig-brown: #b78a66;
+    --hig-gray: #8e8e93;
+    --hig-gray-2: #636366;
+    --hig-gray-3: #48484a;
+    --hig-gray-4: #3a3a3c;
+    --hig-gray-5: #2c2c2e;
+    --hig-gray-6: #1c1c1e;
+    --hig-accent: #5cb8ff;
+    --hig-accent-fill: #5cb8ff;
+    --hig-accent-text: #8ccfff;
+    --hig-on-accent: #000000;
+    --hig-destructive-fill: #ff8a8c;
+    --hig-destructive-text: #ffa3a5;
+    --hig-on-destructive: #000000;
+    --hig-success-text: #4ad968;
+    --hig-warning-text: #ffb36b;
+    --hig-switch-on: #4ad968;
+    --hig-control-border: #c7c7cc;
+    --hig-focus-ring: #8ccfff;
+    --hig-glass-tint: #000000;
+    --hig-glass-tint-large: #000000;
+    --hig-glass-tint-clear: #0000008c;
+    --hig-glass-rim: #ffffff4d;
+    --hig-glass-rim-dim: #ffffff14;
+    --hig-glass-label: #ffffff;
+    --hig-glass-shadow-color: #00000073;
+    --hig-scrim: #00000073;
+    color-scheme: dark;
+  }
+}
+
+/* Glass shadow composed from the scheme-aware color */
+:root { --hig-glass-shadow: 0 8px 28px var(--hig-glass-shadow-color), 0 1px 3px var(--hig-glass-shadow-color); }
+
+/* Type helpers (iOS Dynamic Type "Large"; .hig-mac-* for desktop density) */
+.hig-text-large-title { font: var(--hig-text-large-title); }
+.hig-text-title-1 { font: var(--hig-text-title-1); }
+.hig-text-title-2 { font: var(--hig-text-title-2); }
+.hig-text-title-3 { font: var(--hig-text-title-3); }
+.hig-text-headline { font: var(--hig-text-headline); }
+.hig-text-body { font: var(--hig-text-body); }
+.hig-text-callout { font: var(--hig-text-callout); }
+.hig-text-subhead { font: var(--hig-text-subhead); }
+.hig-text-footnote { font: var(--hig-text-footnote); }
+.hig-text-caption-1 { font: var(--hig-text-caption-1); }
+.hig-text-caption-2 { font: var(--hig-text-caption-2); }
+.hig-text-mac-large-title { font: var(--hig-text-mac-large-title); }
+.hig-text-mac-title-1 { font: var(--hig-text-mac-title-1); }
+.hig-text-mac-title-2 { font: var(--hig-text-mac-title-2); }
+.hig-text-mac-title-3 { font: var(--hig-text-mac-title-3); }
+.hig-text-mac-headline { font: var(--hig-text-mac-headline); }
+.hig-text-mac-body { font: var(--hig-text-mac-body); }
+.hig-text-mac-callout { font: var(--hig-text-mac-callout); }
+.hig-text-mac-subhead { font: var(--hig-text-mac-subhead); }
+.hig-text-mac-footnote { font: var(--hig-text-mac-footnote); }
+.hig-text-mac-caption-1 { font: var(--hig-text-mac-caption-1); }
+.hig-text-mac-caption-2 { font: var(--hig-text-mac-caption-2); }
+
+</style>
+<style>
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/* Optional page defaults. Skip this file when a framework (antd, MUI, Bootstrap…) already owns the base styles. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Focused elements never hide under floating bars (WCAG 2.4.11 Focus Not Obscured) */
+  scroll-padding-block: calc(env(safe-area-inset-top, 0px) + 72px) calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+/* iOS Safari: follow the user's Dynamic Type size */
+@supports (font: -apple-system-body) {
+  html { font: -apple-system-body; }
+}
+body {
+  margin: 0;
+  background: var(--hig-bg);
+  color: var(--hig-label);
+  font: var(--hig-text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+:where(a) { color: var(--hig-link); }
+:where(:focus-visible) { outline: 3px solid var(--hig-focus-ring); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--hig-accent) 30%, transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-hig-motion="standard"]) *, :root:not([data-hig-motion="standard"]) *::before, :root:not([data-hig-motion="standard"]) *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important;
+  }
+}
+:root[data-hig-motion="reduce"] *, :root[data-hig-motion="reduce"] *::before, :root[data-hig-motion="reduce"] *::after {
+  animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important;
+}
+
+</style>
+<style>
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/* Liquid Glass material for the floating control layer (bars, floating buttons, menus, sheets, alerts).
+   Rules: never on content (cards, rows), never glass on glass, tint only the primary action.
+   Requires hig.css. Optional JS: initGlass() from hig-web-kit/glass (refraction, press light, adaptivity). */
+
+.hig-glass {
+  --hig-mx: 50%;
+  --hig-my: 50%;
+  position: relative;
+  isolation: isolate;
+  border-radius: 999px;
+  background: var(--hig-glass-tint);
+  color: var(--hig-glass-label);
+  -webkit-backdrop-filter: blur(var(--hig-glass-blur)) saturate(var(--hig-glass-saturate)) brightness(1.04);
+          backdrop-filter: blur(var(--hig-glass-blur)) saturate(var(--hig-glass-saturate)) brightness(1.04);
+  box-shadow: var(--hig-glass-shadow),
+    inset 0 1px 0 0 var(--hig-glass-rim),
+    inset 0 -1px 0 0 var(--hig-glass-rim-dim),
+    inset 0 0 0 .5px var(--hig-glass-rim-dim);
+  transition: scale var(--hig-duration) var(--hig-ease-spring), background-color .25s var(--hig-ease-out), color .25s var(--hig-ease-out);
+}
+/* angled specular rim: lit top-left, dim bottom-right */
+.hig-glass::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(135deg, var(--hig-glass-rim), transparent 38%, transparent 62%, var(--hig-glass-rim-dim));
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+/* illumination from the touch point (position set by glass.js) */
+.hig-glass::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(90px circle at var(--hig-mx) var(--hig-my), rgb(255 255 255 / .5), transparent 65%);
+  opacity: 0; transition: opacity .45s var(--hig-ease-out);
+}
+.hig-glass > * { position: relative; z-index: 2; }
+.hig-glass.is-pressed::after { opacity: 1; transition-duration: .06s; }
+.hig-glass.is-lit::after { opacity: .3; }
+.hig-glass.hig-press-scale.is-pressed { scale: 1.08; } /* glass scales UP when pressed */
+
+/* Variants */
+.hig-glass--large {
+  background: var(--hig-glass-tint-large);
+  -webkit-backdrop-filter: blur(var(--hig-glass-blur-large)) saturate(180%);
+          backdrop-filter: blur(var(--hig-glass-blur-large)) saturate(180%);
+}
+.hig-glass--clear { /* only over photos/video, with .hig-media-dim behind it */
+  background: var(--hig-glass-tint-clear);
+  color: #fff;
+  font-weight: 600;
+  --hig-glass-rim: rgb(255 255 255 / .55);
+  --hig-glass-rim-dim: rgb(255 255 255 / .12);
+  -webkit-backdrop-filter: blur(var(--hig-glass-blur-clear)) saturate(150%) brightness(1.05);
+          backdrop-filter: blur(var(--hig-glass-blur-clear)) saturate(150%) brightness(1.05);
+}
+.hig-glass--tint { /* the one primary action */
+  background: color-mix(in oklab, var(--hig-accent-fill) 85%, transparent);
+  color: var(--hig-on-accent);
+  --hig-glass-rim: rgb(255 255 255 / .55);
+}
+.hig-glass--on-dark { /* small glass over dark content (set by adaptGlass) */
+  --hig-glass-tint: rgb(28 28 32 / .38);
+  --hig-glass-label: #fff;
+  --hig-glass-rim: rgb(255 255 255 / .32);
+  --hig-glass-rim-dim: rgb(255 255 255 / .1);
+}
+[data-hig-mode="aa"] .hig-glass--on-dark { --hig-glass-tint: rgb(28 28 32 / .72); }
+[data-hig-mode="aa"] .hig-glass--tint { background: var(--hig-accent-fill); }
+
+/* Real edge refraction — Chromium only, enabled by initGlass() via html.hig-refract */
+html.hig-refract .hig-glass[data-hig-refract] {
+  -webkit-backdrop-filter: var(--hig-refract) blur(.6px) saturate(185%) brightness(1.05);
+          backdrop-filter: var(--hig-refract) blur(.6px) saturate(185%) brightness(1.05);
+}
+[data-hig-mode="aa"].hig-refract .hig-glass[data-hig-refract] {
+  -webkit-backdrop-filter: var(--hig-refract) blur(var(--hig-glass-blur)) saturate(185%);
+          backdrop-filter: var(--hig-refract) blur(var(--hig-glass-blur)) saturate(185%);
+}
+
+/* Localized 35 % dimming under clear glass on media */
+.hig-media-dim { position: relative; }
+.hig-media-dim::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgb(0 0 0 / .35), transparent 45%);
+}
+
+/* Scroll edge effect — soft (default) and hard. Visible once content is under the bar (data-hig-scrolled). */
+.hig-scroll-edge {
+  position: fixed; left: 0; right: 0; z-index: 20; pointer-events: none;
+  opacity: 0; transition: opacity .3s var(--hig-ease-out);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.hig-scroll-edge--top {
+  top: 0; height: calc(env(safe-area-inset-top, 0px) + 84px);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--hig-bg) 78%, transparent), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent); mask-image: linear-gradient(to bottom, #000 45%, transparent);
+}
+.hig-scroll-edge--bottom {
+  bottom: 0; height: calc(env(safe-area-inset-bottom, 0px) + 96px); opacity: 1;
+  background: linear-gradient(to top, color-mix(in srgb, var(--hig-bg) 70%, transparent), transparent);
+  -webkit-mask-image: linear-gradient(to top, #000 40%, transparent); mask-image: linear-gradient(to top, #000 40%, transparent);
+}
+[data-hig-scrolled] .hig-scroll-edge--top { opacity: 1; }
+.hig-scroll-edge.is-on-dark { background: linear-gradient(to bottom, rgb(0 0 0 / .35), transparent); }
+.hig-scroll-edge--bottom.is-on-dark { background: linear-gradient(to top, rgb(0 0 0 / .35), transparent); }
+.hig-scroll-edge--hard {
+  background: color-mix(in srgb, var(--hig-bg) 92%, transparent);
+  -webkit-mask-image: none; mask-image: none;
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: .5px solid var(--hig-sep);
+}
+
+/* Appear by ramping blur, not opacity (menus, popovers) */
+@keyframes hig-glass-in {
+  from { scale: .3 .15; border-radius: 999px; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); }
+}
+.hig-glass-enter { animation: hig-glass-in .5s var(--hig-ease-spring) both; }
+
+/* ── Accessibility ── */
+/* Reduce Transparency → frosted, near-opaque */
+@media (prefers-reduced-transparency: reduce) {
+  :root:not([data-hig-transparency="standard"]) :is(.hig-glass, .hig-glass--large, .hig-glass--clear) {
+    background: color-mix(in srgb, var(--hig-bg-elevated) 94%, transparent); color: var(--hig-label);
+    -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px);
+  }
+  :root:not([data-hig-transparency="standard"]) .hig-glass--tint { background: var(--hig-accent-fill); color: var(--hig-on-accent); }
+  :root:not([data-hig-transparency="standard"]) .hig-scroll-edge { background: var(--hig-bg); -webkit-mask-image: none; mask-image: none; }
+}
+:root[data-hig-transparency="reduce"] :is(.hig-glass, .hig-glass--large, .hig-glass--clear) {
+  background: color-mix(in srgb, var(--hig-bg-elevated) 94%, transparent); color: var(--hig-label);
+  -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px);
+}
+:root[data-hig-transparency="reduce"] .hig-glass--tint { background: var(--hig-accent-fill); color: var(--hig-on-accent); }
+:root[data-hig-transparency="reduce"] .hig-scroll-edge { background: var(--hig-bg); -webkit-mask-image: none; mask-image: none; }
+
+/* Increase Contrast → solid surface with a visible border (palette swap comes from hig.css) */
+@media (prefers-contrast: more) {
+  :root:not([data-hig-contrast="standard"]) .hig-glass {
+    -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1.5px var(--hig-label);
+  }
+  :root:not([data-hig-contrast="standard"]) .hig-glass::before { display: none; }
+}
+:root[data-hig-contrast="more"] .hig-glass { -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1.5px var(--hig-label); }
+:root[data-hig-contrast="more"] .hig-glass::before { display: none; }
+:root[data-hig-contrast="more"] .hig-glass--on-dark { --hig-glass-tint: #000; --hig-glass-label: #fff; }
+
+/* Reduce Motion → no gel / scale / springs */
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-hig-motion="standard"]) .hig-glass { transition-duration: .01ms; }
+  :root:not([data-hig-motion="standard"]) .hig-glass.is-pressed { scale: 1; }
+  :root:not([data-hig-motion="standard"]) .hig-glass-enter { animation: none; }
+}
+:root[data-hig-motion="reduce"] .hig-glass { transition-duration: .01ms; }
+:root[data-hig-motion="reduce"] .hig-glass.is-pressed { scale: 1; }
+:root[data-hig-motion="reduce"] .hig-glass-enter { animation: none; }
+
+@media (forced-colors: active) {
+  .hig-glass { border: 1px solid ButtonText; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+</style>
+<style>
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/* Framework-free components following Apple's HIG. Requires hig.css (+ glass.css for bars, menus, sheets).
+   Behaviour (switch, segmented, tabs, menus, dialogs) comes from hig-web-kit/components (initComponents()).
+   Borders use --hig-control-border, which is transparent in Apple mode and a 3:1 gray in AA mode. */
+
+.hig-icon { width: 1.25em; height: 1.25em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── Buttons ── */
+.hig-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 0 20px; border: 0; border-radius: 999px;
+  font: 600 1.0625rem/1.2 var(--hig-font-sans); white-space: nowrap; cursor: pointer;
+  background: var(--hig-fill-2); color: var(--hig-accent-text);
+  transition: scale var(--hig-duration) var(--hig-ease-spring), opacity .2s, background-color .2s;
+}
+.hig-btn:active { opacity: .7; }
+.hig-btn:disabled, .hig-btn[aria-disabled="true"] { opacity: .4; cursor: default; }
+.hig-btn--prominent { background: var(--hig-accent-fill); color: var(--hig-on-accent); }
+.hig-btn--plain { background: transparent; padding-inline: 8px; }
+.hig-btn--destructive { color: var(--hig-destructive-text); }
+.hig-btn--destructive.hig-btn--prominent { background: var(--hig-destructive-fill); color: var(--hig-on-destructive); }
+.hig-btn--neutral { color: var(--hig-label); }
+.hig-btn--xs { min-height: 28px; padding: 0 12px; font-size: .8125rem; }
+.hig-btn--sm { min-height: 32px; padding: 0 14px; font-size: .9375rem; }
+.hig-btn--lg { min-height: 52px; padding: 0 26px; }
+.hig-btn--xl { min-height: 64px; padding: 0 32px; font-size: 1.25rem; }
+.hig-btn--block { width: 100%; }
+.hig-btn--rect { border-radius: var(--hig-radius-md); }
+.hig-btn[aria-busy="true"] { pointer-events: none; }
+.hig-icon-btn {
+  width: 44px; height: 44px; display: inline-grid; place-items: center; flex: none;
+  border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; padding: 0;
+}
+.hig-icon-btn .hig-icon { width: 22px; height: 22px; }
+.hig-spinner { width: 18px; height: 18px; position: relative; display: inline-block; }
+.hig-spinner i {
+  position: absolute; left: 50%; top: 0; width: 2.2px; height: 30%; margin-left: -1.1px; border-radius: 2px;
+  background: currentColor; transform-origin: 50% 166%; animation: hig-spin-fade .8s linear infinite;
+}
+@keyframes hig-spin-fade { from { opacity: 1 } to { opacity: .2 } }
+
+/* ── Switch (use in list rows; outside lists prefer a toggle button) ── */
+.hig-switch {
+  width: 64px; height: 28px; flex: none; position: relative; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--hig-fill); box-shadow: inset 0 0 0 1px var(--hig-control-border);
+  transition: background-color .25s var(--hig-ease-out); touch-action: none;
+}
+.hig-switch[aria-checked="true"] { background: var(--hig-switch-on); box-shadow: none; }
+.hig-switch__thumb {
+  position: absolute; top: 2px; left: 2px; width: 38px; height: 24px; border-radius: 999px; background: #fff;
+  box-shadow: 0 3px 8px rgb(0 0 0 / .15), 0 1px 1px rgb(0 0 0 / .16);
+  transition: translate var(--hig-duration) var(--hig-ease-spring), scale var(--hig-duration) var(--hig-ease-spring), background-color .2s;
+}
+.hig-switch[aria-checked="true"] .hig-switch__thumb { translate: 22px 0; }
+.hig-switch.is-pressed .hig-switch__thumb { /* thumb turns into a glass lens while held */
+  scale: 1.35 1.45; background: rgb(255 255 255 / .25);
+  -webkit-backdrop-filter: blur(2px) saturate(200%); backdrop-filter: blur(2px) saturate(200%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .8), inset 0 0 0 .5px rgb(255 255 255 / .5), 0 4px 14px rgb(0 0 0 / .18);
+}
+.hig-toggle-btn[aria-pressed="true"] { background: var(--hig-accent-fill); color: var(--hig-on-accent); }
+
+/* ── Segmented control ── */
+.hig-segmented {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; position: relative;
+  height: 36px; padding: 3px; border-radius: 999px; background: var(--hig-fill-3);
+  box-shadow: inset 0 0 0 1px var(--hig-control-border);
+}
+.hig-segmented > button {
+  position: relative; z-index: 2; border: 0; border-radius: 999px; background: none; color: var(--hig-label);
+  font: 500 .875rem/1 var(--hig-font-sans); cursor: pointer; padding: 0 10px;
+}
+.hig-segmented > button[aria-checked="true"], .hig-segmented > button[aria-selected="true"] { font-weight: 600; }
+.hig-segmented__thumb {
+  position: absolute; z-index: 1; top: 3px; bottom: 3px; left: 3px; border-radius: 999px;
+  background: var(--hig-bg-elevated); box-shadow: 0 3px 8px rgb(0 0 0 / .12), 0 1px 1px rgb(0 0 0 / .04);
+  transition: translate var(--hig-duration) var(--hig-ease-spring), width var(--hig-duration) var(--hig-ease-spring);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-hig-scheme="light"]) .hig-segmented__thumb { background: #636366; } }
+:root[data-hig-scheme="dark"] .hig-segmented__thumb { background: #636366; }
+[data-hig-mode="aa"] .hig-segmented__thumb { box-shadow: 0 0 0 1.5px var(--hig-control-border), 0 3px 8px rgb(0 0 0 / .12); }
+
+/* ── Slider ── */
+.hig-slider { -webkit-appearance: none; appearance: none; width: 100%; min-width: 0; height: 28px; margin: 0; background: transparent; --p: 50%; }
+.hig-slider::-webkit-slider-runnable-track {
+  height: 6px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--hig-control-border);
+  background: linear-gradient(to right, var(--hig-accent) var(--p), var(--hig-fill) var(--p));
+}
+.hig-slider::-moz-range-track { height: 6px; border-radius: 999px; background: var(--hig-fill); box-shadow: inset 0 0 0 1px var(--hig-control-border); }
+.hig-slider::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--hig-accent); }
+.hig-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 38px; height: 24px; margin-top: -9px; border-radius: 999px; background: #fff;
+  box-shadow: 0 0 0 1px var(--hig-control-border), 0 3px 8px rgb(0 0 0 / .15), 0 1px 1px rgb(0 0 0 / .16);
+  transition: transform .35s var(--hig-ease-spring), background-color .2s;
+}
+.hig-slider::-moz-range-thumb { width: 38px; height: 24px; border: 0; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px var(--hig-control-border), 0 3px 8px rgb(0 0 0 / .15); transition: transform .35s var(--hig-ease-spring); }
+.hig-slider:active::-webkit-slider-thumb {
+  transform: scale(1.4, 1.5); background: rgb(255 255 255 / .35);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), inset 0 0 0 .5px rgb(255 255 255 / .6), 0 4px 14px rgb(0 0 0 / .2);
+}
+.hig-slider:active::-moz-range-thumb { transform: scale(1.4, 1.5); background: rgb(255 255 255 / .35); }
+
+/* ── Stepper ── */
+.hig-stepper { display: inline-flex; align-items: center; height: 36px; border-radius: 999px; background: var(--hig-fill-3); box-shadow: inset 0 0 0 1px var(--hig-control-border); }
+.hig-stepper > button { width: 48px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 999px; background: none; color: var(--hig-label); cursor: pointer; }
+.hig-stepper > button:active { background: var(--hig-fill-2); }
+.hig-stepper > .hig-stepper__divider { width: 1px; height: 18px; background: var(--hig-sep); }
+
+/* ── Progress ── */
+.hig-progress { height: 6px; border-radius: 999px; background: var(--hig-fill); overflow: hidden; box-shadow: inset 0 0 0 1px var(--hig-control-border); }
+.hig-progress > i { display: block; height: 100%; width: var(--value, 0%); background: var(--hig-accent); border-radius: inherit; transition: width .6s var(--hig-ease-out); }
+
+/* ── Text field & search ── */
+.hig-field { display: grid; gap: 6px; }
+.hig-field > label { font: var(--hig-text-footnote); color: var(--hig-label-2); padding-left: 4px; }
+.hig-input {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-radius: var(--hig-radius-field);
+  background: var(--hig-fill-3); box-shadow: inset 0 0 0 1px var(--hig-control-border);
+}
+.hig-input:focus-within { box-shadow: 0 0 0 2px var(--hig-focus-ring); }
+.hig-input > input, .hig-input > textarea { flex: 1; min-width: 0; border: 0; padding: 10px 0; background: transparent; font: inherit; color: var(--hig-label); outline: none; }
+.hig-input > input::placeholder, .hig-input > textarea::placeholder { color: var(--hig-placeholder); opacity: 1; }
+.hig-input--search { border-radius: 999px; }
+.hig-input__clear { width: 22px; height: 22px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 999px; background: var(--hig-label-3); color: var(--hig-bg-2); cursor: pointer; }
+[data-hig-mode="aa"] .hig-input__clear { background: var(--hig-control-border); }
+.hig-field__hint { font: var(--hig-text-footnote); color: var(--hig-label-2); padding-left: 4px; }
+.hig-field.is-invalid .hig-input { box-shadow: 0 0 0 2px var(--hig-destructive-text); }
+.hig-field.is-invalid .hig-field__hint { color: var(--hig-destructive-text); }
+
+/* ── Inset grouped list ── */
+.hig-section-head { font: var(--hig-text-footnote); color: var(--hig-label-2); margin: 0 20px 6px; }
+.hig-section-foot { font: var(--hig-text-footnote); color: var(--hig-label-2); margin: 6px 20px 0; }
+.hig-list { background: var(--hig-grouped-bg-2); border-radius: var(--hig-radius-card); overflow: hidden; margin: 0; padding: 0; list-style: none; }
+.hig-row {
+  display: flex; align-items: center; gap: 12px; position: relative; width: 100%; min-height: 52px; padding: 8px 16px;
+  border: 0; background: none; color: inherit; font: inherit; text-align: left;
+}
+.hig-row + .hig-row::before { content: ""; position: absolute; top: 0; right: 0; left: var(--hig-sep-inset, 16px); border-top: .5px solid var(--hig-sep); }
+.hig-row--icon { --hig-sep-inset: 58px; }
+button.hig-row, a.hig-row { cursor: pointer; text-decoration: none; }
+button.hig-row:active, a.hig-row:active { background: var(--hig-fill-3); }
+.hig-row__title { flex: 1; min-width: 0; }
+.hig-row__value { color: var(--hig-label-2); }
+.hig-row__chevron { color: var(--hig-label-3); width: 14px; height: 14px; stroke-width: 2.6; }
+[data-hig-mode="aa"] .hig-row__chevron { color: var(--hig-label-2); }
+.hig-icon-square { width: 30px; height: 30px; flex: none; display: grid; place-items: center; border-radius: 8px; color: #fff; }
+.hig-icon-square .hig-icon { width: 18px; height: 18px; }
+
+/* ── Badge ── */
+.hig-badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; display: inline-grid; place-items: center; background: var(--hig-red); color: #fff; font: 600 .75rem/1 var(--hig-font-sans); }
+[data-hig-mode="aa"] .hig-badge { background: var(--hig-destructive-fill); }
+
+/* ── Toolbar / navigation bar (transparent; groups are glass capsules) ── */
+.hig-toolbar {
+  position: fixed; inset: 0 0 auto 0; z-index: 30; pointer-events: none;
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) var(--hig-size-gutter) 0;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+}
+.hig-toolbar > * { pointer-events: auto; }
+.hig-toolbar__lead, .hig-toolbar__trail { display: flex; gap: 8px; align-items: center; }
+.hig-toolbar__trail { justify-content: flex-end; }
+.hig-group { display: flex; border-radius: 999px; }
+.hig-inline-title { font: var(--hig-text-headline); white-space: nowrap; opacity: 0; translate: 0 6px; transition: opacity .25s, translate .35s var(--hig-ease-spring); }
+[data-hig-scrolled] .hig-inline-title { opacity: 1; translate: 0 0; }
+.hig-large-title { font: var(--hig-text-large-title); margin: 8px 4px 0; text-wrap: balance; }
+
+/* ── Tab bar (floating capsule) ── */
+.hig-tabdock {
+  position: fixed; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 12px); z-index: 30;
+  display: flex; justify-content: center; align-items: center; gap: 10px; padding-inline: var(--hig-size-gutter); pointer-events: none;
+}
+.hig-tabdock > * { pointer-events: auto; }
+.hig-tabbar { display: flex; position: relative; padding: 4px; border-radius: 999px; }
+.hig-tab {
+  position: relative; z-index: 2; width: 84px; height: 54px; border: 0; border-radius: 999px; background: none; cursor: pointer; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  color: var(--hig-glass-label); font: 600 .65625rem/1.2 var(--hig-font-sans);
+  transition: color .2s, width var(--hig-duration) var(--hig-ease-spring), opacity .2s;
+}
+.hig-tab .hig-icon { width: 24px; height: 24px; }
+.hig-tab[aria-selected="true"] { color: var(--hig-accent-text); }
+.hig-tab[aria-selected="true"] .hig-icon { fill: currentColor; }
+.hig-glass--on-dark .hig-tab[aria-selected="true"] { color: #4db2ff; }
+[data-hig-mode="aa"] .hig-tab[aria-selected="true"] { color: var(--hig-glass-label); }
+[data-hig-mode="aa"] .hig-tab[aria-selected="true"] .hig-icon { color: var(--hig-accent-text); }
+[data-hig-mode="aa"] .hig-glass--on-dark .hig-tab[aria-selected="true"] .hig-icon { color: #8ccfff; }
+.hig-tabbar__lens {
+  position: absolute; z-index: 1; top: 4px; left: 4px; width: 84px; height: 54px; border-radius: 999px; background: var(--hig-fill-3);
+  transition: translate var(--hig-duration) var(--hig-ease-spring), width var(--hig-duration) var(--hig-ease-spring), opacity .2s;
+}
+[data-hig-mode="aa"] .hig-tabbar__lens { background: var(--hig-fill-2); box-shadow: inset 0 0 0 1.5px var(--hig-control-border); }
+.hig-search-tab { width: 62px; height: 62px; display: grid; place-items: center; border: 0; border-radius: 999px; cursor: pointer; color: inherit; }
+.hig-search-tab .hig-icon { width: 24px; height: 24px; }
+.hig-tabdock.is-minimized .hig-tab:not([aria-selected="true"]) { width: 0; opacity: 0; }
+.hig-tabdock.is-minimized .hig-tab { height: 44px; }
+.hig-tabdock.is-minimized .hig-tab span { display: none; }
+.hig-tabdock.is-minimized .hig-tabbar__lens { opacity: 0; }
+.hig-tabdock.is-minimized .hig-search-tab { width: 52px; height: 52px; }
+
+/* ── Menu (grows out of its trigger) ── */
+.hig-menu-anchor { position: relative; display: inline-block; }
+.hig-menu { position: absolute; z-index: 40; top: calc(100% + 8px); left: 0; min-width: 250px; padding: 6px; border-radius: var(--hig-radius-menu); display: grid; transform-origin: 30px -20px; }
+.hig-menu[hidden] { display: none !important; }
+.hig-menu__item {
+  display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 14px; border: 0; border-radius: 18px;
+  background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; position: relative; z-index: 2;
+}
+.hig-menu__item:hover, .hig-menu__item:focus-visible { background: var(--hig-fill-3); outline: none; }
+.hig-menu__item:focus-visible { box-shadow: inset 0 0 0 2px var(--hig-focus-ring); }
+.hig-menu__item .hig-menu__check { width: 18px; visibility: hidden; }
+.hig-menu__item[aria-checked="true"] .hig-menu__check { visibility: visible; }
+.hig-menu__item--destructive { color: var(--hig-destructive-text); }
+.hig-menu__item:disabled { color: var(--hig-label-3); cursor: default; }
+.hig-menu__label { flex: 1; }
+.hig-menu__separator { height: 8px; position: relative; z-index: 2; }
+.hig-menu__separator::after { content: ""; position: absolute; left: 14px; right: 14px; top: 3.5px; border-top: .5px solid var(--hig-sep); }
+@media (pointer: fine) and (min-width: 900px) {
+  .hig-menu { border-radius: var(--hig-radius-md); min-width: 200px; padding: 5px; }
+  .hig-menu__item { min-height: 28px; border-radius: 6px; padding: 0 10px; }
+}
+
+/* ── Dialogs: sheet, alert, action sheet (use <dialog> + showModal) ── */
+dialog.hig-sheet, dialog.hig-alert, dialog.hig-action-sheet { color: var(--hig-label); border: 0; padding: 0; max-width: none; max-height: none; }
+dialog.hig-sheet::backdrop, dialog.hig-alert::backdrop, dialog.hig-action-sheet::backdrop { background: var(--hig-scrim); }
+.hig-sheet {
+  position: fixed; inset: auto 8px calc(env(safe-area-inset-bottom, 0px) + 8px) 8px; margin: 0 auto; width: auto; max-width: 640px;
+  height: min(52vh, 460px); border-radius: var(--hig-radius-window); overflow: hidden; display: none; flex-direction: column;
+  transition: height .5s var(--hig-ease-spring), inset .5s var(--hig-ease-spring), border-radius .5s var(--hig-ease-spring), background-color .3s;
+}
+.hig-sheet[open] { display: flex; animation: hig-sheet-in .55s var(--hig-ease-spring) both; }
+.hig-sheet.is-large {
+  height: calc(100dvh - env(safe-area-inset-top, 0px) - 12px); inset: auto 0 0 0;
+  border-radius: var(--hig-radius-window) var(--hig-radius-window) 0 0; background: color-mix(in srgb, var(--hig-bg-elevated) 96%, transparent);
+}
+.hig-sheet.is-closing, .hig-action-sheet.is-closing { animation: hig-sheet-out .3s var(--hig-ease-out) both; }
+@keyframes hig-sheet-in { from { translate: 0 105%; } }
+@keyframes hig-sheet-out { to { translate: 0 105%; } }
+.hig-sheet__grabber { width: 36px; height: 5px; margin: 6px auto 0; flex: none; padding: 0; border: 0; border-radius: 999px; background: var(--hig-label-3); cursor: pointer; position: relative; z-index: 2; }
+[data-hig-mode="aa"] .hig-sheet__grabber { background: var(--hig-control-border); }
+.hig-sheet__bar { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: 8px 12px; position: relative; z-index: 2; }
+.hig-sheet__title { margin: 0; text-align: center; font: var(--hig-text-headline); }
+.hig-sheet__body { padding: 4px 16px 24px; overflow: auto; position: relative; z-index: 2; display: grid; gap: 16px; align-content: start; }
+.hig-alert {
+  position: fixed; inset: 0; margin: auto; height: fit-content; width: min(300px, calc(100vw - 48px));
+  border-radius: var(--hig-radius-alert); padding: 22px 18px 16px; text-align: left;
+}
+.hig-alert[open] { animation: hig-alert-in .4s var(--hig-ease-spring) both; }
+@keyframes hig-alert-in { from { scale: 1.15; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); } }
+.hig-alert__title { margin: 0 4px 6px; font: var(--hig-text-headline); position: relative; z-index: 2; }
+.hig-alert__message { margin: 0 4px 18px; font: var(--hig-text-subhead); color: var(--hig-label-2); position: relative; z-index: 2; }
+.hig-alert__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; z-index: 2; }
+.hig-alert__actions--stacked { grid-template-columns: 1fr; }
+.hig-action-sheet { position: fixed; inset: auto 8px calc(env(safe-area-inset-bottom, 0px) + 8px) 8px; margin: 0 auto; width: auto; max-width: 420px; background: transparent; display: none; }
+.hig-action-sheet[open] { display: grid; gap: 8px; animation: hig-sheet-in .5s var(--hig-ease-spring) both; }
+.hig-action-sheet__group { display: grid; padding: 6px; border-radius: 28px; }
+.hig-action-sheet__title { text-align: center; font: var(--hig-text-footnote); color: var(--hig-label-2); padding: 10px 16px 8px; position: relative; z-index: 2; }
+.hig-action-sheet__group > button { min-height: 52px; border: 0; border-radius: 22px; background: none; color: inherit; font: var(--hig-text-body); cursor: pointer; position: relative; z-index: 2; }
+.hig-action-sheet__group > button:active { background: var(--hig-fill-3); }
+.hig-action-sheet__group > .hig-action-sheet__destructive { color: var(--hig-destructive-text); }
+.hig-action-sheet__group > .hig-action-sheet__cancel { font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-hig-motion="standard"]) :is(.hig-switch__thumb, .hig-segmented__thumb, .hig-tab, .hig-tabbar__lens, .hig-sheet, .hig-btn) { transition-duration: .01ms; }
+  :root:not([data-hig-motion="standard"]) :is(.hig-sheet[open], .hig-alert[open], .hig-action-sheet[open], .hig-sheet.is-closing) { animation: none; }
+  :root:not([data-hig-motion="standard"]) .hig-switch.is-pressed .hig-switch__thumb { scale: 1; }
+}
+:root[data-hig-motion="reduce"] :is(.hig-switch__thumb, .hig-segmented__thumb, .hig-tab, .hig-tabbar__lens, .hig-sheet, .hig-btn) { transition-duration: .01ms; }
+:root[data-hig-motion="reduce"] :is(.hig-sheet[open], .hig-alert[open], .hig-action-sheet[open], .hig-sheet.is-closing) { animation: none; }
+:root[data-hig-motion="reduce"] .hig-switch.is-pressed .hig-switch__thumb { scale: 1; }
+
+</style>
+<style>
+/* Demo-only layout. Everything visual comes from the kit's tokens and classes. */
+body { background: var(--hig-grouped-bg); }
+main { max-width: 720px; margin-inline: auto; padding: calc(env(safe-area-inset-top, 0px) + 64px) 16px calc(env(safe-area-inset-bottom, 0px) + 120px); }
+.view { display: grid; gap: 28px; }
+.lede { margin: -18px 4px 0; color: var(--hig-label-2); max-width: 60ch; }
+.mode-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; margin-left: 8px; vertical-align: middle; border-radius: 999px; font: 600 .75rem/1 var(--hig-font-sans); background: var(--hig-fill-3); color: var(--hig-label-2); }
+[data-hig-mode="aa"] .mode-chip { background: var(--hig-switch-on); color: #fff; }
+.media { position: relative; border-radius: var(--hig-radius-card); overflow: hidden; aspect-ratio: 4 / 3; max-width: 100%; background: #1a1030 center / cover no-repeat; color: #fff; }
+.media-meta { position: absolute; left: 20px; top: 18px; z-index: 2; text-shadow: 0 1px 8px rgb(0 0 0 / .4); }
+.media-meta b { display: block; font: var(--hig-text-title-2); }
+.player { position: absolute; z-index: 3; left: 50%; bottom: 16px; translate: -50% 0; display: flex; align-items: center; gap: 2px; padding: 4px; }
+.player .hig-icon-btn .hig-icon { width: 24px; height: 24px; }
+.player .big .hig-icon { width: 30px; height: 30px; }
+.lens-stage { position: relative; overflow: hidden; border-radius: var(--hig-radius-card); background: var(--hig-grouped-bg-2); padding: 20px; min-height: 220px; touch-action: none; user-select: none; }
+.lens-stage p { margin: 0 0 10px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.swatches i { width: 44px; height: 44px; border-radius: 12px; display: block; }
+.lens { position: absolute; left: 30px; top: 60px; z-index: 2; width: 180px; height: 72px; cursor: grab; touch-action: none; }
+.lens.dragging { cursor: grabbing; scale: 1.06 1.03; }
+.lens span { position: absolute; inset: 0; display: grid; place-items: center; font: 600 .8125rem/1 var(--hig-font-sans); opacity: .6; }
+[data-hig-mode="aa"] .lens span { opacity: 1; }
+.panel { background: var(--hig-grouped-bg-2); border-radius: var(--hig-radius-card); padding: 16px; display: grid; gap: 16px; }
+.panel-label { font: var(--hig-text-footnote); color: var(--hig-label-2); margin-bottom: -8px; }
+.row-wrap { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.slider-row { display: flex; align-items: center; gap: 12px; color: var(--hig-label-2); }
+.ct-ratio { font-variant-numeric: tabular-nums; color: var(--hig-label-2); min-width: 4.2em; text-align: right; }
+.ct-verdict { min-width: 5.2em; display: inline-flex; gap: 4px; justify-content: flex-end; align-items: center; font: 600 .8125rem/1 var(--hig-font-sans); }
+.ct-verdict.bad { color: var(--hig-destructive-text); }
+.ct-need { display: block; font: var(--hig-text-footnote); color: var(--hig-label-2); }
+code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--hig-fill-3); padding: 1px 5px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-chev-ud" viewBox="0 0 24 24"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3c3.5 4.5 6 7.6 6 10.8A6 6 0 016 13.8C6 10.6 8.5 7.5 12 3z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2" fill="currentColor"/><circle cx="4.5" cy="12" r="1.2" fill="currentColor"/><circle cx="4.5" cy="18" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1.2" fill="currentColor" stroke="none"/><rect x="14" y="4.5" width="4" height="15" rx="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M11 6l-7 6 7 6zM20 6l-7 6 7 6z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M13 6l7 6-7 6zM4 6l7 6-7 6z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-sun-s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 5v1M12 18v1M5 12h1M18 12h1"/></symbol>
+    <symbol id="i-sun-l" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15zM10 20a2 2 0 004 0"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"/><path d="M5 8.5l7 1.5 7-1.5M12 10v4.5M12 14.5L9 21M12 14.5l3 6.5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8L3.5 9.7l5.9-.8z"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  </defs>
+</svg>
+
+<!-- Functional layer: floats above the content -->
+<div class="hig-scroll-edge hig-scroll-edge--top" aria-hidden="true"></div>
+<header class="hig-toolbar">
+  <div class="hig-toolbar__lead">
+    <div class="hig-glass hig-group" data-hig-adapt><button class="hig-icon-btn" aria-label="Back"><svg class="hig-icon"><use href="#i-chev-l"/></svg></button></div>
+  </div>
+  <div class="hig-inline-title" id="inlineTitle">Glass</div>
+  <div class="hig-toolbar__trail">
+    <div class="hig-glass hig-group" data-hig-adapt>
+      <button class="hig-icon-btn" aria-label="Share"><svg class="hig-icon"><use href="#i-share"/></svg></button>
+      <button class="hig-icon-btn" aria-label="More"><svg class="hig-icon"><use href="#i-more"/></svg></button>
+    </div>
+    <button class="hig-glass hig-glass--tint hig-icon-btn hig-press-scale" aria-label="Done" data-hig-open="alert"><svg class="hig-icon"><use href="#i-check"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <!-- 1 · Glass -->
+  <div class="view" id="v-glass" role="tabpanel" aria-labelledby="t-glass">
+    <h1 class="hig-large-title" data-title>Glass <span class="mode-chip" id="modeChip">Apple</span></h1>
+    <p class="lede">Liquid Glass belongs to the floating control layer. Content runs edge to edge underneath it.</p>
+
+    <section>
+      <div class="media hig-media-dim" id="media" data-hig-tone="dark">
+        <div class="media-meta"><span class="hig-text-footnote">Clear variant + 35 % dimming</span><b>Evening over the hills</b></div>
+        <div class="hig-glass hig-glass--clear player" data-hig-refract>
+          <button class="hig-icon-btn" aria-label="Previous"><svg class="hig-icon"><use href="#i-back"/></svg></button>
+          <button class="hig-icon-btn big" aria-label="Pause" id="playBtn"><svg class="hig-icon"><use href="#i-pause"/></svg></button>
+          <button class="hig-icon-btn" aria-label="Next"><svg class="hig-icon"><use href="#i-fwd"/></svg></button>
+        </div>
+      </div>
+      <p class="hig-section-foot">Clear glass only over photos or video, with a dimming layer and bold, bright symbols.</p>
+    </section>
+
+    <section>
+      <h2 class="hig-text-title-3" style="margin:0 4px 8px">Refraction at the edge</h2>
+      <div class="lens-stage" id="lensStage">
+        <p><b>Drag the capsule.</b> Glass bends light at its rim and keeps the centre clear. Chromium renders real refraction through an SVG displacement map; Safari and Firefox get blur, saturation and a specular rim.</p>
+        <p class="hig-text-subhead" style="color:var(--hig-label-2)">Regular variant: blurs and adjusts luminosity so text stays legible over any content.</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:var(--hig-red)"></i><i style="background:var(--hig-orange)"></i><i style="background:var(--hig-yellow)"></i><i style="background:var(--hig-green)"></i><i style="background:var(--hig-teal)"></i><i style="background:var(--hig-blue)"></i><i style="background:var(--hig-indigo)"></i><i style="background:var(--hig-pink)"></i>
+        </div>
+        <div class="hig-glass lens" id="lens" data-hig-refract role="img" aria-label="Glass lens"><span>Liquid Glass</span></div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Layering rules</p>
+      <ul class="hig-list">
+        <li class="hig-row"><span class="hig-row__title">Never put glass on content (cards, rows)</span></li>
+        <li class="hig-row"><span class="hig-row__title">No glass on glass</span></li>
+        <li class="hig-row"><span class="hig-row__title">Tint only the primary action</span><span class="hig-row__value">1×</span></li>
+        <li class="hig-row"><span class="hig-row__title">Small glass flips light/dark with the content</span></li>
+      </ul>
+      <p class="hig-section-foot">Scroll the page: the bars switch to their dark style over the photo, and the tab bar minimizes while you scroll down.</p>
+    </section>
+  </div>
+
+  <!-- 2 · Controls -->
+  <div class="view" id="v-controls" role="tabpanel" aria-labelledby="t-controls" hidden>
+    <h1 class="hig-large-title" data-title>Controls</h1>
+
+    <section>
+      <p class="hig-section-head">Buttons by importance</p>
+      <div class="panel">
+        <div class="row-wrap">
+          <button class="hig-btn hig-btn--prominent">Add to Cart</button>
+          <button class="hig-btn">Save</button>
+          <button class="hig-btn hig-btn--plain">Edit</button>
+        </div>
+        <div class="row-wrap">
+          <button class="hig-btn hig-btn--destructive">Delete</button>
+          <button class="hig-btn hig-btn--prominent" id="busyBtn"><span>Send</span></button>
+        </div>
+        <div class="panel-label">Heights 28 · 32 · 44 · 52 · 64</div>
+        <div class="row-wrap">
+          <button class="hig-btn hig-btn--xs">Mini</button>
+          <button class="hig-btn hig-btn--sm">Small</button>
+          <button class="hig-btn">Regular</button>
+          <button class="hig-btn hig-btn--lg">Large</button>
+        </div>
+        <button class="hig-btn hig-btn--prominent hig-btn--xl hig-btn--block">Continue</button>
+      </div>
+      <p class="hig-section-foot">At most one or two prominent buttons per view. Show the preferred option by style, not size.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Choices and values</p>
+      <div class="panel">
+        <div class="hig-segmented" role="radiogroup" aria-label="Period">
+          <span class="hig-segmented__thumb" aria-hidden="true"></span>
+          <button role="radio" aria-checked="true">Day</button>
+          <button role="radio" aria-checked="false">Week</button>
+          <button role="radio" aria-checked="false">Month</button>
+          <button role="radio" aria-checked="false">Year</button>
+        </div>
+        <div>
+          <div class="panel-label" style="margin-bottom:6px">Brightness:</div>
+          <div class="slider-row">
+            <svg class="hig-icon" aria-hidden="true"><use href="#i-sun-s"/></svg>
+            <input class="hig-slider" id="bright" type="range" min="0" max="100" value="62" aria-label="Brightness" data-hig-unit="%">
+            <svg class="hig-icon" aria-hidden="true"><use href="#i-sun-l"/></svg>
+          </div>
+        </div>
+        <div class="row-wrap" style="justify-content:space-between">
+          <span>Copies: <b id="copies">2</b></span>
+          <div class="hig-stepper" role="group" aria-label="Copies">
+            <button aria-label="Fewer" id="stMinus"><svg class="hig-icon"><use href="#i-minus"/></svg></button>
+            <span class="hig-stepper__divider" aria-hidden="true"></span>
+            <button aria-label="More" id="stPlus"><svg class="hig-icon"><use href="#i-plus"/></svg></button>
+          </div>
+        </div>
+        <div>
+          <div class="panel-label" style="margin-bottom:8px" id="progLabel">Downloading 4 of 12 lessons</div>
+          <div class="hig-progress" role="progressbar" aria-labelledby="progLabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" id="prog"><i style="--value:33%"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Text fields</p>
+      <div class="panel">
+        <div class="hig-field" id="emailField">
+          <label for="email">Email</label>
+          <div class="hig-input"><input id="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" enterkeyhint="next" aria-describedby="emailHint"></div>
+          <div class="hig-field__hint" id="emailHint">Checked when you leave the field.</div>
+        </div>
+        <div class="hig-field">
+          <label for="q">Search courses</label>
+          <div class="hig-input hig-input--search">
+            <svg class="hig-icon" style="color:var(--hig-label-2);width:18px;height:18px" aria-hidden="true"><use href="#i-search"/></svg>
+            <input id="q" type="search" placeholder="Robotics, Python, 3D printing" enterkeyhint="search">
+            <button class="hig-input__clear" aria-label="Clear" hidden><svg class="hig-icon" style="width:12px;height:12px;stroke-width:3"><use href="#i-x"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Menus, sheets and alerts</p>
+      <div class="panel">
+        <div class="row-wrap">
+          <div class="hig-menu-anchor">
+            <button class="hig-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="sortMenu">Sort <svg class="hig-icon" style="width:16px;height:16px"><use href="#i-chev-ud"/></svg></button>
+            <div class="hig-glass hig-glass--large hig-menu" id="sortMenu" role="menu" aria-label="Sort by" hidden>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="true"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Date</span><svg class="hig-icon"><use href="#i-cal"/></svg></button>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="false"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Name</span><svg class="hig-icon"><use href="#i-text"/></svg></button>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="false"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Rating</span><svg class="hig-icon"><use href="#i-star"/></svg></button>
+              <div class="hig-menu__separator" role="separator"></div>
+              <button class="hig-menu__item hig-menu__item--destructive" role="menuitem" data-hig-open="alert"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Delete All…</span><svg class="hig-icon"><use href="#i-trash"/></svg></button>
+            </div>
+          </div>
+          <button class="hig-btn" data-hig-open="sheet">Open Sheet</button>
+          <button class="hig-btn" data-hig-open="actions">Actions</button>
+          <button class="hig-btn hig-btn--destructive" data-hig-open="alert">Delete</button>
+        </div>
+      </div>
+      <p class="hig-section-foot">The menu grows out of its button. A medium sheet floats inset from the edges and becomes more opaque at full height.</p>
+    </section>
+  </div>
+
+  <!-- 3 · Settings -->
+  <div class="view" id="v-settings" role="tabpanel" aria-labelledby="t-settings" hidden>
+    <h1 class="hig-large-title" data-title>Settings</h1>
+    <section>
+      <p class="hig-section-head">Accessibility mode</p>
+      <div class="hig-list">
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-accent-fill)"><svg class="hig-icon"><use href="#i-check"/></svg></span><span class="hig-row__title" id="lbl-aa">WCAG 2.2 AA</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-aa" aria-describedby="aa-note" id="aaSwitch"><span class="hig-switch__thumb"></span></button></div>
+      </div>
+      <p class="hig-section-foot" id="aa-note">On: text reaches 4.5:1, controls and focus 3:1, and glass is opaque enough for text over any backdrop. Off: Apple's default values. Add <code>#aa</code> to the URL to open in this mode.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">Live contrast check</p>
+      <div class="hig-list" id="ctList" aria-live="polite"></div>
+      <p class="hig-section-foot">Measured from the live tokens with the WCAG formula. Glass is measured over the worst possible backdrop.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">Appearance</p>
+      <div class="hig-list">
+        <div class="hig-row"><div class="hig-segmented" style="flex:1" role="radiogroup" aria-label="Appearance" id="schemeSeg">
+          <span class="hig-segmented__thumb" aria-hidden="true"></span>
+          <button role="radio" aria-checked="true" value="system">System</button>
+          <button role="radio" aria-checked="false" value="light">Light</button>
+          <button role="radio" aria-checked="false" value="dark">Dark</button>
+        </div></div>
+      </div>
+      <p class="hig-section-foot">Apple recommends following the system setting. Keep an in-app switch only with System as the default.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">System accessibility settings (simulated)</p>
+      <div class="hig-list">
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-indigo)"><svg class="hig-icon"><use href="#i-eye"/></svg></span><span class="hig-row__title" id="lbl-hc">Increase Contrast</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-hc" data-pref="contrast"><span class="hig-switch__thumb"></span></button></div>
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-teal)"><svg class="hig-icon"><use href="#i-drop"/></svg></span><span class="hig-row__title" id="lbl-rt">Reduce Transparency</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-rt" data-pref="transparency"><span class="hig-switch__thumb"></span></button></div>
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-green)"><svg class="hig-icon"><use href="#i-sliders"/></svg></span><span class="hig-row__title" id="lbl-rm">Reduce Motion</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-rm" data-pref="motion"><span class="hig-switch__thumb"></span></button></div>
+      </div>
+      <p class="hig-section-foot">These start from your operating system's settings.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">Lessons</p>
+      <div class="hig-list">
+        <button class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-red)"><svg class="hig-icon"><use href="#i-bell"/></svg></span><span class="hig-row__title">Notifications</span><span class="hig-row__value">On</span><svg class="hig-icon hig-row__chevron"><use href="#i-chev-r"/></svg></button>
+        <button class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-orange)"><svg class="hig-icon"><use href="#i-cal"/></svg></span><span class="hig-row__title">Schedule</span><span class="hig-row__value">Tue, Thu</span><svg class="hig-icon hig-row__chevron"><use href="#i-chev-r"/></svg></button>
+        <button class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-gray)"><svg class="hig-icon"><use href="#i-moon"/></svg></span><span class="hig-row__title">Quiet Hours</span><span class="hig-row__value">20:00–7:00</span><svg class="hig-icon hig-row__chevron"><use href="#i-chev-r"/></svg></button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="hig-scroll-edge hig-scroll-edge--bottom" aria-hidden="true"></div>
+<nav class="hig-tabdock" id="dock" aria-label="Sections">
+  <div class="hig-glass hig-tabbar" data-hig-adapt data-hig-refract role="tablist">
+    <span class="hig-tabbar__lens" aria-hidden="true"></span>
+    <button class="hig-tab" role="tab" id="t-glass" aria-selected="true" aria-controls="v-glass"><svg class="hig-icon"><use href="#i-drop"/></svg><span>Glass</span></button>
+    <button class="hig-tab" role="tab" id="t-controls" aria-selected="false" aria-controls="v-controls"><svg class="hig-icon"><use href="#i-sliders"/></svg><span>Controls</span></button>
+    <button class="hig-tab" role="tab" id="t-settings" aria-selected="false" aria-controls="v-settings"><svg class="hig-icon"><use href="#i-list"/></svg><span>Settings</span></button>
+  </div>
+  <button class="hig-glass hig-search-tab hig-press-scale" data-hig-adapt aria-label="Search" id="searchTab"><svg class="hig-icon"><use href="#i-search"/></svg></button>
+</nav>
+
+<dialog class="hig-glass hig-glass--large hig-sheet" id="sheet" aria-labelledby="sheetTitle">
+  <button class="hig-sheet__grabber" aria-label="Resize sheet"></button>
+  <div class="hig-sheet__bar">
+    <button class="hig-glass hig-icon-btn hig-press-scale" aria-label="Cancel" data-hig-close><svg class="hig-icon"><use href="#i-x"/></svg></button>
+    <h2 class="hig-sheet__title" id="sheetTitle">New Lesson</h2>
+    <button class="hig-glass hig-glass--tint hig-icon-btn hig-press-scale" aria-label="Done" data-hig-close><svg class="hig-icon"><use href="#i-check"/></svg></button>
+  </div>
+  <div class="hig-sheet__body">
+    <div class="hig-field"><label for="lessonName">Name</label><div class="hig-input"><input id="lessonName" value="Micro:bit traffic light"></div></div>
+    <div class="hig-list">
+      <div class="hig-row"><span class="hig-row__title">Day</span><span class="hig-row__value">Thursday</span></div>
+      <div class="hig-row"><span class="hig-row__title">Time</span><span class="hig-row__value">16:30</span></div>
+      <div class="hig-row"><span class="hig-row__title" id="lbl-rem">Remind Parents</span><button class="hig-switch" role="switch" aria-checked="true" aria-labelledby="lbl-rem"><span class="hig-switch__thumb"></span></button></div>
+    </div>
+    <p class="hig-text-footnote" style="color:var(--hig-label-2);margin:0 4px">Tap the grabber to switch between medium and full height.</p>
+  </div>
+</dialog>
+
+<dialog class="hig-glass hig-glass--large hig-alert" id="alert" role="alertdialog" aria-labelledby="alertTitle" aria-describedby="alertMsg">
+  <h2 class="hig-alert__title" id="alertTitle">Delete 3 Lessons?</h2>
+  <p class="hig-alert__message" id="alertMsg">The lessons will be removed from all devices. You can't undo this action.</p>
+  <div class="hig-alert__actions">
+    <button class="hig-btn hig-btn--neutral" data-hig-close>Cancel</button>
+    <button class="hig-btn hig-btn--destructive hig-btn--prominent" data-hig-close>Delete</button>
+  </div>
+</dialog>
+
+<dialog class="hig-action-sheet" id="actions" aria-label="Message draft">
+  <div class="hig-glass hig-glass--large hig-action-sheet__group">
+    <div class="hig-action-sheet__title">Discard this draft to parents?</div>
+    <button class="hig-action-sheet__destructive" data-hig-close>Delete Draft</button>
+    <button data-hig-close>Save Draft</button>
+  </div>
+  <div class="hig-glass hig-glass--large hig-action-sheet__group"><button class="hig-action-sheet__cancel" data-hig-close>Cancel</button></div>
+</dialog>
+
+<script type="module">
+const { parseColor, toHex, toRgba, over, flatten, luminance, contrast } = (() => {
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+// Color utilities shared by the build, the contrast checker and the runtime (dist/a11y.js).
+// Dependency-free. Colors are [r, g, b, a] with r/g/b in 0..255 and a in 0..1.
+
+/** Parse #rgb, #rgba, #rrggbb, #rrggbbaa, rgb()/rgba() in comma or space syntax. */
+function parseColor(input) {
+  const s = String(input).trim().toLowerCase();
+  if (s.startsWith('#')) {
+    let h = s.slice(1);
+    if (h.length === 3 || h.length === 4) h = [...h].map(c => c + c).join('');
+    if (h.length !== 6 && h.length !== 8) throw new Error(`Bad hex color: ${input}`);
+    const n = [0, 2, 4, 6].map(i => (i < h.length ? parseInt(h.slice(i, i + 2), 16) : 255));
+    return [n[0], n[1], n[2], n[3] / 255];
+  }
+  const m = s.match(/^rgba?\((.*)\)$/);
+  if (m) {
+    const parts = m[1].split(/[\s,/]+/).filter(Boolean);
+    const [r, g, b] = parts.slice(0, 3).map(Number);
+    let a = parts[3] === undefined ? 1 : parts[3].endsWith('%') ? parseFloat(parts[3]) / 100 : Number(parts[3]);
+    return [r, g, b, a];
+  }
+  if (s === 'transparent') return [0, 0, 0, 0];
+  throw new Error(`Unsupported color: ${input}`);
+}
+
+const h2 = n => Math.round(Math.max(0, Math.min(255, n))).toString(16).padStart(2, '0');
+
+/** #rrggbb when opaque, #rrggbbaa otherwise (parseable by CSS, antd/tinycolor, MUI, Sass). */
+function toHex(c) {
+  const [r, g, b, a = 1] = Array.isArray(c) ? c : parseColor(c);
+  return `#${h2(r)}${h2(g)}${h2(b)}${a >= 0.999 ? '' : h2(a * 255)}`;
+}
+
+/** rgba(r, g, b, a) — legacy syntax for libraries that dislike hex8. */
+function toRgba(c) {
+  const [r, g, b, a = 1] = Array.isArray(c) ? c : parseColor(c);
+  return `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, ${+a.toFixed(3)})`;
+}
+
+/** Composite fg over bg (source-over). */
+function over(fg, bg) {
+  const f = Array.isArray(fg) ? fg : parseColor(fg);
+  const b = Array.isArray(bg) ? bg : parseColor(bg);
+  const a = f[3] + b[3] * (1 - f[3]);
+  if (a === 0) return [0, 0, 0, 0];
+  return [0, 1, 2].map(i => (f[i] * f[3] + b[i] * b[3] * (1 - f[3])) / a).concat(a);
+}
+
+/** Flatten a stack of layers, topmost first: flatten(text, glass, backdrop). */
+function flatten(...layers) {
+  return layers.reduceRight((bg, fg) => over(fg, bg));
+}
+
+/** WCAG 2.x relative luminance. */
+function luminance(c) {
+  const [r, g, b] = (Array.isArray(c) ? c : parseColor(c)).slice(0, 3).map(v => {
+    v /= 255;
+    return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** WCAG 2.x contrast ratio of two opaque colors (translucent ones should be flattened first). */
+function contrast(a, b) {
+  const [x, y] = [luminance(a), luminance(b)].sort((m, n) => n - m);
+  return (x + 0.05) / (y + 0.05);
+}
+
+return { parseColor, toHex, toRgba, over, flatten, luminance, contrast };
+})();
+
+const { BACKDROPS, PAIRS, resolveLayers } = (() => {
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+// The color pairs that must meet WCAG 2.2 AA in "aa" mode (and in increased-contrast sets).
+// Each pair: [label, foregroundLayers, backgroundLayers, minimumRatio].
+// Layers are token names or literal colors, topmost first; they are flattened before measuring.
+// Translucent glass is measured over BOTH a black and a white backdrop and the worse result counts.
+
+const BACKDROPS = ['#000000', '#ffffff'];
+
+const PAIRS = [
+  // 1.4.3 Contrast (Minimum) — text 4.5:1
+  ['Primary text on page', ['label'], ['bg'], 4.5],
+  ['Secondary text on page', ['label-2'], ['bg'], 4.5],
+  ['Secondary text on secondary background', ['label-2', 'bg-2'], ['bg-2'], 4.5],
+  ['Secondary text on grouped card', ['label-2', 'grouped-bg-2'], ['grouped-bg-2'], 4.5],
+  ['Secondary text on grouped page', ['label-2', 'grouped-bg'], ['grouped-bg'], 4.5],
+  ['Placeholder in text field', ['placeholder', 'fill-3', 'bg'], ['fill-3', 'bg'], 4.5],
+  ['Link / accent text on page', ['accent-text'], ['bg'], 4.5],
+  ['Accent text on secondary background', ['accent-text'], ['bg-2'], 4.5],
+  ['Accent text on gray button', ['accent-text', 'fill-2', 'bg'], ['fill-2', 'bg'], 4.5],
+  ['Label on primary (filled) button', ['on-accent'], ['accent-fill'], 4.5],
+  ['Label on destructive (filled) button', ['on-destructive'], ['destructive-fill'], 4.5],
+  ['Destructive text on page', ['destructive-text'], ['bg'], 4.5],
+  ['Destructive text on gray button', ['destructive-text', 'fill-2', 'bg'], ['fill-2', 'bg'], 4.5],
+  ['Success text on page', ['success-text'], ['bg'], 4.5],
+  ['Success text on secondary background', ['success-text'], ['bg-2'], 4.5],
+  ['Warning text on page', ['warning-text'], ['bg'], 4.5],
+  ['Warning text on secondary background', ['warning-text'], ['bg-2'], 4.5],
+  ['Label on regular glass (worst backdrop)', ['glass-label', 'glass-tint', '@backdrop'], ['glass-tint', '@backdrop'], 4.5],
+  ['Label on large glass (worst backdrop)', ['glass-label', 'glass-tint-large', '@backdrop'], ['glass-tint-large', '@backdrop'], 4.5],
+  ['White label on clear glass over media (worst backdrop)', ['#ffffff'], ['glass-tint-clear', '@backdrop'], 4.5],
+
+  // 1.4.11 Non-text Contrast — UI component boundaries, states and focus 3:1
+  ['Switch "on" track vs card', ['switch-on'], ['bg-2'], 3],
+  ['Switch "on" track vs page', ['switch-on'], ['bg'], 3],
+  ['Control border (field, switch off, segmented) vs page', ['control-border', 'bg'], ['bg'], 3],
+  ['Control border vs grouped card', ['control-border', 'grouped-bg-2'], ['grouped-bg-2'], 3],
+  ['Slider fill / selected indicator vs page', ['accent'], ['bg'], 3],
+  ['Focus ring vs page', ['focus-ring', 'bg'], ['bg'], 3],
+  ['Focus ring vs secondary background', ['focus-ring', 'bg-2'], ['bg-2'], 3],
+];
+
+/** Resolve a layer list against a token set; '@backdrop' is replaced by the given backdrop. */
+function resolveLayers(layers, set, backdrop) {
+  return layers.map(l => (l === '@backdrop' ? backdrop : l.startsWith('#') ? l : set[l]));
+}
+
+return { BACKDROPS, PAIRS, resolveLayers };
+})();
+
+const { supportsRefraction, lensMap, attachRefraction, adaptGlass, observeScrolled, minimizeOnScroll, initGlass } = (() => {
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+// Liquid Glass behaviours that CSS alone can't do:
+//  • edge refraction (SVG displacement inside backdrop-filter — Chromium only, enabled by engine detection)
+//  • illumination from the touch point, spreading to sibling glass in the same group
+//  • light/dark adaptivity of small glass over [data-hig-tone="dark"] content
+//  • scrolled state (for the scroll edge effect + large-title collapse) and tab bar minimize-on-scroll
+//
+//   import { initGlass } from 'hig-web-kit/glass';
+//   const stop = initGlass();          // call once after the DOM is ready; returns a cleanup function
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+/** True in Chromium-based browsers — the only engine that renders backdrop-filter: url(#svg). */
+function supportsRefraction() {
+  if (typeof navigator === 'undefined') return false;
+  const brands = navigator.userAgentData?.brands || [];
+  return brands.some(b => /Chromium/.test(b.brand));
+}
+
+/** Edge-lens displacement map: pixels near the rim shift inward along the edge normal; the centre stays flat. */
+function lensMap(w, h, r, bezel) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const ctx = c.getContext('2d');
+  const img = ctx.createImageData(w, h), d = img.data;
+  const sdf = (x, y) => {
+    const qx = Math.abs(x - w / 2) - (w / 2 - r), qy = Math.abs(y - h / 2) - (h / 2 - r);
+    return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - r;
+  };
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const dist = -sdf(x + 0.5, y + 0.5);
+    let dx = 0, dy = 0;
+    if (dist > 0 && dist < bezel) {
+      const nx = sdf(x + 1, y) - sdf(x - 1, y), ny = sdf(x, y + 1) - sdf(x, y - 1), len = Math.hypot(nx, ny) || 1;
+      const mag = Math.pow(1 - dist / bezel, 2.2);
+      dx = (-nx / len) * mag; dy = (-ny / len) * mag;
+    }
+    const i = (y * w + x) * 4;
+    d[i] = 128 + dx * 127; d[i + 1] = 128 + dy * 127; d[i + 2] = 128; d[i + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+  return c.toDataURL();
+}
+
+let filterHost = null, filterSeq = 0;
+function host() {
+  if (filterHost?.isConnected) return filterHost;
+  filterHost = document.createElementNS(SVG_NS, 'svg');
+  filterHost.setAttribute('width', '0'); filterHost.setAttribute('height', '0');
+  filterHost.setAttribute('aria-hidden', 'true');
+  filterHost.style.cssText = 'position:absolute;width:0;height:0;pointer-events:none';
+  document.body.appendChild(filterHost);
+  return filterHost;
+}
+
+/** Give one element real edge refraction. Tested defaults: bezel = clamp(8, .32·h, 22) px, scale = 1.1·bezel. */
+function attachRefraction(el, { strength = 1.1 } = {}) {
+  const id = `hig-lens-${++filterSeq}`;
+  const f = document.createElementNS(SVG_NS, 'filter');
+  f.setAttribute('id', id); f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
+  const im = document.createElementNS(SVG_NS, 'feImage');
+  im.setAttribute('result', 'map'); im.setAttribute('preserveAspectRatio', 'none');
+  const dm = document.createElementNS(SVG_NS, 'feDisplacementMap');
+  dm.setAttribute('in', 'SourceGraphic'); dm.setAttribute('in2', 'map');
+  dm.setAttribute('xChannelSelector', 'R'); dm.setAttribute('yChannelSelector', 'G');
+  f.append(im, dm); host().append(f);
+  const build = () => {
+    const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+    if (!w || !h) return;
+    const r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, h / 2, w / 2);
+    const bezel = Math.max(8, Math.min(h * 0.32, 22));
+    for (const [k, v] of [['x', 0], ['y', 0], ['width', w], ['height', h]]) { f.setAttribute(k, v); im.setAttribute(k, v); }
+    im.setAttribute('href', lensMap(w, h, r, bezel));
+    dm.setAttribute('scale', String(Math.round(bezel * strength)));
+  };
+  build();
+  const ro = new ResizeObserver(build); ro.observe(el);
+  el.style.setProperty('--hig-refract', `url(#${id})`);
+  return () => { ro.disconnect(); f.remove(); el.style.removeProperty('--hig-refract'); };
+}
+
+/** Press light: glow from the pointer position; neighbours in the same group light up softly. */
+function onPointerDown(e) {
+  const g = e.target.closest?.('.hig-glass');
+  if (!g || g.matches('dialog')) return;
+  const r = g.getBoundingClientRect();
+  g.style.setProperty('--hig-mx', `${e.clientX - r.left}px`);
+  g.style.setProperty('--hig-my', `${e.clientY - r.top}px`);
+  g.classList.add('is-pressed');
+  const sibs = g.parentElement ? [...g.parentElement.children].filter(n => n !== g && n.classList.contains('hig-glass')) : [];
+  sibs.forEach(n => n.classList.add('is-lit'));
+  const up = () => {
+    g.classList.remove('is-pressed'); sibs.forEach(n => n.classList.remove('is-lit'));
+    removeEventListener('pointerup', up); removeEventListener('pointercancel', up);
+  };
+  addEventListener('pointerup', up); addEventListener('pointercancel', up);
+}
+
+/** Flip [data-hig-adapt] glass to its dark style when it sits over [data-hig-tone="dark"] content. */
+function adaptGlass(root = document) {
+  root.querySelectorAll('[data-hig-adapt]').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (!r.width) return;
+    const dark = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2)
+      .some(n => n !== el && !el.contains(n) && n.closest?.('[data-hig-tone="dark"]'));
+    el.classList.toggle('hig-glass--on-dark', dark);
+  });
+  document.querySelectorAll('.hig-scroll-edge').forEach(edge => {
+    const r = edge.getBoundingClientRect();
+    const y = edge.classList.contains('hig-scroll-edge--bottom') ? r.bottom - 10 : r.top + 10;
+    const dark = document.elementsFromPoint(innerWidth / 2, Math.max(0, Math.min(innerHeight - 1, y)))
+      .some(n => n.closest?.('[data-hig-tone="dark"]'));
+    edge.classList.toggle('is-on-dark', dark);
+  });
+}
+
+/**
+ * Set data-hig-scrolled on <html> once `sentinel` (usually the large title) scrolls under the floating bar.
+ * Drives .hig-scroll-edge and .hig-inline-title.
+ */
+function observeScrolled(sentinel, { barHeight = 56 } = {}) {
+  if (!sentinel) return () => {};
+  const io = new IntersectionObserver(([en]) => {
+    document.documentElement.toggleAttribute('data-hig-scrolled', !en.isIntersecting);
+  }, { rootMargin: `-${barHeight}px 0px 0px 0px` });
+  io.observe(sentinel);
+  return () => io.disconnect();
+}
+
+/** Tab bar minimize on scroll: adds .is-minimized to `dock` when scrolling down, removes it when scrolling up. */
+function minimizeOnScroll(dock, { threshold = 8, top = 40 } = {}) {
+  if (!dock) return () => {};
+  let lastY = scrollY, ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = scrollY, dy = y - lastY;
+      if (y < top) dock.classList.remove('is-minimized');
+      else if (dy > threshold) dock.classList.add('is-minimized');
+      else if (dy < -threshold) dock.classList.remove('is-minimized');
+      lastY = y; ticking = false;
+    });
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  return () => removeEventListener('scroll', onScroll);
+}
+
+/**
+ * Wire up everything. Options:
+ *   refraction: 'auto' (Chromium only) | true | false — applies to [data-hig-refract] elements
+ *   press: true — touch-point illumination on .hig-glass
+ *   adapt: true — light/dark flip of [data-hig-adapt] on scroll and resize
+ */
+function initGlass({ root = document, refraction = 'auto', press = true, adapt = true } = {}) {
+  const cleanups = [];
+  const refract = refraction === 'auto' ? supportsRefraction() : !!refraction;
+  document.documentElement.classList.toggle('hig-refract', refract);
+  if (refract) root.querySelectorAll('[data-hig-refract]').forEach(el => cleanups.push(attachRefraction(el)));
+  if (press) { document.addEventListener('pointerdown', onPointerDown); cleanups.push(() => document.removeEventListener('pointerdown', onPointerDown)); }
+  if (adapt) {
+    let pending = false;
+    const run = () => { if (pending) return; pending = true; requestAnimationFrame(() => { pending = false; adaptGlass(root); }); };
+    addEventListener('scroll', run, { passive: true }); addEventListener('resize', run);
+    run();
+    cleanups.push(() => { removeEventListener('scroll', run); removeEventListener('resize', run); });
+  }
+  return () => cleanups.forEach(f => f());
+}
+
+return { supportsRefraction, lensMap, attachRefraction, adaptGlass, observeScrolled, minimizeOnScroll, initGlass };
+})();
+
+const { setMode, setScheme, setContrast, setTransparency, setMotion, getPreferences, currentSet, savePreferences, restorePreferences, watchPreferences, readColor, checkContrast } = (() => {
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+// Runtime switches for hig-web-kit: mode (apple | aa), color scheme, contrast, transparency and motion.
+// All state lives in data-hig-* attributes on <html>, so any CSS (or framework theme) can react to it.
+//
+//   import { restorePreferences, setMode, watchPreferences } from 'hig-web-kit/a11y';
+//   restorePreferences();               // reads #aa in the URL and the saved choice
+//   setMode('aa');                      // WCAG 2.2 AA palette + visible control borders
+//   watchPreferences(p => render(p));   // e.g. rebuild an Ant Design / MUI theme
+
+
+const STORE_KEY = 'hig-web-kit:preferences';
+const html = () => document.documentElement;
+const mq = q => (typeof matchMedia === 'function' ? matchMedia(q) : { matches: false, addEventListener() {}, removeEventListener() {} });
+const media = {
+  dark: () => mq('(prefers-color-scheme: dark)'),
+  more: () => mq('(prefers-contrast: more)'),
+  transparency: () => mq('(prefers-reduced-transparency: reduce)'),
+  motion: () => mq('(prefers-reduced-motion: reduce)'),
+};
+
+function setAttr(name, value, persist) {
+  if (value === 'system' || value == null) html().removeAttribute(name);
+  else html().setAttribute(name, value);
+  if (persist) savePreferences();
+}
+
+/** 'apple' (default, Apple's values) or 'aa' (WCAG 2.2 AA). */
+function setMode(mode, { persist = true } = {}) { setAttr('data-hig-mode', mode === 'aa' ? 'aa' : null, persist); }
+/** 'system' | 'light' | 'dark' */
+function setScheme(scheme, { persist = true } = {}) { setAttr('data-hig-scheme', scheme, persist); }
+/** 'system' | 'more' | 'standard' */
+function setContrast(value, { persist = true } = {}) { setAttr('data-hig-contrast', value, persist); }
+/** 'system' | 'reduce' | 'standard' — Reduce Transparency for glass. */
+function setTransparency(value, { persist = true } = {}) { setAttr('data-hig-transparency', value, persist); }
+/** 'system' | 'reduce' | 'standard' — Reduce Motion. */
+function setMotion(value, { persist = true } = {}) { setAttr('data-hig-motion', value, persist); }
+
+/** Effective preferences after combining attributes and OS media queries. */
+function getPreferences() {
+  const a = n => html().getAttribute(n);
+  return {
+    mode: a('data-hig-mode') === 'aa' ? 'aa' : 'apple',
+    scheme: a('data-hig-scheme') || (media.dark().matches ? 'dark' : 'light'),
+    contrast: a('data-hig-contrast') || (media.more().matches ? 'more' : 'standard'),
+    transparency: a('data-hig-transparency') || (media.transparency().matches ? 'reduce' : 'standard'),
+    motion: a('data-hig-motion') || (media.motion().matches ? 'reduce' : 'standard'),
+  };
+}
+
+/** Name of the active token set, e.g. "aa.dark-hc" — matches the keys of tokens.json / tokens.color. */
+function currentSet(p = getPreferences()) {
+  return `${p.mode}.${p.scheme}${p.contrast === 'more' ? '-hc' : ''}`;
+}
+
+function savePreferences() {
+  const a = n => html().getAttribute(n);
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({
+      mode: a('data-hig-mode'), scheme: a('data-hig-scheme'), contrast: a('data-hig-contrast'),
+      transparency: a('data-hig-transparency'), motion: a('data-hig-motion'),
+    }));
+  } catch { /* storage unavailable: preferences stay for this page view */ }
+}
+
+/**
+ * Apply saved choices, then URL hash flags: #aa, #dark, #light, #hc — combinable as #aa-dark-hc.
+ * Call once, as early as possible (ideally inline in <head> to avoid a flash).
+ */
+function restorePreferences({ hash = true } = {}) {
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch { saved = {}; }
+  const map = { mode: 'data-hig-mode', scheme: 'data-hig-scheme', contrast: 'data-hig-contrast', transparency: 'data-hig-transparency', motion: 'data-hig-motion' };
+  for (const [k, attr] of Object.entries(map)) if (saved[k]) html().setAttribute(attr, saved[k]);
+  if (hash && typeof location !== 'undefined') {
+    const flags = location.hash.slice(1).toLowerCase().split(/[,+&._~-]/);
+    if (flags.includes('aa')) html().setAttribute('data-hig-mode', 'aa');
+    if (flags.includes('dark')) html().setAttribute('data-hig-scheme', 'dark');
+    if (flags.includes('light')) html().setAttribute('data-hig-scheme', 'light');
+    if (flags.includes('hc')) html().setAttribute('data-hig-contrast', 'more');
+  }
+  return getPreferences();
+}
+
+/** Calls cb(preferences) now and whenever an attribute or OS preference changes. Returns an unsubscribe fn. */
+function watchPreferences(cb, { immediate = true } = {}) {
+  let last = '';
+  const fire = () => { const p = getPreferences(); const k = JSON.stringify(p); if (k !== last) { last = k; cb(p); } };
+  const queries = Object.values(media).map(f => f());
+  queries.forEach(q => q.addEventListener?.('change', fire));
+  const mo = typeof MutationObserver === 'function' ? new MutationObserver(fire) : null;
+  mo?.observe(html(), { attributes: true, attributeFilter: ['data-hig-mode', 'data-hig-scheme', 'data-hig-contrast', 'data-hig-transparency', 'data-hig-motion'] });
+  if (immediate) fire();
+  return () => { queries.forEach(q => q.removeEventListener?.('change', fire)); mo?.disconnect(); };
+}
+
+/** Read a --hig-* color as rendered right now (handles color(srgb …) and rgb() serializations). */
+function readColor(name, el = html()) {
+  const probe = document.createElement('i');
+  probe.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';
+  probe.style.color = name.startsWith('#') ? name : `var(--hig-${name})`;
+  el.appendChild(probe);
+  const c = getComputedStyle(probe).color;
+  probe.remove();
+  const n = (c.match(/[\d.]+/g) || []).map(Number);
+  if (c.startsWith('color(')) return [n[0] * 255, n[1] * 255, n[2] * 255, n[3] ?? 1];
+  return [n[0], n[1], n[2], n[3] ?? 1];
+}
+
+/**
+ * Measure the live --hig-* tokens against WCAG 2.2 AA (text 4.5:1, UI & focus 3:1).
+ * @returns {{label:string, ratio:number, min:number, pass:boolean}[]}
+ */
+function checkContrast(el = html()) {
+  const cache = {};
+  const set = new Proxy({}, { get: (_, k) => (cache[k] ??= readColor(String(k), el)) });
+  return PAIRS.map(([label, fg, bg, min]) => {
+    const needsBackdrop = [...fg, ...bg].includes('@backdrop');
+    const ratio = Math.min(...(needsBackdrop ? BACKDROPS : ['#ffffff']).map(bd => {
+      const res = layers => resolveLayers(layers, set, bd).map(v => (typeof v === 'string' ? readColor(v, el) : v));
+      const b = flatten(...res(bg), [255, 255, 255, 1]);
+      const f = flatten(...res(fg), b);
+      return contrast(f, b);
+    }));
+    return { label, ratio: +ratio.toFixed(2), min, pass: ratio >= min };
+  });
+}
+
+
+return { setMode, setScheme, setContrast, setTransparency, setMotion, getPreferences, currentSet, savePreferences, restorePreferences, watchPreferences, readColor, checkContrast };
+})();
+
+const { layoutSegmented, layoutTabbar, openDialog, closeDialog, initComponents } = (() => {
+/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+// Behaviour for the framework-free components in components.css. Markup contracts:
+//   <button class="hig-switch" role="switch" aria-checked="false"><span class="hig-switch__thumb"></span></button>
+//   <div class="hig-segmented" role="radiogroup"><span class="hig-segmented__thumb"></span><button role="radio" aria-checked="true">…</button>…</div>
+//   <div class="hig-tabbar" role="tablist"><span class="hig-tabbar__lens"></span><button class="hig-tab" role="tab" aria-selected aria-controls="panel-id">…</button>…</div>
+//   <button aria-haspopup="menu" aria-controls="menu-id" aria-expanded="false"> + <div class="hig-menu" role="menu" id="menu-id" hidden>…</div>
+//   <button data-hig-open="dialog-id"> + <dialog class="hig-sheet|hig-alert|hig-action-sheet" id="dialog-id">… <button data-hig-close>
+//   <input type="range" class="hig-slider">  ·  <div class="hig-input"><input><button class="hig-input__clear" hidden></div>
+//
+//   import { initComponents } from 'hig-web-kit/components';
+//   initComponents();   // idempotent per element; returns a cleanup function
+
+const reduceMotion = () =>
+  document.documentElement.getAttribute('data-hig-motion') === 'reduce' ||
+  (document.documentElement.getAttribute('data-hig-motion') !== 'standard' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+function initSwitch(sw) {
+  const down = () => sw.classList.add('is-pressed');
+  const up = () => sw.classList.remove('is-pressed');
+  const click = () => {
+    const on = sw.getAttribute('aria-checked') !== 'true';
+    sw.setAttribute('aria-checked', String(on));
+    sw.dispatchEvent(new CustomEvent('hig:change', { bubbles: true, detail: { checked: on } }));
+  };
+  sw.addEventListener('pointerdown', down);
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(e => sw.addEventListener(e, up));
+  sw.addEventListener('click', click);
+  return () => { sw.removeEventListener('pointerdown', down); sw.removeEventListener('click', click); };
+}
+
+function layoutSegmented(seg) {
+  const thumb = seg.querySelector('.hig-segmented__thumb');
+  const sel = [...seg.querySelectorAll(':scope > button')].find(b => b.getAttribute('aria-checked') === 'true' || b.getAttribute('aria-selected') === 'true');
+  if (!thumb || !sel || !sel.offsetWidth) return;
+  thumb.style.width = `${sel.offsetWidth}px`;
+  thumb.style.translate = `${sel.offsetLeft - 3}px 0`;
+}
+
+function initSegmented(seg) {
+  const btns = [...seg.querySelectorAll(':scope > button')];
+  const attr = btns[0]?.getAttribute('role') === 'tab' ? 'aria-selected' : 'aria-checked';
+  const select = b => {
+    btns.forEach(x => { x.setAttribute(attr, String(x === b)); x.tabIndex = x === b ? 0 : -1; });
+    layoutSegmented(seg);
+    seg.dispatchEvent(new CustomEvent('hig:change', { bubbles: true, detail: { value: b.value || b.textContent.trim(), index: btns.indexOf(b) } }));
+  };
+  btns.forEach((b, i) => {
+    b.tabIndex = b.getAttribute(attr) === 'true' ? 0 : -1;
+    b.addEventListener('click', () => select(b));
+    b.addEventListener('keydown', e => {
+      const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      const rtl = getComputedStyle(seg).direction === 'rtl' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight') ? -1 : 1;
+      const n = btns[(i + d * rtl + btns.length) % btns.length];
+      n.focus(); select(n);
+    });
+  });
+  const ro = new ResizeObserver(() => layoutSegmented(seg));
+  ro.observe(seg);
+  layoutSegmented(seg);
+  return () => ro.disconnect();
+}
+
+function layoutTabbar(bar) {
+  const lens = bar.querySelector('.hig-tabbar__lens');
+  const sel = bar.querySelector('.hig-tab[aria-selected="true"]');
+  if (!lens || !sel) return;
+  lens.style.translate = `${sel.offsetLeft - 4}px 0`;
+  lens.style.width = `${sel.offsetWidth}px`;
+}
+
+function initTabbar(bar) {
+  const tabs = [...bar.querySelectorAll('.hig-tab')];
+  const dock = bar.closest('.hig-tabdock');
+  const select = t => {
+    if (dock?.classList.contains('is-minimized') && t.getAttribute('aria-selected') === 'true') { dock.classList.remove('is-minimized'); return; }
+    tabs.forEach(x => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on ? 0 : -1;
+      const panel = x.getAttribute('aria-controls') && document.getElementById(x.getAttribute('aria-controls'));
+      if (panel) panel.hidden = !on;
+    });
+    dock?.classList.remove('is-minimized');
+    layoutTabbar(bar);
+    bar.dispatchEvent(new CustomEvent('hig:change', { bubbles: true, detail: { tab: t, index: tabs.indexOf(t) } }));
+  };
+  tabs.forEach((t, i) => {
+    t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {
+      const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      const n = tabs[(i + d + tabs.length) % tabs.length];
+      n.focus(); select(n);
+    });
+  });
+  const ro = new ResizeObserver(() => layoutTabbar(bar));
+  ro.observe(bar);
+  layoutTabbar(bar);
+  return () => ro.disconnect();
+}
+
+function initMenu(trigger) {
+  const menu = document.getElementById(trigger.getAttribute('aria-controls'));
+  if (!menu) return () => {};
+  const items = () => [...menu.querySelectorAll('[role^="menuitem"]:not(:disabled)')];
+  const close = (focus = true) => {
+    menu.hidden = true; trigger.setAttribute('aria-expanded', 'false');
+    if (focus) trigger.focus();
+  };
+  const open = () => {
+    menu.hidden = false;
+    menu.classList.remove('hig-glass-enter'); void menu.offsetWidth; menu.classList.add('hig-glass-enter');
+    trigger.setAttribute('aria-expanded', 'true');
+    items()[0]?.focus();
+  };
+  const onTrigger = e => { e.stopPropagation(); menu.hidden ? open() : close(); };
+  const onDoc = e => { if (!menu.hidden && !menu.contains(e.target) && e.target !== trigger) close(false); };
+  const onKey = e => {
+    const list = items(), i = list.indexOf(document.activeElement);
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); list[(i + 1) % list.length]?.focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); list[(i - 1 + list.length) % list.length]?.focus(); }
+    else if (e.key === 'Home') { e.preventDefault(); list[0]?.focus(); }
+    else if (e.key === 'End') { e.preventDefault(); list[list.length - 1]?.focus(); }
+    else if (e.key === 'Tab') close(false);
+  };
+  const onPick = e => {
+    const item = e.target.closest('[role^="menuitem"]');
+    if (!item || item.disabled) return;
+    if (item.getAttribute('role') === 'menuitemradio') {
+      menu.querySelectorAll('[role="menuitemradio"]').forEach(x => x.setAttribute('aria-checked', String(x === item)));
+    } else if (item.getAttribute('role') === 'menuitemcheckbox') {
+      item.setAttribute('aria-checked', String(item.getAttribute('aria-checked') !== 'true'));
+    }
+    menu.dispatchEvent(new CustomEvent('hig:select', { bubbles: true, detail: { item } }));
+    close();
+  };
+  trigger.addEventListener('click', onTrigger);
+  document.addEventListener('click', onDoc);
+  menu.addEventListener('keydown', onKey);
+  menu.addEventListener('click', onPick);
+  return () => { trigger.removeEventListener('click', onTrigger); document.removeEventListener('click', onDoc); menu.removeEventListener('keydown', onKey); menu.removeEventListener('click', onPick); };
+}
+
+/** Open a hig dialog (sheet / alert / action sheet) as a modal. */
+function openDialog(d) {
+  if (typeof d === 'string') d = document.getElementById(d);
+  if (!d || d.open) return;
+  d.classList.remove('is-closing', 'is-large');
+  d.showModal();
+}
+
+/** Close with the exit animation (sheets slide down the way they came in). */
+function closeDialog(d) {
+  if (typeof d === 'string') d = document.getElementById(d);
+  if (!d?.open) return;
+  if (d.classList.contains('hig-alert') || reduceMotion()) { d.close(); return; }
+  d.classList.add('is-closing');
+  d.addEventListener('animationend', () => { d.classList.remove('is-closing'); d.close(); }, { once: true });
+}
+
+function initDialog(d) {
+  const onClick = e => {
+    if (e.target.closest('[data-hig-close]')) { closeDialog(d); return; }
+    if (e.target.closest('.hig-sheet__grabber')) { d.classList.toggle('is-large'); return; }
+    // backdrop tap closes sheets/action sheets (not alerts) — only when outside the dialog box
+    if (e.target === d && !d.classList.contains('hig-alert')) {
+      const r = d.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) closeDialog(d);
+    }
+  };
+  const onCancel = e => { e.preventDefault(); closeDialog(d); };
+  d.addEventListener('click', onClick);
+  d.addEventListener('cancel', onCancel);
+  return () => { d.removeEventListener('click', onClick); d.removeEventListener('cancel', onCancel); };
+}
+
+function initSlider(s) {
+  const fill = () => {
+    const p = ((s.value - (s.min || 0)) / ((s.max || 100) - (s.min || 0))) * 100;
+    s.style.setProperty('--p', `${p}%`);
+    if (s.dataset.higUnit) s.setAttribute('aria-valuetext', `${s.value} ${s.dataset.higUnit}`);
+  };
+  s.addEventListener('input', fill);
+  fill();
+  return () => s.removeEventListener('input', fill);
+}
+
+function initClearable(wrap) {
+  const input = wrap.querySelector('input'), btn = wrap.querySelector('.hig-input__clear');
+  if (!input || !btn) return () => {};
+  const sync = () => { btn.hidden = !input.value; };
+  const clear = () => { input.value = ''; sync(); input.dispatchEvent(new Event('input', { bubbles: true })); input.focus(); };
+  input.addEventListener('input', sync); btn.addEventListener('click', clear);
+  sync();
+  return () => { input.removeEventListener('input', sync); btn.removeEventListener('click', clear); };
+}
+
+const done = new WeakSet();
+/** Wire up every component under `root`. Safe to call again after adding markup. */
+function initComponents(root = document) {
+  const cleanups = [];
+  const each = (sel, fn) => root.querySelectorAll(sel).forEach(el => { if (done.has(el)) return; done.add(el); cleanups.push(fn(el)); });
+  each('.hig-switch', initSwitch);
+  each('.hig-segmented', initSegmented);
+  each('.hig-tabbar', initTabbar);
+  each('[aria-haspopup="menu"][aria-controls]', initMenu);
+  each('dialog.hig-sheet, dialog.hig-alert, dialog.hig-action-sheet', initDialog);
+  each('input.hig-slider', initSlider);
+  each('.hig-input', initClearable);
+  const onOpen = e => {
+    const t = e.target.closest?.('[data-hig-open]');
+    if (t) openDialog(t.getAttribute('data-hig-open'));
+  };
+  if (!done.has(root)) { done.add(root); root.addEventListener('click', onOpen); cleanups.push(() => root.removeEventListener('click', onOpen)); }
+  return () => cleanups.forEach(f => f && f());
+}
+
+return { layoutSegmented, layoutTabbar, openDialog, closeDialog, initComponents };
+})();
+
+
+restorePreferences();
+initComponents();
+initGlass();
+minimizeOnScroll(document.getElementById('dock'));
+
+/* hero "photo" painted on a canvas (no external images) */
+(() => {
+  const c = document.createElement('canvas'); c.width = 1200; c.height = 900; const g = c.getContext('2d');
+  const sky = g.createLinearGradient(0, 0, 0, 900);
+  [[0, '#2a1b5c'], [.45, '#c2477a'], [.62, '#f59a4a'], [.75, '#3b2246'], [1, '#120c1e']].forEach(([o, col]) => sky.addColorStop(o, col));
+  g.fillStyle = sky; g.fillRect(0, 0, 1200, 900);
+  const sun = g.createRadialGradient(780, 560, 10, 780, 560, 260);
+  sun.addColorStop(0, 'rgba(255,236,170,1)'); sun.addColorStop(.25, 'rgba(255,170,90,.8)'); sun.addColorStop(1, 'rgba(255,120,80,0)');
+  g.fillStyle = sun; g.fillRect(0, 0, 1200, 900);
+  const ridge = (y, amp, col, seed) => { g.beginPath(); g.moveTo(0, 900); for (let x = 0; x <= 1200; x += 20) g.lineTo(x, y + Math.sin(x / 140 + seed) * amp + Math.sin(x / 47 + seed * 2) * amp * .35); g.lineTo(1200, 900); g.fillStyle = col; g.fill(); };
+  ridge(600, 40, '#4a2a55', 1); ridge(660, 34, '#2e1a3c', 3); ridge(730, 26, '#1b1026', 5);
+  for (let i = 0; i < 90; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * .6})`; g.fillRect(Math.random() * 1200, Math.random() * 300, 2, 2); }
+  document.getElementById('media').style.backgroundImage = `url(${c.toDataURL('image/jpeg', .85)})`;
+})();
+
+/* large title → inline title on scroll, per visible view */
+let stopScrolled = () => {};
+const watchTitle = () => { stopScrolled(); stopScrolled = observeScrolled(document.querySelector('.view:not([hidden]) [data-title]')); };
+watchTitle();
+document.querySelector('.hig-tabbar').addEventListener('hig:change', e => {
+  document.getElementById('inlineTitle').textContent = e.detail.tab.textContent.trim();
+  scrollTo({ top: 0 });
+  requestAnimationFrame(() => { document.querySelectorAll('.hig-segmented').forEach(layoutSegmented); watchTitle(); renderContrast(); });
+});
+document.getElementById('searchTab').addEventListener('click', () => {
+  document.getElementById('t-controls').click();
+  setTimeout(() => { const q = document.getElementById('q'); q.scrollIntoView({ block: 'center' }); q.focus({ preventScroll: true }); }, 60);
+});
+
+/* mode / scheme / simulated system settings */
+const aaSwitch = document.getElementById('aaSwitch');
+aaSwitch.addEventListener('hig:change', e => setMode(e.detail.checked ? 'aa' : 'apple'));
+document.getElementById('schemeSeg').addEventListener('hig:change', e => setScheme(e.detail.value));
+const prefSetters = { contrast: v => setContrast(v ? 'more' : 'standard'), transparency: v => setTransparency(v ? 'reduce' : 'standard'), motion: v => setMotion(v ? 'reduce' : 'standard') };
+document.querySelectorAll('[data-pref]').forEach(sw => sw.addEventListener('hig:change', e => prefSetters[sw.dataset.pref](e.detail.checked)));
+
+watchPreferences(p => {
+  aaSwitch.setAttribute('aria-checked', String(p.mode === 'aa'));
+  document.getElementById('modeChip').textContent = p.mode === 'aa' ? 'WCAG AA' : 'Apple';
+  document.querySelector('[data-pref="contrast"]').setAttribute('aria-checked', String(p.contrast === 'more'));
+  document.querySelector('[data-pref="transparency"]').setAttribute('aria-checked', String(p.transparency === 'reduce'));
+  document.querySelector('[data-pref="motion"]').setAttribute('aria-checked', String(p.motion === 'reduce'));
+  const s = document.documentElement.getAttribute('data-hig-scheme') || 'system';
+  document.querySelectorAll('#schemeSeg button').forEach(b => b.setAttribute('aria-checked', String(b.value === s)));
+  requestAnimationFrame(() => { document.querySelectorAll('.hig-segmented').forEach(layoutSegmented); renderContrast(); });
+});
+
+/* live contrast table */
+function renderContrast() {
+  const list = document.getElementById('ctList');
+  if (!list || list.closest('[hidden]')) return;
+  const fmt = n => n.toFixed(1);
+  list.innerHTML = checkContrast().map(r => `<div class="hig-row"><span class="hig-row__title">${r.label}<span class="ct-need">needs ${fmt(r.min)}:1</span></span>` +
+    `<span class="ct-ratio">${fmt(r.ratio)}:1</span><span class="ct-verdict ${r.pass ? '' : 'bad'}"><svg class="hig-icon" style="width:16px;height:16px" aria-hidden="true"><use href="#${r.pass ? 'i-check' : 'i-x'}"/></svg>${r.pass ? 'Pass' : 'Fail'}</span></div>`).join('');
+}
+
+/* demo-only interactions */
+const lens = document.getElementById('lens'), stage = document.getElementById('lensStage');
+lens.addEventListener('pointerdown', e => {
+  lens.setPointerCapture(e.pointerId); lens.classList.add('dragging');
+  const sr = stage.getBoundingClientRect(), lr = lens.getBoundingClientRect(), ox = e.clientX - lr.left, oy = e.clientY - lr.top;
+  const move = ev => {
+    lens.style.left = `${Math.max(0, Math.min(ev.clientX - sr.left - ox, sr.width - lr.width))}px`;
+    lens.style.top = `${Math.max(0, Math.min(ev.clientY - sr.top - oy, sr.height - lr.height))}px`;
+  };
+  const up = () => { lens.classList.remove('dragging'); lens.removeEventListener('pointermove', move); lens.removeEventListener('pointerup', up); };
+  lens.addEventListener('pointermove', move); lens.addEventListener('pointerup', up);
+});
+document.getElementById('playBtn').addEventListener('click', e => {
+  const b = e.currentTarget, use = b.querySelector('use'), playing = use.getAttribute('href') === '#i-pause';
+  use.setAttribute('href', playing ? '#i-play' : '#i-pause'); b.setAttribute('aria-label', playing ? 'Play' : 'Pause');
+});
+let copies = 2; const cp = document.getElementById('copies');
+document.getElementById('stMinus').onclick = () => { copies = Math.max(1, copies - 1); cp.textContent = copies; };
+document.getElementById('stPlus').onclick = () => { copies = Math.min(99, copies + 1); cp.textContent = copies; };
+let step = 4; const prog = document.getElementById('prog');
+setInterval(() => {
+  step = step >= 12 ? 1 : step + 1; const v = Math.round(step / 12 * 100);
+  prog.firstElementChild.style.setProperty('--value', `${v}%`); prog.setAttribute('aria-valuenow', v);
+  document.getElementById('progLabel').textContent = `Downloading ${step} of 12 lessons`;
+}, 1400);
+document.getElementById('busyBtn').addEventListener('click', e => {
+  const b = e.currentTarget; if (b.getAttribute('aria-busy') === 'true') return;
+  b.style.minWidth = `${b.offsetWidth}px`; b.setAttribute('aria-busy', 'true');
+  b.innerHTML = '<span class="hig-spinner" aria-hidden="true">' + Array.from({ length: 8 }, (_, i) => `<i style="rotate:${i * 45}deg;animation-delay:${-0.8 + i * .1}s"></i>`).join('') + '</span><span>Sending…</span>';
+  setTimeout(() => { b.innerHTML = '<span>Sent</span>'; b.removeAttribute('aria-busy'); setTimeout(() => { b.innerHTML = '<span>Send</span>'; }, 1600); }, 1800);
+});
+const email = document.getElementById('email'), ef = document.getElementById('emailField'), eh = document.getElementById('emailHint');
+email.addEventListener('blur', () => {
+  const bad = !!email.value && !email.checkValidity();
+  ef.classList.toggle('is-invalid', bad); email.setAttribute('aria-invalid', String(bad));
+  eh.textContent = bad ? 'Enter an email address like name@example.com.' : 'Checked when you leave the field.';
+});
+</script>
+</body>
+</html>

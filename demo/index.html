@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>hig-web-kit demo</title>
+<meta name="description" content="Apple HIG and Liquid Glass for the web, with an opt-in WCAG 2.2 AA mode.">
+<link rel="stylesheet" href="../dist/hig.css">
+<link rel="stylesheet" href="../dist/base.css">
+<link rel="stylesheet" href="../dist/glass.css">
+<link rel="stylesheet" href="../dist/components.css">
+<style>
+/* Demo-only layout. Everything visual comes from the kit's tokens and classes. */
+body { background: var(--hig-grouped-bg); }
+main { max-width: 720px; margin-inline: auto; padding: calc(env(safe-area-inset-top, 0px) + 64px) 16px calc(env(safe-area-inset-bottom, 0px) + 120px); }
+.view { display: grid; gap: 28px; }
+.lede { margin: -18px 4px 0; color: var(--hig-label-2); max-width: 60ch; }
+.mode-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; margin-left: 8px; vertical-align: middle; border-radius: 999px; font: 600 .75rem/1 var(--hig-font-sans); background: var(--hig-fill-3); color: var(--hig-label-2); }
+[data-hig-mode="aa"] .mode-chip { background: var(--hig-switch-on); color: #fff; }
+.media { position: relative; border-radius: var(--hig-radius-card); overflow: hidden; aspect-ratio: 4 / 3; max-width: 100%; background: #1a1030 center / cover no-repeat; color: #fff; }
+.media-meta { position: absolute; left: 20px; top: 18px; z-index: 2; text-shadow: 0 1px 8px rgb(0 0 0 / .4); }
+.media-meta b { display: block; font: var(--hig-text-title-2); }
+.player { position: absolute; z-index: 3; left: 50%; bottom: 16px; translate: -50% 0; display: flex; align-items: center; gap: 2px; padding: 4px; }
+.player .hig-icon-btn .hig-icon { width: 24px; height: 24px; }
+.player .big .hig-icon { width: 30px; height: 30px; }
+.lens-stage { position: relative; overflow: hidden; border-radius: var(--hig-radius-card); background: var(--hig-grouped-bg-2); padding: 20px; min-height: 220px; touch-action: none; user-select: none; }
+.lens-stage p { margin: 0 0 10px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.swatches i { width: 44px; height: 44px; border-radius: 12px; display: block; }
+.lens { position: absolute; left: 30px; top: 60px; z-index: 2; width: 180px; height: 72px; cursor: grab; touch-action: none; }
+.lens.dragging { cursor: grabbing; scale: 1.06 1.03; }
+.lens span { position: absolute; inset: 0; display: grid; place-items: center; font: 600 .8125rem/1 var(--hig-font-sans); opacity: .6; }
+[data-hig-mode="aa"] .lens span { opacity: 1; }
+.panel { background: var(--hig-grouped-bg-2); border-radius: var(--hig-radius-card); padding: 16px; display: grid; gap: 16px; }
+.panel-label { font: var(--hig-text-footnote); color: var(--hig-label-2); margin-bottom: -8px; }
+.row-wrap { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.slider-row { display: flex; align-items: center; gap: 12px; color: var(--hig-label-2); }
+.ct-ratio { font-variant-numeric: tabular-nums; color: var(--hig-label-2); min-width: 4.2em; text-align: right; }
+.ct-verdict { min-width: 5.2em; display: inline-flex; gap: 4px; justify-content: flex-end; align-items: center; font: 600 .8125rem/1 var(--hig-font-sans); }
+.ct-verdict.bad { color: var(--hig-destructive-text); }
+.ct-need { display: block; font: var(--hig-text-footnote); color: var(--hig-label-2); }
+code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--hig-fill-3); padding: 1px 5px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-chev-ud" viewBox="0 0 24 24"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3c3.5 4.5 6 7.6 6 10.8A6 6 0 016 13.8C6 10.6 8.5 7.5 12 3z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2" fill="currentColor"/><circle cx="4.5" cy="12" r="1.2" fill="currentColor"/><circle cx="4.5" cy="18" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1.2" fill="currentColor" stroke="none"/><rect x="14" y="4.5" width="4" height="15" rx="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M11 6l-7 6 7 6zM20 6l-7 6 7 6z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M13 6l7 6-7 6zM4 6l7 6-7 6z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-sun-s" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 5v1M12 18v1M5 12h1M18 12h1"/></symbol>
+    <symbol id="i-sun-l" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15zM10 20a2 2 0 004 0"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"/><path d="M5 8.5l7 1.5 7-1.5M12 10v4.5M12 14.5L9 21M12 14.5l3 6.5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8L3.5 9.7l5.9-.8z"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  </defs>
+</svg>
+
+<!-- Functional layer: floats above the content -->
+<div class="hig-scroll-edge hig-scroll-edge--top" aria-hidden="true"></div>
+<header class="hig-toolbar">
+  <div class="hig-toolbar__lead">
+    <div class="hig-glass hig-group" data-hig-adapt><button class="hig-icon-btn" aria-label="Back"><svg class="hig-icon"><use href="#i-chev-l"/></svg></button></div>
+  </div>
+  <div class="hig-inline-title" id="inlineTitle">Glass</div>
+  <div class="hig-toolbar__trail">
+    <div class="hig-glass hig-group" data-hig-adapt>
+      <button class="hig-icon-btn" aria-label="Share"><svg class="hig-icon"><use href="#i-share"/></svg></button>
+      <button class="hig-icon-btn" aria-label="More"><svg class="hig-icon"><use href="#i-more"/></svg></button>
+    </div>
+    <button class="hig-glass hig-glass--tint hig-icon-btn hig-press-scale" aria-label="Done" data-hig-open="alert"><svg class="hig-icon"><use href="#i-check"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <!-- 1 · Glass -->
+  <div class="view" id="v-glass" role="tabpanel" aria-labelledby="t-glass">
+    <h1 class="hig-large-title" data-title>Glass <span class="mode-chip" id="modeChip">Apple</span></h1>
+    <p class="lede">Liquid Glass belongs to the floating control layer. Content runs edge to edge underneath it.</p>
+
+    <section>
+      <div class="media hig-media-dim" id="media" data-hig-tone="dark">
+        <div class="media-meta"><span class="hig-text-footnote">Clear variant + 35 % dimming</span><b>Evening over the hills</b></div>
+        <div class="hig-glass hig-glass--clear player" data-hig-refract>
+          <button class="hig-icon-btn" aria-label="Previous"><svg class="hig-icon"><use href="#i-back"/></svg></button>
+          <button class="hig-icon-btn big" aria-label="Pause" id="playBtn"><svg class="hig-icon"><use href="#i-pause"/></svg></button>
+          <button class="hig-icon-btn" aria-label="Next"><svg class="hig-icon"><use href="#i-fwd"/></svg></button>
+        </div>
+      </div>
+      <p class="hig-section-foot">Clear glass only over photos or video, with a dimming layer and bold, bright symbols.</p>
+    </section>
+
+    <section>
+      <h2 class="hig-text-title-3" style="margin:0 4px 8px">Refraction at the edge</h2>
+      <div class="lens-stage" id="lensStage">
+        <p><b>Drag the capsule.</b> Glass bends light at its rim and keeps the centre clear. Chromium renders real refraction through an SVG displacement map; Safari and Firefox get blur, saturation and a specular rim.</p>
+        <p class="hig-text-subhead" style="color:var(--hig-label-2)">Regular variant: blurs and adjusts luminosity so text stays legible over any content.</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:var(--hig-red)"></i><i style="background:var(--hig-orange)"></i><i style="background:var(--hig-yellow)"></i><i style="background:var(--hig-green)"></i><i style="background:var(--hig-teal)"></i><i style="background:var(--hig-blue)"></i><i style="background:var(--hig-indigo)"></i><i style="background:var(--hig-pink)"></i>
+        </div>
+        <div class="hig-glass lens" id="lens" data-hig-refract role="img" aria-label="Glass lens"><span>Liquid Glass</span></div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Layering rules</p>
+      <ul class="hig-list">
+        <li class="hig-row"><span class="hig-row__title">Never put glass on content (cards, rows)</span></li>
+        <li class="hig-row"><span class="hig-row__title">No glass on glass</span></li>
+        <li class="hig-row"><span class="hig-row__title">Tint only the primary action</span><span class="hig-row__value">1×</span></li>
+        <li class="hig-row"><span class="hig-row__title">Small glass flips light/dark with the content</span></li>
+      </ul>
+      <p class="hig-section-foot">Scroll the page: the bars switch to their dark style over the photo, and the tab bar minimizes while you scroll down.</p>
+    </section>
+  </div>
+
+  <!-- 2 · Controls -->
+  <div class="view" id="v-controls" role="tabpanel" aria-labelledby="t-controls" hidden>
+    <h1 class="hig-large-title" data-title>Controls</h1>
+
+    <section>
+      <p class="hig-section-head">Buttons by importance</p>
+      <div class="panel">
+        <div class="row-wrap">
+          <button class="hig-btn hig-btn--prominent">Add to Cart</button>
+          <button class="hig-btn">Save</button>
+          <button class="hig-btn hig-btn--plain">Edit</button>
+        </div>
+        <div class="row-wrap">
+          <button class="hig-btn hig-btn--destructive">Delete</button>
+          <button class="hig-btn hig-btn--prominent" id="busyBtn"><span>Send</span></button>
+        </div>
+        <div class="panel-label">Heights 28 · 32 · 44 · 52 · 64</div>
+        <div class="row-wrap">
+          <button class="hig-btn hig-btn--xs">Mini</button>
+          <button class="hig-btn hig-btn--sm">Small</button>
+          <button class="hig-btn">Regular</button>
+          <button class="hig-btn hig-btn--lg">Large</button>
+        </div>
+        <button class="hig-btn hig-btn--prominent hig-btn--xl hig-btn--block">Continue</button>
+      </div>
+      <p class="hig-section-foot">At most one or two prominent buttons per view. Show the preferred option by style, not size.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Choices and values</p>
+      <div class="panel">
+        <div class="hig-segmented" role="radiogroup" aria-label="Period">
+          <span class="hig-segmented__thumb" aria-hidden="true"></span>
+          <button role="radio" aria-checked="true">Day</button>
+          <button role="radio" aria-checked="false">Week</button>
+          <button role="radio" aria-checked="false">Month</button>
+          <button role="radio" aria-checked="false">Year</button>
+        </div>
+        <div>
+          <div class="panel-label" style="margin-bottom:6px">Brightness:</div>
+          <div class="slider-row">
+            <svg class="hig-icon" aria-hidden="true"><use href="#i-sun-s"/></svg>
+            <input class="hig-slider" id="bright" type="range" min="0" max="100" value="62" aria-label="Brightness" data-hig-unit="%">
+            <svg class="hig-icon" aria-hidden="true"><use href="#i-sun-l"/></svg>
+          </div>
+        </div>
+        <div class="row-wrap" style="justify-content:space-between">
+          <span>Copies: <b id="copies">2</b></span>
+          <div class="hig-stepper" role="group" aria-label="Copies">
+            <button aria-label="Fewer" id="stMinus"><svg class="hig-icon"><use href="#i-minus"/></svg></button>
+            <span class="hig-stepper__divider" aria-hidden="true"></span>
+            <button aria-label="More" id="stPlus"><svg class="hig-icon"><use href="#i-plus"/></svg></button>
+          </div>
+        </div>
+        <div>
+          <div class="panel-label" style="margin-bottom:8px" id="progLabel">Downloading 4 of 12 lessons</div>
+          <div class="hig-progress" role="progressbar" aria-labelledby="progLabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" id="prog"><i style="--value:33%"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Text fields</p>
+      <div class="panel">
+        <div class="hig-field" id="emailField">
+          <label for="email">Email</label>
+          <div class="hig-input"><input id="email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" enterkeyhint="next" aria-describedby="emailHint"></div>
+          <div class="hig-field__hint" id="emailHint">Checked when you leave the field.</div>
+        </div>
+        <div class="hig-field">
+          <label for="q">Search courses</label>
+          <div class="hig-input hig-input--search">
+            <svg class="hig-icon" style="color:var(--hig-label-2);width:18px;height:18px" aria-hidden="true"><use href="#i-search"/></svg>
+            <input id="q" type="search" placeholder="Robotics, Python, 3D printing" enterkeyhint="search">
+            <button class="hig-input__clear" aria-label="Clear" hidden><svg class="hig-icon" style="width:12px;height:12px;stroke-width:3"><use href="#i-x"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Menus, sheets and alerts</p>
+      <div class="panel">
+        <div class="row-wrap">
+          <div class="hig-menu-anchor">
+            <button class="hig-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="sortMenu">Sort <svg class="hig-icon" style="width:16px;height:16px"><use href="#i-chev-ud"/></svg></button>
+            <div class="hig-glass hig-glass--large hig-menu" id="sortMenu" role="menu" aria-label="Sort by" hidden>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="true"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Date</span><svg class="hig-icon"><use href="#i-cal"/></svg></button>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="false"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Name</span><svg class="hig-icon"><use href="#i-text"/></svg></button>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="false"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Rating</span><svg class="hig-icon"><use href="#i-star"/></svg></button>
+              <div class="hig-menu__separator" role="separator"></div>
+              <button class="hig-menu__item hig-menu__item--destructive" role="menuitem" data-hig-open="alert"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Delete All…</span><svg class="hig-icon"><use href="#i-trash"/></svg></button>
+            </div>
+          </div>
+          <button class="hig-btn" data-hig-open="sheet">Open Sheet</button>
+          <button class="hig-btn" data-hig-open="actions">Actions</button>
+          <button class="hig-btn hig-btn--destructive" data-hig-open="alert">Delete</button>
+        </div>
+      </div>
+      <p class="hig-section-foot">The menu grows out of its button. A medium sheet floats inset from the edges and becomes more opaque at full height.</p>
+    </section>
+  </div>
+
+  <!-- 3 · Settings -->
+  <div class="view" id="v-settings" role="tabpanel" aria-labelledby="t-settings" hidden>
+    <h1 class="hig-large-title" data-title>Settings</h1>
+    <section>
+      <p class="hig-section-head">Accessibility mode</p>
+      <div class="hig-list">
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-accent-fill)"><svg class="hig-icon"><use href="#i-check"/></svg></span><span class="hig-row__title" id="lbl-aa">WCAG 2.2 AA</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-aa" aria-describedby="aa-note" id="aaSwitch"><span class="hig-switch__thumb"></span></button></div>
+      </div>
+      <p class="hig-section-foot" id="aa-note">On: text reaches 4.5:1, controls and focus 3:1, and glass is opaque enough for text over any backdrop. Off: Apple's default values. Add <code>#aa</code> to the URL to open in this mode.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">Live contrast check</p>
+      <div class="hig-list" id="ctList" aria-live="polite"></div>
+      <p class="hig-section-foot">Measured from the live tokens with the WCAG formula. Glass is measured over the worst possible backdrop.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">Appearance</p>
+      <div class="hig-list">
+        <div class="hig-row"><div class="hig-segmented" style="flex:1" role="radiogroup" aria-label="Appearance" id="schemeSeg">
+          <span class="hig-segmented__thumb" aria-hidden="true"></span>
+          <button role="radio" aria-checked="true" value="system">System</button>
+          <button role="radio" aria-checked="false" value="light">Light</button>
+          <button role="radio" aria-checked="false" value="dark">Dark</button>
+        </div></div>
+      </div>
+      <p class="hig-section-foot">Apple recommends following the system setting. Keep an in-app switch only with System as the default.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">System accessibility settings (simulated)</p>
+      <div class="hig-list">
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-indigo)"><svg class="hig-icon"><use href="#i-eye"/></svg></span><span class="hig-row__title" id="lbl-hc">Increase Contrast</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-hc" data-pref="contrast"><span class="hig-switch__thumb"></span></button></div>
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-teal)"><svg class="hig-icon"><use href="#i-drop"/></svg></span><span class="hig-row__title" id="lbl-rt">Reduce Transparency</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-rt" data-pref="transparency"><span class="hig-switch__thumb"></span></button></div>
+        <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-green)"><svg class="hig-icon"><use href="#i-sliders"/></svg></span><span class="hig-row__title" id="lbl-rm">Reduce Motion</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-rm" data-pref="motion"><span class="hig-switch__thumb"></span></button></div>
+      </div>
+      <p class="hig-section-foot">These start from your operating system's settings.</p>
+    </section>
+    <section>
+      <p class="hig-section-head">Lessons</p>
+      <div class="hig-list">
+        <button class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-red)"><svg class="hig-icon"><use href="#i-bell"/></svg></span><span class="hig-row__title">Notifications</span><span class="hig-row__value">On</span><svg class="hig-icon hig-row__chevron"><use href="#i-chev-r"/></svg></button>
+        <button class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-orange)"><svg class="hig-icon"><use href="#i-cal"/></svg></span><span class="hig-row__title">Schedule</span><span class="hig-row__value">Tue, Thu</span><svg class="hig-icon hig-row__chevron"><use href="#i-chev-r"/></svg></button>
+        <button class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-gray)"><svg class="hig-icon"><use href="#i-moon"/></svg></span><span class="hig-row__title">Quiet Hours</span><span class="hig-row__value">20:00–7:00</span><svg class="hig-icon hig-row__chevron"><use href="#i-chev-r"/></svg></button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="hig-scroll-edge hig-scroll-edge--bottom" aria-hidden="true"></div>
+<nav class="hig-tabdock" id="dock" aria-label="Sections">
+  <div class="hig-glass hig-tabbar" data-hig-adapt data-hig-refract role="tablist">
+    <span class="hig-tabbar__lens" aria-hidden="true"></span>
+    <button class="hig-tab" role="tab" id="t-glass" aria-selected="true" aria-controls="v-glass"><svg class="hig-icon"><use href="#i-drop"/></svg><span>Glass</span></button>
+    <button class="hig-tab" role="tab" id="t-controls" aria-selected="false" aria-controls="v-controls"><svg class="hig-icon"><use href="#i-sliders"/></svg><span>Controls</span></button>
+    <button class="hig-tab" role="tab" id="t-settings" aria-selected="false" aria-controls="v-settings"><svg class="hig-icon"><use href="#i-list"/></svg><span>Settings</span></button>
+  </div>
+  <button class="hig-glass hig-search-tab hig-press-scale" data-hig-adapt aria-label="Search" id="searchTab"><svg class="hig-icon"><use href="#i-search"/></svg></button>
+</nav>
+
+<dialog class="hig-glass hig-glass--large hig-sheet" id="sheet" aria-labelledby="sheetTitle">
+  <button class="hig-sheet__grabber" aria-label="Resize sheet"></button>
+  <div class="hig-sheet__bar">
+    <button class="hig-glass hig-icon-btn hig-press-scale" aria-label="Cancel" data-hig-close><svg class="hig-icon"><use href="#i-x"/></svg></button>
+    <h2 class="hig-sheet__title" id="sheetTitle">New Lesson</h2>
+    <button class="hig-glass hig-glass--tint hig-icon-btn hig-press-scale" aria-label="Done" data-hig-close><svg class="hig-icon"><use href="#i-check"/></svg></button>
+  </div>
+  <div class="hig-sheet__body">
+    <div class="hig-field"><label for="lessonName">Name</label><div class="hig-input"><input id="lessonName" value="Micro:bit traffic light"></div></div>
+    <div class="hig-list">
+      <div class="hig-row"><span class="hig-row__title">Day</span><span class="hig-row__value">Thursday</span></div>
+      <div class="hig-row"><span class="hig-row__title">Time</span><span class="hig-row__value">16:30</span></div>
+      <div class="hig-row"><span class="hig-row__title" id="lbl-rem">Remind Parents</span><button class="hig-switch" role="switch" aria-checked="true" aria-labelledby="lbl-rem"><span class="hig-switch__thumb"></span></button></div>
+    </div>
+    <p class="hig-text-footnote" style="color:var(--hig-label-2);margin:0 4px">Tap the grabber to switch between medium and full height.</p>
+  </div>
+</dialog>
+
+<dialog class="hig-glass hig-glass--large hig-alert" id="alert" role="alertdialog" aria-labelledby="alertTitle" aria-describedby="alertMsg">
+  <h2 class="hig-alert__title" id="alertTitle">Delete 3 Lessons?</h2>
+  <p class="hig-alert__message" id="alertMsg">The lessons will be removed from all devices. You can't undo this action.</p>
+  <div class="hig-alert__actions">
+    <button class="hig-btn hig-btn--neutral" data-hig-close>Cancel</button>
+    <button class="hig-btn hig-btn--destructive hig-btn--prominent" data-hig-close>Delete</button>
+  </div>
+</dialog>
+
+<dialog class="hig-action-sheet" id="actions" aria-label="Message draft">
+  <div class="hig-glass hig-glass--large hig-action-sheet__group">
+    <div class="hig-action-sheet__title">Discard this draft to parents?</div>
+    <button class="hig-action-sheet__destructive" data-hig-close>Delete Draft</button>
+    <button data-hig-close>Save Draft</button>
+  </div>
+  <div class="hig-glass hig-glass--large hig-action-sheet__group"><button class="hig-action-sheet__cancel" data-hig-close>Cancel</button></div>
+</dialog>
+
+<script type="module">
+import { initGlass, observeScrolled, minimizeOnScroll } from '../dist/glass.js';
+import { restorePreferences, setMode, setScheme, setContrast, setTransparency, setMotion, watchPreferences, checkContrast } from '../dist/a11y.js';
+import { initComponents, layoutSegmented } from '../dist/components.js';
+
+restorePreferences();
+initComponents();
+initGlass();
+minimizeOnScroll(document.getElementById('dock'));
+
+/* hero "photo" painted on a canvas (no external images) */
+(() => {
+  const c = document.createElement('canvas'); c.width = 1200; c.height = 900; const g = c.getContext('2d');
+  const sky = g.createLinearGradient(0, 0, 0, 900);
+  [[0, '#2a1b5c'], [.45, '#c2477a'], [.62, '#f59a4a'], [.75, '#3b2246'], [1, '#120c1e']].forEach(([o, col]) => sky.addColorStop(o, col));
+  g.fillStyle = sky; g.fillRect(0, 0, 1200, 900);
+  const sun = g.createRadialGradient(780, 560, 10, 780, 560, 260);
+  sun.addColorStop(0, 'rgba(255,236,170,1)'); sun.addColorStop(.25, 'rgba(255,170,90,.8)'); sun.addColorStop(1, 'rgba(255,120,80,0)');
+  g.fillStyle = sun; g.fillRect(0, 0, 1200, 900);
+  const ridge = (y, amp, col, seed) => { g.beginPath(); g.moveTo(0, 900); for (let x = 0; x <= 1200; x += 20) g.lineTo(x, y + Math.sin(x / 140 + seed) * amp + Math.sin(x / 47 + seed * 2) * amp * .35); g.lineTo(1200, 900); g.fillStyle = col; g.fill(); };
+  ridge(600, 40, '#4a2a55', 1); ridge(660, 34, '#2e1a3c', 3); ridge(730, 26, '#1b1026', 5);
+  for (let i = 0; i < 90; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * .6})`; g.fillRect(Math.random() * 1200, Math.random() * 300, 2, 2); }
+  document.getElementById('media').style.backgroundImage = `url(${c.toDataURL('image/jpeg', .85)})`;
+})();
+
+/* large title → inline title on scroll, per visible view */
+let stopScrolled = () => {};
+const watchTitle = () => { stopScrolled(); stopScrolled = observeScrolled(document.querySelector('.view:not([hidden]) [data-title]')); };
+watchTitle();
+document.querySelector('.hig-tabbar').addEventListener('hig:change', e => {
+  document.getElementById('inlineTitle').textContent = e.detail.tab.textContent.trim();
+  scrollTo({ top: 0 });
+  requestAnimationFrame(() => { document.querySelectorAll('.hig-segmented').forEach(layoutSegmented); watchTitle(); renderContrast(); });
+});
+document.getElementById('searchTab').addEventListener('click', () => {
+  document.getElementById('t-controls').click();
+  setTimeout(() => { const q = document.getElementById('q'); q.scrollIntoView({ block: 'center' }); q.focus({ preventScroll: true }); }, 60);
+});
+
+/* mode / scheme / simulated system settings */
+const aaSwitch = document.getElementById('aaSwitch');
+aaSwitch.addEventListener('hig:change', e => setMode(e.detail.checked ? 'aa' : 'apple'));
+document.getElementById('schemeSeg').addEventListener('hig:change', e => setScheme(e.detail.value));
+const prefSetters = { contrast: v => setContrast(v ? 'more' : 'standard'), transparency: v => setTransparency(v ? 'reduce' : 'standard'), motion: v => setMotion(v ? 'reduce' : 'standard') };
+document.querySelectorAll('[data-pref]').forEach(sw => sw.addEventListener('hig:change', e => prefSetters[sw.dataset.pref](e.detail.checked)));
+
+watchPreferences(p => {
+  aaSwitch.setAttribute('aria-checked', String(p.mode === 'aa'));
+  document.getElementById('modeChip').textContent = p.mode === 'aa' ? 'WCAG AA' : 'Apple';
+  document.querySelector('[data-pref="contrast"]').setAttribute('aria-checked', String(p.contrast === 'more'));
+  document.querySelector('[data-pref="transparency"]').setAttribute('aria-checked', String(p.transparency === 'reduce'));
+  document.querySelector('[data-pref="motion"]').setAttribute('aria-checked', String(p.motion === 'reduce'));
+  const s = document.documentElement.getAttribute('data-hig-scheme') || 'system';
+  document.querySelectorAll('#schemeSeg button').forEach(b => b.setAttribute('aria-checked', String(b.value === s)));
+  requestAnimationFrame(() => { document.querySelectorAll('.hig-segmented').forEach(layoutSegmented); renderContrast(); });
+});
+
+/* live contrast table */
+function renderContrast() {
+  const list = document.getElementById('ctList');
+  if (!list || list.closest('[hidden]')) return;
+  const fmt = n => n.toFixed(1);
+  list.innerHTML = checkContrast().map(r => `<div class="hig-row"><span class="hig-row__title">${r.label}<span class="ct-need">needs ${fmt(r.min)}:1</span></span>` +
+    `<span class="ct-ratio">${fmt(r.ratio)}:1</span><span class="ct-verdict ${r.pass ? '' : 'bad'}"><svg class="hig-icon" style="width:16px;height:16px" aria-hidden="true"><use href="#${r.pass ? 'i-check' : 'i-x'}"/></svg>${r.pass ? 'Pass' : 'Fail'}</span></div>`).join('');
+}
+
+/* demo-only interactions */
+const lens = document.getElementById('lens'), stage = document.getElementById('lensStage');
+lens.addEventListener('pointerdown', e => {
+  lens.setPointerCapture(e.pointerId); lens.classList.add('dragging');
+  const sr = stage.getBoundingClientRect(), lr = lens.getBoundingClientRect(), ox = e.clientX - lr.left, oy = e.clientY - lr.top;
+  const move = ev => {
+    lens.style.left = `${Math.max(0, Math.min(ev.clientX - sr.left - ox, sr.width - lr.width))}px`;
+    lens.style.top = `${Math.max(0, Math.min(ev.clientY - sr.top - oy, sr.height - lr.height))}px`;
+  };
+  const up = () => { lens.classList.remove('dragging'); lens.removeEventListener('pointermove', move); lens.removeEventListener('pointerup', up); };
+  lens.addEventListener('pointermove', move); lens.addEventListener('pointerup', up);
+});
+document.getElementById('playBtn').addEventListener('click', e => {
+  const b = e.currentTarget, use = b.querySelector('use'), playing = use.getAttribute('href') === '#i-pause';
+  use.setAttribute('href', playing ? '#i-play' : '#i-pause'); b.setAttribute('aria-label', playing ? 'Play' : 'Pause');
+});
+let copies = 2; const cp = document.getElementById('copies');
+document.getElementById('stMinus').onclick = () => { copies = Math.max(1, copies - 1); cp.textContent = copies; };
+document.getElementById('stPlus').onclick = () => { copies = Math.min(99, copies + 1); cp.textContent = copies; };
+let step = 4; const prog = document.getElementById('prog');
+setInterval(() => {
+  step = step >= 12 ? 1 : step + 1; const v = Math.round(step / 12 * 100);
+  prog.firstElementChild.style.setProperty('--value', `${v}%`); prog.setAttribute('aria-valuenow', v);
+  document.getElementById('progLabel').textContent = `Downloading ${step} of 12 lessons`;
+}, 1400);
+document.getElementById('busyBtn').addEventListener('click', e => {
+  const b = e.currentTarget; if (b.getAttribute('aria-busy') === 'true') return;
+  b.style.minWidth = `${b.offsetWidth}px`; b.setAttribute('aria-busy', 'true');
+  b.innerHTML = '<span class="hig-spinner" aria-hidden="true">' + Array.from({ length: 8 }, (_, i) => `<i style="rotate:${i * 45}deg;animation-delay:${-0.8 + i * .1}s"></i>`).join('') + '</span><span>Sending…</span>';
+  setTimeout(() => { b.innerHTML = '<span>Sent</span>'; b.removeAttribute('aria-busy'); setTimeout(() => { b.innerHTML = '<span>Send</span>'; }, 1600); }, 1800);
+});
+const email = document.getElementById('email'), ef = document.getElementById('emailField'), eh = document.getElementById('emailHint');
+email.addEventListener('blur', () => {
+  const bad = !!email.value && !email.checkValidity();
+  ef.classList.toggle('is-invalid', bad); email.setAttribute('aria-invalid', String(bad));
+  eh.textContent = bad ? 'Enter an email address like name@example.com.' : 'Checked when you leave the field.';
+});
+</script>
+</body>
+</html>

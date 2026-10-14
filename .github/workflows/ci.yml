@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: WCAG 2.2 AA contrast gate
+        run: npm run check:contrast
+      - run: npm test
+      - run: npm run typecheck
+      - name: dist/ is up to date
+        run: git diff --exit-code -- dist docs/tokens.md
