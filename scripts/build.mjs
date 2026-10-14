@@ -300,7 +300,11 @@ console.log(`Built ${SETS.length} color sets → dist/`);
 
 /* ───────────── skill/SKILL.md (token block generated so the skill never drifts from the kit) ───────────── */
 {
-  const block = (sel, set, dark) => `${sel} {\n${Object.entries(sets[set]).map(([k, v]) => `  --hig-${k}: ${v};`).join('\n')}\n  color-scheme: ${dark ? 'dark' : 'light'};\n}`;
+  const block = (sel, set, dark) => {
+    const decls = Object.entries(sets[set]).map(([k, v]) => `--hig-${k}: ${v};`).concat(`color-scheme: ${dark ? 'dark' : 'light'};`);
+    const lines = []; for (let i = 0; i < decls.length; i += 4) lines.push('  ' + decls.slice(i, i + 4).join(' '));
+    return `${sel} {\n${lines.join('\n')}\n}`;
+  };
   const scale = [
     ...Object.entries(tokens.font.family).map(([k, v]) => `  --hig-font-${k}: ${v};`),
     ...Object.entries(tokens.radius).map(([k, v]) => `  --hig-radius-${k}: ${v}px;`),
