@@ -144,6 +144,7 @@ In CSS: `font: var(--hig-text-body)` or `var(--hig-text-mac-body)`.
 
 - **Sizes.** Use `rem` everywhere and support 200 % zoom. Body grows to 28/33/40/47/53 px at AX1–AX5. The minimum is 11 px on iOS and 10 px on macOS.
 - **Weights.** Avoid Ultralight, Thin and Light.
+- **Tracking.** Automatic with the system stack on Apple devices. With Inter or other fallbacks, use slight negative letter-spacing at 15–24 px (≈ −0.01 to −0.02 em) and slight positive at 11–12 px. Avoid tight leading for 3+ lines.
 - **Fonts.** Never self-host SF Pro; the system stack (`system-ui, -apple-system, …`) renders SF on Apple devices. The cross-platform look-alike is Inter.
 - **Style of the Liquid Glass era.** Typography is bolder and left-aligned (alerts, onboarding). Section headers are Title Case, not ALL CAPS.
 - **iOS Dynamic Type.** `@supports (font: -apple-system-body) { html { font: -apple-system-body; } }` follows it in Safari.
@@ -180,6 +181,7 @@ Ant Design specifics:
 - **Safe areas.** Use `viewport-fit=cover` and `env(safe-area-inset-*)`. Floating bars sit ≈ 8–12 px above the bottom inset and 16 px from the sides.
 - **Focus not obscured** (WCAG 2.4.11): `html { scroll-padding-block: 72px 96px }` when bars float.
 - **Desktop.** No critical controls at the bottom of windows. Split view dividers are 1 px with ≈ 8 px hit areas.
+- **Steady state.** At rest (top of the page), content and glass shouldn't overlap awkwardly; make sure what sits under the bars is legible.
 - **Background extension.** Under a floating sidebar, mirror and blur a copy of the hero image (`transform: scaleX(-1); filter: blur(30px)`).
 
 ---
@@ -193,6 +195,7 @@ Ant Design specifics:
 - **Respect the system color scheme.** An in-app theme switch must default to "System".
 - **Contrast.** AA requires ≥ 4.5:1 for text up to 17 px (≥ 3:1 at 18 px+ or bold) and ≥ 3:1 for UI boundaries and focus. In Apple mode these are not guaranteed; that is what AA mode is for.
 - **Dark mode.** Soften images with white backgrounds (`filter: brightness(.9)`).
+- **Wide color.** Use `@media (color-gamut: p3)` with `color(display-p3 …)` overrides if needed.
 
 ---
 
@@ -319,7 +322,7 @@ html.hig-refract .hig-glass[data-hig-refract] {
           backdrop-filter: var(--hig-refract) blur(.6px) saturate(185%) brightness(1.05);
 }
 ```
-Use refraction on 2–4 hero elements (tab bar, media player capsule, a FAB), not on every button.
+Use refraction on 2–4 hero elements (tab bar, media player capsule, a FAB), not on every button. Cross-browser fake when the background is known (a wallpaper image): put a copy of the background inside the glass with `background-attachment: fixed` and apply a normal `filter: url(#…)` to that copy.
 
 ### 6.4 Adaptivity (light/dark flip of small glass)
 
@@ -503,9 +506,11 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - **Settings:** good defaults; don't duplicate OS settings (theme defaults to "System").
 - **Accounts:** sign in as late as possible; guest use; passkeys; account deletion easy to find.
 - **Permissions:** explain the benefit first; a pre-prompt has a single "Continue" button (never "Allow"); stay usable after denial.
+- **Notifications:** marketing only after an explicit opt-in; "urgent" only for events happening now or within the hour.
 - **Undo:** prefer undo to confirmation; label it ("Undo Typing").
 - **Drag and drop:** start after ≈ 3 px; highlight only valid targets; always offer a keyboard or menu alternative.
 - **Help:** tooltips ≤ 60–75 characters, never essential information. **Ratings:** ask after a positive moment, ≥ 1–2 weeks apart.
+- **Charts:** a headline takeaway, a text alternative, consistent colors across charts, accessible contrast.
 
 ## 9. Inputs
 
