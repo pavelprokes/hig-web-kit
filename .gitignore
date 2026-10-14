@@ -2,3 +2,5 @@ node_modules/
 .DS_Store
 *.log
 coverage/
+examples/antd/dist/
+docs/screenshots/raw/

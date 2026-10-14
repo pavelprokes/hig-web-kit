@@ -96,6 +96,9 @@ export function getAntdTheme(options = {}) {
       colorFillTertiary: c.fill3,
       colorFillQuaternary: c.fill4,
       colorBorder: border,
+      controlItemBgActive: c.fill3,
+      controlItemBgActiveHover: c.fill2,
+      controlItemBgHover: c.fill4,
       colorBorderSecondary: c.sep,
       colorSplit: c.sep,
       // focus (WCAG 2.4.7 / 2.4.13)
@@ -229,6 +232,7 @@ export function higAntd(options = {}) {
     select: { variant: aa ? 'outlined' : 'filled' },
     datePicker: { variant: aa ? 'outlined' : 'filled' },
     inputNumber: { variant: aa ? 'outlined' : 'filled' },
+    card: { variant: 'borderless' },
     componentSize: 'middle',
   };
 }

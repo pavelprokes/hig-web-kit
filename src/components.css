@@ -2,6 +2,12 @@
    Behaviour (switch, segmented, tabs, menus, dialogs) comes from hig-web-kit/components (initComponents()).
    Borders use --hig-control-border, which is transparent in Apple mode and a 3:1 gray in AA mode. */
 
+/* predictable sizing for every kit element and its children */
+:where([class^="hig-"], [class*=" hig-"]), :where([class^="hig-"], [class*=" hig-"]) *, :where([class^="hig-"], [class*=" hig-"])::before, :where([class^="hig-"], [class*=" hig-"])::after { box-sizing: border-box; }
+
+/* the hidden attribute always wins (tab panels, clear buttons) */
+:where(.hig-tabpanel, .hig-input__clear, .hig-menu)[hidden] { display: none !important; }
+
 .hig-icon { width: 1.25em; height: 1.25em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ── Buttons ── */

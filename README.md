@@ -12,6 +12,8 @@ Apple's Human Interface Guidelines and the Liquid Glass design language, package
 - **Framework-free components**: buttons, switch, segmented control, slider, stepper, fields, inset lists, toolbar, floating tab bar, menu, sheet, alert and action sheet.
 - **Guidelines as a skill**: `skill/SKILL.md` condenses the HIG (layering, components, patterns, writing, accessibility) for designers and AI assistants.
 
+![Demo: Liquid Glass bars and media controls, dark scroll edge, controls in AA mode, sheet](docs/screenshots/hero.png)
+
 > Not affiliated with or endorsed by Apple Inc. See [NOTICE.md](NOTICE.md). No Apple fonts, SF Symbols or other Apple assets are included.
 
 **Demo:** open `dist/demo.html` after building, or add `#aa`, `#dark`, `#hc` (combinable: `#aa-dark-hc`) to the demo URL.
@@ -86,6 +88,10 @@ import { higAntd } from 'hig-web-kit/antd';
 
 A complete example that follows OS settings live is in [examples/antd/App.tsx](examples/antd/App.tsx).
 
+![Ant Design themed with hig-web-kit: Apple light, Apple dark, AA light, AA select with glass dropdown](docs/screenshots/antd.png)
+
+<sub>Ant Design 6 with `higAntd()`. From left: Apple mode light, Apple mode dark, AA mode (outlined fields, darker green switch), AA mode with a glass Select dropdown.</sub>
+
 ## Accessibility: what the AA mode guarantees
 
 `npm run check:contrast` measures every color pair with the WCAG formula (glass is measured over both a black and a white backdrop). CI fails if any `aa` set drops below AA. The `apple` sets are reported for information only, because several Apple defaults fall short:
@@ -98,6 +104,14 @@ A complete example that follows OS settings live is in [examples/antd/App.tsx](e
 | Switch "on" vs background | 2.2:1 ✗ | 4.54:1 ✓ |
 | Field / switch-off boundary | none ✗ | 4.49:1 ✓ |
 | Focus ring | 1.9:1 ✗ | 5.8:1 ✓ |
+
+![Live contrast check in the demo: Apple mode fails 24 pairs, AA mode passes all](docs/screenshots/aa-mode.png)
+
+<sub>The demo's live contrast check (`checkContrast()`): Apple mode on the left, AA mode on the right.</sub>
+
+![Controls in Apple mode, AA mode and AA dark](docs/screenshots/controls.png)
+
+<sub>Same controls: Apple mode, AA mode (visible field, segmented and stepper borders; darker blue), AA dark.</sub>
 
 Color is only part of WCAG. The kit also provides:
 
@@ -120,6 +134,10 @@ Your own content, labels and flows still need review. See [docs/accessibility.md
   initGlass(); // refraction (Chromium only), touch light, light/dark adaptivity
 </script>
 ```
+
+![Menu growing out of its button, alert, dark mode with adaptive bars](docs/screenshots/overlays.png)
+
+![Desktop width, dark mode](docs/screenshots/desktop-dark.png)
 
 Rules worth keeping: glass goes only on the floating layer (bars, menus, sheets), never on cards or rows; never put glass on glass; tint only the primary action. Details are in [docs/liquid-glass.md](docs/liquid-glass.md).
 

@@ -15,6 +15,6 @@ export interface HigAntdOptions {
 export declare function getAntdTheme(options?: HigAntdOptions): ThemeConfig;
 export declare function higAntd(options?: HigAntdOptions): Pick<
   ConfigProviderProps,
-  'theme' | 'button' | 'input' | 'select' | 'datePicker' | 'inputNumber' | 'componentSize'
+  'theme' | 'button' | 'input' | 'select' | 'datePicker' | 'inputNumber' | 'card' | 'componentSize'
 >;
 export default higAntd;

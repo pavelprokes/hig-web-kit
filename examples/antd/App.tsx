@@ -3,7 +3,7 @@
 //   npm i antd hig-web-kit
 //   main.tsx: import 'hig-web-kit/hig.css'; import 'hig-web-kit/glass.css'; import 'hig-web-kit/antd-glass.css';
 import { useEffect, useState } from 'react';
-import { App as AntApp, Button, Card, ConfigProvider, Form, Input, Segmented, Space, Switch, Typography } from 'antd';
+import { App as AntApp, Button, Card, ConfigProvider, Form, Input, Segmented, Select, Space, Switch, Typography } from 'antd';
 import { higAntd, type HigAntdOptions } from 'hig-web-kit/antd';
 import { getPreferences, restorePreferences, setMode, watchPreferences, type HigPreferences } from 'hig-web-kit/a11y';
 
@@ -42,6 +42,9 @@ export default function App() {
               </Form.Item>
               <Form.Item label="Email" name="email" rules={[{ type: 'email', message: 'Enter an email address like name@example.com.' }]}>
                 <Input placeholder="name@example.com" inputMode="email" autoComplete="email" />
+              </Form.Item>
+              <Form.Item label="Day" name="day" initialValue="thu">
+                <Select options={[{ value: 'tue', label: 'Tuesday' }, { value: 'thu', label: 'Thursday' }, { value: 'sat', label: 'Saturday' }]} />
               </Form.Item>
               <Space>
                 <Button>Cancel</Button>

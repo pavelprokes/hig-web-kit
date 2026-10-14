@@ -5,15 +5,50 @@
   "type": "module",
   "license": "MIT",
   "author": "Pavel Prokeš",
-  "keywords": ["design-tokens", "apple", "hig", "human-interface-guidelines", "liquid-glass", "wcag", "accessibility", "antd", "ant-design", "tailwindcss", "mui", "shadcn", "bootstrap", "css"],
-  "repository": { "type": "git", "url": "git+https://github.com/pavelprokes/hig-web-kit.git" },
+  "keywords": [
+    "design-tokens",
+    "apple",
+    "hig",
+    "human-interface-guidelines",
+    "liquid-glass",
+    "wcag",
+    "accessibility",
+    "antd",
+    "ant-design",
+    "tailwindcss",
+    "mui",
+    "shadcn",
+    "bootstrap",
+    "css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavelprokes/hig-web-kit.git"
+  },
   "homepage": "https://github.com/pavelprokes/hig-web-kit#readme",
   "bugs": "https://github.com/pavelprokes/hig-web-kit/issues",
-  "sideEffects": ["*.css"],
-  "files": ["dist", "tokens", "skill", "README.md", "LICENSE", "NOTICE.md"],
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "tokens",
+    "skill",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md"
+  ],
   "exports": {
-    ".": { "types": "./dist/tokens.d.ts", "import": "./dist/tokens.js", "require": "./dist/tokens.cjs" },
-    "./tokens": { "types": "./dist/tokens.d.ts", "import": "./dist/tokens.js", "require": "./dist/tokens.cjs" },
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.cjs"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.cjs"
+    },
     "./tokens.json": "./dist/tokens.json",
     "./hig.css": "./dist/hig.css",
     "./base.css": "./dist/base.css",
@@ -26,12 +61,30 @@
     "./bootstrap-runtime.css": "./dist/bootstrap-runtime.css",
     "./hig.scss": "./dist/hig.scss",
     "./hig-bootstrap.scss": "./dist/hig-bootstrap.scss",
-    "./a11y": { "types": "./dist/a11y.d.ts", "import": "./dist/a11y.js" },
-    "./glass": { "types": "./dist/glass.d.ts", "import": "./dist/glass.js" },
-    "./components": { "types": "./dist/components.d.ts", "import": "./dist/components.js" },
-    "./color": { "types": "./dist/color.d.ts", "import": "./dist/color.js" },
-    "./antd": { "types": "./dist/antd.d.ts", "import": "./dist/antd.js" },
-    "./mui": { "types": "./dist/mui.d.ts", "import": "./dist/mui.js" },
+    "./a11y": {
+      "types": "./dist/a11y.d.ts",
+      "import": "./dist/a11y.js"
+    },
+    "./glass": {
+      "types": "./dist/glass.d.ts",
+      "import": "./dist/glass.js"
+    },
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.js"
+    },
+    "./color": {
+      "types": "./dist/color.d.ts",
+      "import": "./dist/color.js"
+    },
+    "./antd": {
+      "types": "./dist/antd.d.ts",
+      "import": "./dist/antd.js"
+    },
+    "./mui": {
+      "types": "./dist/mui.d.ts",
+      "import": "./dist/mui.js"
+    },
     "./package.json": "./package.json"
   },
   "style": "./dist/hig.css",
@@ -40,13 +93,16 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "test": "node --test test/*.test.mjs",
     "typecheck": "tsc -p test/tsconfig.json",
-    "verify": "npm run build && npm run check:contrast && npm test && npm run typecheck"
+    "verify": "npm run build && npm run check:contrast && npm test && npm run typecheck",
+    "example:antd": "esbuild examples/antd/main.tsx --bundle --format=esm --outdir=examples/antd/dist --jsx=automatic --minify --define:process.env.NODE_ENV='\"production\"' --loader:.css=css"
   },
   "peerDependencies": {
     "antd": ">=5.12"
   },
   "peerDependenciesMeta": {
-    "antd": { "optional": true }
+    "antd": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@emotion/react": "^11.14.0",
@@ -56,11 +112,14 @@
     "@types/react": "^19.0.0",
     "antd": "^6.6.6",
     "bootstrap": "^5.3.8",
+    "esbuild": "^0.25.12",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sass": "^1.80.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.0 || ^7.0.0"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

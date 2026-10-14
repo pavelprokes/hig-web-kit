@@ -1,5 +1,7 @@
 /*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 /* Optional page defaults. Skip this file when a framework (antd, MUI, Bootstrap…) already owns the base styles. */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
