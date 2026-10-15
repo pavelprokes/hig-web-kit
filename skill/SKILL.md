@@ -30,7 +30,7 @@ Decision rule:
 2. **It doesn't, and the user is present.** Ask one short question before building, for example: *"Should this use Apple's exact colors, or the WCAG 2.2 AA mode (same look, contrast-safe colors and visible control borders)? I can also add a switch so visitors choose."* Offer three answers: Apple / WCAG AA / both with a switch.
 3. **Nobody can answer** (unattended run). Use **apple**, say so in one line at the top of the result, and mention that `data-hig-mode="aa"` switches the whole UI to AA.
 
-Both modes respond to OS settings (dark mode, Increase Contrast, Reduce Transparency, Reduce Motion). The mode is one attribute: `<html data-hig-mode="aa">`. With "both", add a visible switch that calls `setMode()` (see §6.7).
+Both modes respond to OS settings (dark mode, Increase Contrast, Reduce Transparency, Reduce Motion). The mode is one attribute: `<html data-hig-mode="aa">`. With "both", add a visible switch that calls `setMode()` (see §6.7). A brand color is a separate, orthogonal choice (§3.5).
 
 ## Workflow
 
@@ -40,7 +40,7 @@ Both modes respond to OS settings (dark mode, Increase Contrast, Reduce Transpar
 
    Compact width is ≈ < 700 px; regular is above.
 2. **Split into two layers.** The content layer holds data, media, brand color and standard materials. The floating functional layer (toolbar, tab bar, sidebar, menus, sheets, popovers, alerts) is made of Liquid Glass.
-3. **Load the tokens** (§3). Use `hig-web-kit/hig.css`, or paste the block. Build from tokens only (`var(--hig-…)`).
+3. **Load the tokens** (§3). Use `hig-web-kit/hig.css`, or paste the block. Build from tokens only (`var(--hig-…)`). If the product has a brand color, set it as the accent theme (§3.5).
 4. **Use a framework adapter** if the project has a framework (§3.4). Use the component specs (§7) and patterns (§8) rather than inventing new ones.
 5. **Write the copy** per §10.
 6. **Add the accessibility mapping** (§6.7) and check §12.
@@ -59,7 +59,7 @@ Both modes respond to OS settings (dark mode, Increase Contrast, Reduce Transpar
 7. **Craft.** Care about details: alignment, motion, wording.
 8. **Delight.** Human moments, never decoration that blocks the task.
 
-Branding defers to content: no logo repeated on every screen, and no splash screen (use skeletons). Brand color lives in the content layer. A custom font is fine for headlines while the body uses the system font.
+Branding defers to content: no logo repeated on every screen, and no splash screen (use skeletons). Brand color lives in the content layer and in the single app accent. A custom font is fine for headlines while the body uses the system font.
 
 ---
 
@@ -97,10 +97,11 @@ Branding defers to content: no logo repeated on every screen, and no splash scre
 | `data-hig-contrast` | `more` · `standard` | `prefers-contrast` |
 | `data-hig-transparency` | `reduce` · `standard` | `prefers-reduced-transparency` |
 | `data-hig-motion` | `reduce` · `standard` | `prefers-reduced-motion` |
+| `data-hig-theme` | `vzb` · `indigo` · `purple` · `pink` · `orange` · `green` · `teal` · `graphite` | Apple system blue (§3.5) |
 
 ### 3.2 Color tokens (generated from hig-web-kit; light/dark for both modes)
 
-`hig.css` also contains increased-contrast sets (`apple.*-hc`, `aa.*-hc`) and the selector logic for every combination. When pasting by hand, the block below covers light and dark for both modes.
+`hig.css` also contains increased-contrast sets (`apple.*-hc`, `aa.*-hc`), the accent themes and the selector logic for every combination. When pasting by hand, the block below covers light and dark for both modes.
 
 ```css
 /* hig-web-kit v0.3.0 — Apple mode (default) */
@@ -298,14 +299,14 @@ In CSS: `font: var(--hig-text-body)` or `var(--hig-text-mac-body)`.
 | shadcn/ui | `@import "hig-web-kit/shadcn.css"` maps `--background`, `--primary`, `--ring`… onto `--hig-*`; delete the generated `.dark {}` block. |
 | MUI | `createTheme(higMui({ mode, scheme, accent }))` |
 | Bootstrap 5 | `$hig-set: "aa.light"; @import "hig-bootstrap"; @import "bootstrap/scss/bootstrap";`, plus `bootstrap-runtime.css` |
-| Anything else | CSS variables, or `import { tokens } from 'hig-web-kit'` → `tokens.color.aa.dark.accentFill` for Vuetify, Chakra, Mantine, PrimeVue and the like |
+| Anything else | CSS variables, or `import { tokens } from 'hig-web-kit'` → `tokens.color.aa.dark.accentFill` (themes: `tokens.themes.vzb.color.aa.dark.accentFill`) for Vuetify, Chakra, Mantine, PrimeVue and the like |
 
 ### 3.5 Accent themes (brand color)
 
 HIG: one app accent tints primary buttons, links, selection, the slider fill and the focus ring. Labels, fills, system colors and the green switch don't change. Never use a second "primary" color on controls; secondary brand colors live in content (illustrations, cards, tags).
 
 - **Built-in:** `<html data-hig-theme="vzb">` (Vzdělání budoucnosti navy `#01497c`, dark scheme from `#1768ac`), `indigo`, `purple`, `pink`, `orange`, `green`, `teal`, `graphite`. No attribute = Apple system blue.
-- **Runtime:** `import { setTheme, restoreTheme, applyBrandColor } from 'hig-web-kit/theme'`. `restoreTheme()` reads the saved choice and `#theme=vzb`; `applyBrandColor('#c8102e')` derives and injects a theme for any color.
+- **Runtime:** `import { setTheme, restoreTheme, applyBrandColor } from 'hig-web-kit/theme'`. `restoreTheme()` reads the saved choice and `#theme=vzb` (combinable: `#aa-dark-theme=vzb`); `applyBrandColor('#c8102e')` derives and injects a theme for any color; `deriveBrandTheme()` returns the values only.
 - **Derivation:** keep hue and saturation, move only lightness, minimally:
   - Apple mode: accent ≥ 3:1 on the page; white `on-accent` (black only for yellow-like brands).
   - AA mode and Increase Contrast: accent text and link ≥ 4.5:1 on page, card, secondary background and gray button; filled button label ≥ 4.5:1 (white preferred); fill, indicator and focus ring ≥ 3:1 on page and card.
@@ -322,7 +323,7 @@ Ant Design specifics:
 - Already themed by `higAntd()`: Checkbox/Radio (22/16 px, visible outline), Breadcrumb (path control colors), Collapse (ghost disclosure rows), Avatar (Contacts-style monogram, AA-safe gray), Badge (`on-destructive` text in AA), Tag (`fill-2` capsule), Tooltip (light help tag), Skeleton, Carousel dots (8 px; wider current dot in AA), Table sort states, Progress, Notification and Message.
 - `antd-glass.css` also turns notifications and messages into glass (banner and HUD capsule); add `className="hig-striped"` to a `Table` for alternating rows.
 - Brand color: `accent: 'vzb'` (built-in theme) or `accent: '#c8102e'`; keep it in sync with `data-hig-theme` via `getTheme()`.
-- Mapping: pop-up button → `Select`; pull-down → `Dropdown`; context menu → `Dropdown trigger={['contextMenu']}`; popover → `Popover`; disclosure → `Collapse ghost`; scope bar → `Segmented` or `Radio.Group optionType="button"`; HUD toast → `message`; sidebar → `Layout.Sider` + `Menu`; page control → `Carousel`; empty state → `Empty`.
+- Mapping: pop-up button → `Select`; pull-down → `Dropdown`; context menu → `Dropdown trigger={['contextMenu']}`; popover → `Popover`; disclosure → `Collapse ghost expandIconPlacement="end"`; scope bar → `Segmented` or `Radio.Group optionType="button"`; path control → `Breadcrumb separator="›"`; HUD toast → `message`; sidebar → `Layout.Sider` + `Menu`; page control → `Carousel`; empty state → `Empty`.
 
 ---
 
@@ -345,7 +346,7 @@ Ant Design specifics:
 ## 5. Color rules
 
 - **One meaning per color.** Never rely on color alone; pair it with text, shape or position.
-- **Accent sparingly**: primary actions, selection, status. Brand color goes into the content layer.
+- **Accent sparingly**: primary actions, selection, status. Brand color goes into the content layer and the one accent (§3.5).
 - **Destructive** uses red. The switch "on" color is green.
 - **Behind glass,** avoid label colors similar to busy content; use monochrome bars.
 - **Respect the system color scheme.** An in-app theme switch must default to "System".
@@ -524,10 +525,12 @@ For button → menu and tab bar ↔ sidebar, use the View Transitions API with a
 
 ```js
 import { restorePreferences, setMode, watchPreferences, checkContrast } from 'hig-web-kit/a11y';
+import { restoreTheme } from 'hig-web-kit/theme';
 restorePreferences();                 // saved choice + URL flags #aa #dark #hc (combinable: #aa-dark-hc)
+restoreTheme();                       // saved accent theme or #theme=vzb
 setMode('aa');                        // AA mode on (or 'apple')
 watchPreferences(p => rebuildFrameworkTheme(p)); // { mode, scheme, contrast, transparency, motion }
-console.table(checkContrast());       // live WCAG check of the rendered tokens
+console.table(checkContrast());       // live WCAG check of the rendered tokens (themes included)
 ```
 Without the package: `document.documentElement.setAttribute('data-hig-mode', 'aa')`, and for the other attributes listen to `matchMedia('(prefers-contrast: more)')` and the like.
 
@@ -585,7 +588,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
   - **Pop-up button** (`.hig-btn.hig-popup` + `data-hig-popup`): a mutually exclusive choice; the label shows the current value with ⌃⌄; its menu uses `menuitemradio` with a checkmark. Pick a sensible default. In list rows it's plain, trailing, `label-2` (accent in AA mode).
   - **Native select** styled as a field: `<div class="hig-select"><select>`.
   - **Compact date/time** (`input.hig-date`, type date/time): a capsule showing the value; the system calendar opens from it. Minute steps divide 60 (`step="900"`).
-- **Progress:** prefer determinate; never switch between a bar and a circle; report evenly; show progress after ≈ 1–2 s; use skeletons instead of blank screens.
+- **Progress:** prefer determinate; never switch between a bar and a circle; report evenly; show progress after ≈ 1–2 s; use skeletons instead of blank screens. Patterns in "Progress, gauges, ratings" below.
 
 ### Text fields and search
 - Always show a visible label; the placeholder is only a format hint. Never prefill passwords or block paste.
@@ -613,7 +616,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - A sheet is for a scoped task, one at a time. Swipe down to dismiss, and confirm first if there are unsaved changes.
 - Top bar: **Cancel on the leading side** (xmark), **Done on the trailing side** (tinted checkmark). Never show Done alone, or Cancel, Done and Back together.
 - Detents: medium (≈ ½ height, inset ≈ 8 px, radius ≈ 34 px, regular glass) and large (edge to edge, more opaque). The grabber is 36×5 px.
-- Implement with `<dialog>` and `showModal()`. Animate the close. A backdrop tap closes only when it lands outside the sheet.
+- Implement with `<dialog>` and `showModal()`. Animate the close. A backdrop tap closes only when it lands outside the sheet. Keep the `<dialog>` UA reset at class specificity (`:where(dialog).hig-sheet`), or it overrides the component's padding and max-width.
 
 ### Popovers and tooltips
 - Anchored to their source with an arrow, one at a time. Dismissing by tapping outside **saves** the work. Never use a popover for warnings. In compact width, use a sheet instead.
@@ -625,7 +628,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - The title is specific and at most 2 lines (never "Error"). At most 3 buttons.
 - Button labels are 1–2 word verbs; **never Yes/No**. Cancel is always "Cancel" and never the default.
 - With 2 buttons, Cancel goes on the leading side. With 3, stack them with Cancel at the bottom.
-- Look: ≈ 300 px wide, radius ≈ 32 px, left-aligned bold title, capsule buttons. Use `role="alertdialog"`.
+- Look: ≈ 300 px wide, radius ≈ 32 px, padding ≈ 22/18/16 px, left-aligned bold title, capsule buttons. Use `role="alertdialog"`.
 
 ### Action sheets
 - For choices about an action the person started. Destructive options come first in red, and Cancel is a separate block at the bottom. On wide screens, show it as a popover from the trigger.
@@ -633,7 +636,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 ### Tab bar
 - Tabs navigate between sections; they are never actions. Keep the bar visible, with ≤ 5 tabs and always-visible labels. Never disable or hide a tab.
 - Use filled icons for the selected tab. Badges are red, for critical information only.
-- Look: a floating capsule ≈ 62 px tall, ≈ 12 px above the safe area; items ≈ 84×54 px. The selected tab is accent-colored with a `fill-3` lens behind it; in AA mode the label is `label` and the lens gets a border.
+- Look: a floating capsule ≈ 62 px tall, ≈ 12 px above the safe area; items ≈ 84×54 px (shrinking to ≈ 64 px on narrow phones). The selected tab is accent-colored with a `fill-3` lens behind it; in AA mode the label is `label` and the lens gets a border.
 - Search is a separate circular glass button. The bar minimizes while scrolling down.
 
 ### Toolbar / navigation bar
@@ -655,13 +658,13 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - **Path control / breadcrumbs** (`nav.hig-path > ol > li`, last `aria-current="page"`): in the window body, never in a toolbar; middle items truncate first.
 
 ### Lists (inset grouped)
-- **Swipe actions** (`li.hig-swipe > .hig-swipe__actions + .hig-row.hig-swipe__content`): drag left to reveal; ≤ 3 actions, destructive last (trailing edge) in `destructive-fill`. Every swipe action must also exist elsewhere (context menu or edit mode); in the kit, Tab-focusing an action reveals the row.
 - Cards are `grouped-bg-2` on a `grouped-bg` page, radius ≈ 26 px.
 - Rows are ≥ 44 px (≈ 52 px in the Liquid Glass era), with a 16 px inset. 0.5 px separators are inset to the text (58 px when there's a 30 px icon square).
-- Values use `label-2`. Chevrons use `label-3` (`label-2` in AA mode).
+- Title with an optional `.hig-row__subtitle` (footnote, `label-2`); values use `label-2`. Chevrons use `label-3` (`label-2` in AA mode).
 - Settings icon squares: 30 px, radius 8 px, white 18 px glyph.
 - Section headers are Title Case footnotes. Footers say what a setting does when it's **on**.
 - Accessories: a chevron drills down, ⓘ shows details, a checkmark marks the chosen option.
+- **Swipe actions** (`li.hig-swipe > .hig-swipe__actions + .hig-row.hig-swipe__content`): drag left to reveal; ≤ 3 actions, destructive last (trailing edge) in `destructive-fill`. Every swipe action must also exist elsewhere (context menu or edit mode); in the kit, Tab-focusing an action reveals the row.
 
 ### Labels, badges, page controls
 - Use the label hierarchy (`label` → `label-4`); make useful text selectable.
@@ -674,7 +677,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - **Circular progress** (`.hig-progress-ring`, `--value: 40%`; `--label` shows the number inside, `--stop` a stop square) fills clockwise; never switch between bar and ring for one task. In lists, title + subtitle ("Uploading · 40 %") on the leading side, ring trailing.
 - **Bar in a row:** `.hig-row > .hig-row__body > .hig-row__line (title + value "8 of 12") + .hig-progress`.
 - **Gauge** (`.hig-gauge[role="meter"]`, `--value: 0–100`, `--color`, sizes `--sm`/`--lg`): a 270° capacity ring, value centred (unit in `<small>`), endpoint labels under the two ends of the arc. Wrap in `figure.hig-gauge-item` with a `figcaption` (bold name + context) and lay several out in `.hig-meters`. `.hig-gauge-bar` is linear with an indicator (`--heat` gradient when color carries meaning) and `.hig-gauge-scale` for its end labels. Always `aria-valuetext`.
-- **Rating** (`.hig-rating[role="img"]`, `--value`): whole stars only, `aria-label="4 of 5 stars"`.
+- **Rating** (`.hig-rating[role="img"]`, `--value`): whole stars only, `aria-label="4 of 5 stars"`; show the number next to it.
 
 ### Empty states, loading, notifications
 - **Empty state** (`.hig-empty`: icon, title, one-line explanation, optional button) — say what will appear and how to get it ("No Homework · Assignments from your teachers appear here."). Never a blank screen.
@@ -697,7 +700,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - **Launching and loading:** restore state; skeletons; progress after ≈ 1–2 s; never a blank screen.
 - **Feedback:** match how intrusive it is to how important it is (inline < toast < alert). Errors appear near the problem, with the fix.
 - **Entering data:** minimize typing; use pickers and defaults; validate each field as it's completed.
-- **Settings:** good defaults; don't duplicate OS settings (theme defaults to "System").
+- **Settings:** good defaults; don't duplicate OS settings (theme defaults to "System"); an accent picker is fine (§3.5).
 - **Accounts:** sign in as late as possible; guest use; passkeys; account deletion easy to find.
 - **Permissions:** explain the benefit first; a pre-prompt has a single "Continue" button (never "Allow"); stay usable after denial.
 - **Notifications:** marketing only after an explicit opt-in; "urgent" only for events happening now or within the hour.
@@ -733,14 +736,14 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 
 ## 12. Accessibility checklist (WCAG 2.2 AA)
 
-- **Contrast.** In AA mode: text ≥ 4.5:1 (≥ 3:1 at 18 px+ or bold); control boundaries, switch "on", slider fill and focus ≥ 3:1. Measure text on glass over the worst backdrop. Check custom colors with `checkContrast()`.
+- **Contrast.** In AA mode: text ≥ 4.5:1 (≥ 3:1 at 18 px+ or bold); control boundaries, switch "on", slider fill and focus ≥ 3:1. Measure text on glass over the worst backdrop. Check custom and brand colors with `checkContrast()`.
 - **Targets.** ≥ 44 px on touch (24 px minimum), 28 px on desktop.
 - **Text size and reflow** (1.4.4 / 1.4.10). Use `rem`, support 200 %, and stack horizontal items at large sizes.
 - **Focus.** Visible (2.4.7) and not hidden under floating bars (2.4.11, `scroll-padding`).
 - **Keyboard** (2.1.1). Segmented control and tabs use arrow keys; menus use arrows, Home/End and Esc; dialogs use `<dialog>`.
 - **Name, role, value** (4.1.2).
   - Every icon-only control has `aria-label`.
-  - Roles: `switch`, `radiogroup`, `tablist`, `menu`, `alertdialog`, `progressbar`.
+  - Roles: `switch`, `radiogroup`, `tablist`, `menu`, `alertdialog`, `progressbar`, `meter`.
   - `aria-checked`, `selected`, `expanded` and `busy` stay in sync.
 - **Errors** are announced (`aria-describedby` / `aria-live`) and say how to fix the problem.
 - **Preferences.** Reduce Transparency, Increase Contrast, Reduce Motion and forced colors are handled.
@@ -764,10 +767,12 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - [ ] `outline: none` with no replacement; hover-only controls; drag-only reordering.
 - [ ] Refraction via `backdrop-filter: url()` without engine detection; dozens of backdrop-filtered elements.
 - [ ] Ant Design: antd's derived `colorPrimary` used in AA dark mode (pin it, as `higAntd` does); more than one `type="primary"`.
+- [ ] A brand color pasted into `--hig-accent` unchanged in AA or dark mode (derive it, §3.5); a second "primary" brand color on controls.
 - [ ] Glass on cards, widgets, tables or an inline banner (content layer); a popover in compact width instead of a sheet.
 - [ ] Checkboxes on iPhone-style settings rows (use switches); a pop-up button with actions, or a pull-down with < 3 items.
 - [ ] Actions available only by swipe, long press or right-click; information only in a tooltip.
 - [ ] Coloured page dots, > 10 dots, or a page control without paging by keyboard.
+- [ ] Gauges without endpoint labels or `aria-valuetext`; red badges for plain counts.
 - [ ] A blank screen while loading or when empty (use skeletons and an empty state); a toast for errors.
 - [ ] Table on a phone where a list would do; headings that aren't Title Case nouns; numbers left-aligned.
 
