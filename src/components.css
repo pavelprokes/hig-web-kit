@@ -224,8 +224,9 @@ button.hig-row:active, a.hig-row:active { background: var(--hig-fill-3); }
 }
 
 /* ── Dialogs: sheet, alert, action sheet (use <dialog> + showModal) ── */
-dialog.hig-sheet, dialog.hig-alert, dialog.hig-action-sheet { color: var(--hig-label); border: 0; padding: 0; max-width: none; max-height: none; }
-dialog.hig-sheet::backdrop, dialog.hig-alert::backdrop, dialog.hig-action-sheet::backdrop { background: var(--hig-scrim); }
+/* UA reset wrapped in :where() so it stays at class specificity and the component rules below (padding, max-width) win. */
+:where(dialog).hig-sheet, :where(dialog).hig-alert, :where(dialog).hig-action-sheet { color: var(--hig-label); border: 0; padding: 0; max-width: none; max-height: none; }
+:where(dialog).hig-sheet::backdrop, :where(dialog).hig-alert::backdrop, :where(dialog).hig-action-sheet::backdrop { background: var(--hig-scrim); }
 .hig-sheet {
   position: fixed; inset: auto 8px calc(env(safe-area-inset-bottom, 0px) + 8px) 8px; margin: 0 auto; width: auto; max-width: 640px;
   height: min(52vh, 460px); border-radius: var(--hig-radius-window); overflow: hidden; display: none; flex-direction: column;
