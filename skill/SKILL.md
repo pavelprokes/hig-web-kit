@@ -5,7 +5,7 @@ description: Use when designing, building or reviewing web UI (HTML/CSS/JS, Reac
 
 # Apple HIG for the web (Liquid Glass era) — with an optional WCAG 2.2 AA mode
 
-Distilled from developer.apple.com/design: Human Interface Guidelines (Getting started, Foundations, Patterns, Components, Inputs), "Adopting Liquid Glass", and WWDC25 sessions 219, 356, 359, 208 and 220. Current as of October 2026 (iOS/iPadOS/macOS 27). The code in this skill matches the open-source package **hig-web-kit** (`npm i hig-web-kit`, MIT), which is tested in real browsers and frameworks. Use the package when the project can install dependencies; paste the code below when it can't.
+Distilled from developer.apple.com/design: Human Interface Guidelines (Getting started, Foundations, Patterns, Components, Inputs), "Adopting Liquid Glass", and WWDC25 sessions 219, 356, 359, 208 and 220. Current as of October 2026 (iOS/iPadOS/macOS 27). The code in this skill matches the open-source package **hig-web-kit** (`npm i hig-web-kit`, MIT, github.com/pavelprokes/hig-web-kit), which is tested in real browsers and frameworks. Use the package when the project can install dependencies; paste the code below when it can't.
 
 Apple publishes almost no pixel values for Liquid Glass (blur, opacity). Numbers marked **≈** are tuned web values, not Apple specs; numbers without ≈ come from the HIG. 1 pt (Apple) = 1 CSS px.
 
