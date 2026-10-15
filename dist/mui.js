@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // MUI (Material UI) adapter.
 //
 //   import { createTheme, ThemeProvider } from '@mui/material/styles';

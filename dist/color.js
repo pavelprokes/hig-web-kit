@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // Color utilities shared by the build, the contrast checker and the runtime (dist/a11y.js).
 // Dependency-free. Colors are [r, g, b, a] with r/g/b in 0..255 and a in 0..1.
 

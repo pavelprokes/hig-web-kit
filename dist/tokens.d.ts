@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 
 export type HigColorName = 'bg' | 'bg2' | 'bg3' | 'groupedBg' | 'groupedBg2' | 'groupedBg3' | 'bgElevated' | 'bgElevated2' | 'label' | 'label2' | 'label3' | 'label4' | 'placeholder' | 'link' | 'sep' | 'sepOpaque' | 'fill' | 'fill2' | 'fill3' | 'fill4' | 'red' | 'orange' | 'yellow' | 'green' | 'mint' | 'teal' | 'cyan' | 'blue' | 'indigo' | 'purple' | 'pink' | 'brown' | 'gray' | 'gray2' | 'gray3' | 'gray4' | 'gray5' | 'gray6' | 'accent' | 'accentFill' | 'accentText' | 'onAccent' | 'destructiveFill' | 'destructiveText' | 'onDestructive' | 'successText' | 'warningText' | 'switchOn' | 'controlBorder' | 'focusRing' | 'glassTint' | 'glassTintLarge' | 'glassTintClear' | 'glassRim' | 'glassRimDim' | 'glassLabel' | 'glassShadowColor' | 'scrim';
 export type HigColorSet = Record<HigColorName, string>;

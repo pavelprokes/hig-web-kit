@@ -27,6 +27,10 @@ export const PAIRS = [
   ['Label on regular glass (worst backdrop)', ['glass-label', 'glass-tint', '@backdrop'], ['glass-tint', '@backdrop'], 4.5],
   ['Label on large glass (worst backdrop)', ['glass-label', 'glass-tint-large', '@backdrop'], ['glass-tint-large', '@backdrop'], 4.5],
   ['White label on clear glass over media (worst backdrop)', ['#ffffff'], ['glass-tint-clear', '@backdrop'], 4.5],
+  ['Token / chip text on fill', ['label', 'fill-2', 'grouped-bg-2'], ['fill-2', 'grouped-bg-2'], 4.5],
+  ['Selected chip text', ['bg'], ['label'], 4.5],
+  ['Tooltip text', ['label'], ['bg-elevated'], 4.5],
+  ['Secondary text in table stripe', ['label-2', 'fill-4', 'grouped-bg-2'], ['fill-4', 'grouped-bg-2'], 4.5],
 
   // 1.4.11 Non-text Contrast — UI component boundaries, states and focus 3:1
   ['Switch "on" track vs card', ['switch-on'], ['bg-2'], 3],
@@ -34,6 +38,9 @@ export const PAIRS = [
   ['Control border (field, switch off, segmented) vs page', ['control-border', 'bg'], ['bg'], 3],
   ['Control border vs grouped card', ['control-border', 'grouped-bg-2'], ['grouped-bg-2'], 3],
   ['Slider fill / selected indicator vs page', ['accent'], ['bg'], 3],
+  ['Checkbox / radio outline vs elevated surface', ['control-border', 'bg-elevated'], ['bg-elevated'], 3],
+  ['Checked checkbox / radio vs card', ['accent-fill'], ['grouped-bg-2'], 3],
+  ['Page dot / gauge track vs grouped page', ['control-border', 'grouped-bg'], ['grouped-bg'], 3],
   ['Focus ring vs page', ['focus-ring', 'bg'], ['bg'], 3],
   ['Focus ring vs secondary background', ['focus-ring', 'bg-2'], ['bg-2'], 3],
 ];

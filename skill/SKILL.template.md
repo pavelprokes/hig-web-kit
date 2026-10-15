@@ -167,6 +167,9 @@ Ant Design specifics:
 - Controls are 44 px (touch) or 28 px (desktop).
 - Keep only one `type="primary"` button per view.
 - In `Modal.confirm`, give the destructive button `okButtonProps={{ danger: true }}` and set `autoFocusButton="cancel"`.
+- Already themed by `higAntd()`: Checkbox/Radio (22/16 px, visible outline), Breadcrumb (path control colors), Collapse (ghost disclosure rows), Avatar (Contacts-style monogram, AA-safe gray), Badge (`on-destructive` text in AA), Tag (`fill-2` capsule), Tooltip (light help tag), Skeleton, Carousel dots (8 px; wider current dot in AA), Table sort states, Progress, Notification and Message.
+- `antd-glass.css` also turns notifications and messages into glass (banner and HUD capsule); add `className="hig-striped"` to a `Table` for alternating rows.
+- Mapping: pop-up button → `Select`; pull-down → `Dropdown`; context menu → `Dropdown trigger={['contextMenu']}`; popover → `Popover`; disclosure → `Collapse ghost`; scope bar → `Segmented` or `Radio.Group optionType="button"`; HUD toast → `message`; sidebar → `Layout.Sider` + `Menu`; page control → `Carousel`; empty state → `Empty`.
 
 ---
 
@@ -412,7 +415,10 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 ### Toggles
 - Use a **switch** only in list rows: ≈ 64×28 px track and 38×24 px thumb, green when on, `role="switch"`. In AA mode it gets a border when off.
 - Outside lists, use a **toggle button** (`aria-pressed`).
-- Checkbox and radio controls are for desktop; radio groups hold 2–5 options.
+- **Checkbox and radio** (`input.hig-checkbox` / `input.hig-radio` inside `label.hig-check`, grouped in `fieldset.hig-choices`) are desktop controls; radio groups hold 2–5 options, more → pop-up button.
+  - Label on the trailing side; the box always has a visible outline (`label-3`; `control-border` in AA mode); checked = `accent-fill` with an `on-accent` mark.
+  - A parent checkbox shows **mixed** (dash) when its children differ: `aria-controls="child ids"` wires this up. Indent dependents (`.hig-choices--nested`).
+  - Touch 22 px boxes with 44 px rows; pointer 18 px with 28 px rows.
 
 ### Segmented control
 - 2–5 segments on phones (≤ 7 when wide), equal widths, all text or all icons, noun labels.
@@ -423,6 +429,9 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - **Slider:** min on the leading side; live feedback; label ending with a colon; 6 px track; the thumb turns to glass while dragged; `aria-valuetext`.
 - **Stepper:** −/+ in one capsule, with the value shown next to it.
 - **Pickers:** for medium and long lists; short lists use a pull-down or pop-up button.
+  - **Pop-up button** (`.hig-btn.hig-popup` + `data-hig-popup`): a mutually exclusive choice; the label shows the current value with ⌃⌄; its menu uses `menuitemradio` with a checkmark. Pick a sensible default. In list rows it's plain, trailing, `label-2` (accent in AA mode).
+  - **Native select** styled as a field: `<div class="hig-select"><select>`.
+  - **Compact date/time** (`input.hig-date`, type date/time): a capsule showing the value; the system calendar opens from it. Minute steps divide 60 (`step="900"`).
 - **Progress:** prefer determinate; never switch between a bar and a circle; report evenly; show progress after ≈ 1–2 s; use skeletons instead of blank screens.
 
 ### Text fields and search
@@ -430,6 +439,8 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - Fields are 44 px, `fill-3`, radius 14 px, with `control-border` in AA mode and a 2 px focus ring.
 - Validate digits as they're typed, email on blur, and passwords before the person leaves the field. Errors appear inline and say how to fix the problem.
 - Set `inputmode` / `type` and `enterkeyhint`.
+- **Multiline** (`.hig-input--multiline` + `textarea`): grows with content (3–12 lines); show a live count (`.hig-field__count`, `aria-live="polite"`) when there's a limit.
+- **Token field** (`.hig-input.hig-tokens[data-hig-tokens]`): comma or Return turns text into a token; Backspace on an empty input removes the last; every token has a labelled remove button ("Remove Robotics").
 - Search:
   - a magnifier, a placeholder naming what can be searched, and a clear button shown only when there's text;
   - search as people type, with recents before typing;
@@ -443,6 +454,7 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - Context menus open on right-click or long press (≈ 500 ms); every item must also be reachable elsewhere.
 - Look: large glass, radius ≈ 26 px (touch) or 10–12 px (pointer), rows 44 px (touch) or ≈ 28 px (pointer). The menu grows out of its trigger.
 - Accessibility: `aria-haspopup`, `aria-expanded`; arrow keys, Home/End and Esc, with focus returning to the trigger.
+- **Context menu** (`data-hig-contextmenu="menu-id"` on the item; the menu is a normal `.hig-menu`): right-click, long press (≈ 500 ms) or **Shift+F10 / Menu key**. The item lifts (scale 1.02 + shadow), the page dims and blurs, the menu opens at the pointer and flips above when there's no room. Keep ≤ 3 groups, destructive last, no keyboard shortcuts shown, hide (don't dim) unavailable items.
 
 ### Sheets
 - A sheet is for a scoped task, one at a time. Swipe down to dismiss, and confirm first if there are unsaved changes.
@@ -450,8 +462,10 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - Detents: medium (≈ ½ height, inset ≈ 8 px, radius ≈ 34 px, regular glass) and large (edge to edge, more opaque). The grabber is 36×5 px.
 - Implement with `<dialog>` and `showModal()`. Animate the close. A backdrop tap closes only when it lands outside the sheet.
 
-### Popovers
+### Popovers and tooltips
 - Anchored to their source with an arrow, one at a time. Dismissing by tapping outside **saves** the work. Never use a popover for warnings. In compact width, use a sheet instead.
+- Implementation: Popover API — `<button popovertarget="p">` + `<div class="hig-glass hig-glass--large hig-popover" id="p" popover><span class="hig-popover__arrow"></span>…`. components.js places it below (or above) the source and aims the arrow; under 600 px it becomes a bottom sheet with a scrim.
+- **Tooltips / help tags** (`data-hig-tooltip="…"`): pointer only, after ≈ 500 ms hover or immediately on keyboard focus; short, solid surface, wired with `aria-describedby`. Hoverable, dismissible with Esc, persistent while hovered (WCAG 1.4.13). Never put essential information only in a tooltip; iOS has none.
 
 ### Alerts
 - Use alerts rarely, never on launch, and not for actions that can be undone.
@@ -477,11 +491,18 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - The title is specific, < 15 characters, and never the app name. The large title collapses into the inline title on scroll.
 
 ### Sidebar and split view
-- The sidebar sits on the leading side, with ≤ 2 levels. People can hide it, but it isn't hidden by default. Icons use the accent color.
+- The sidebar sits on the leading side, with ≤ 2 levels. People can hide it, but it isn't hidden by default. Icons use the accent color. No critical items at the bottom.
 - Look: floating glass inset ≈ 8 px, with a radius concentric with the window. Content and hero images extend under it.
-- Split view: the selection stays highlighted in each pane. Dividers are 1 px. It collapses to a stack in compact width.
+- Markup: `nav.hig-glass.hig-glass--large.hig-sidebar` with `.hig-sidebar__heading`, `a.hig-sidebar__item[aria-current="page"]` (selected = `fill-2` pill + semibold; AA adds a border), optional `.hig-sidebar__count`, collapsible groups as `details.hig-sidebar__group > summary`. Rows 44 px touch / 32 px pointer; item radius = sidebar radius − padding (concentric).
+- Split view: `.hig-split > .hig-split__layout > (sidebar, .hig-split__detail)` — a container query puts panes side by side from 560 px and stacks them below; `.hig-split--three` adds a `.hig-split__list` column (1 px divider) from 860 px. The selection stays highlighted in each pane.
+
+### Disclosure, scope bars, path controls
+- **Disclosure** (`details.hig-disclosure > summary`): the chevron points to the trailing side when closed and down when open; give it a descriptive label ("Advanced Options"). Keep the most-used controls visible. Inside `.hig-list` it renders as a row; height animates where supported.
+- **Scope bar / filter chips** (`.hig-scope[role="radiogroup"] > button.hig-chip[role="radio"]`): narrow results under a search field or list; one selected, arrow keys move. Independent filters are `button.hig-chip[aria-pressed]`. Selected = inverted (`label` fill, `bg` text) — not colour alone.
+- **Path control / breadcrumbs** (`nav.hig-path > ol > li`, last `aria-current="page"`): in the window body, never in a toolbar; middle items truncate first.
 
 ### Lists (inset grouped)
+- **Swipe actions** (`li.hig-swipe > .hig-swipe__actions + .hig-row.hig-swipe__content`): drag left to reveal; ≤ 3 actions, destructive last (trailing edge) in `destructive-fill`. Every swipe action must also exist elsewhere (context menu or edit mode); in the kit, Tab-focusing an action reveals the row.
 - Cards are `grouped-bg-2` on a `grouped-bg` page, radius ≈ 26 px.
 - Rows are ≥ 44 px (≈ 52 px in the Liquid Glass era), with a 16 px inset. 0.5 px separators are inset to the text (58 px when there's a 30 px icon square).
 - Values use `label-2`. Chevrons use `label-3` (`label-2` in AA mode).
@@ -491,8 +512,25 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 
 ### Labels, badges, page controls
 - Use the label hierarchy (`label` → `label-4`); make useful text selectable.
-- Badges are 18 px tall and red.
-- Page controls are ≈ 8 px dots for ≤ 10 pages, paired with `scroll-snap`.
+- Badges are 18 px tall and red, for things that need attention; position with `.hig-badge-anchor`, `.hig-badge--dot` for a dot. Put the count in the button's `aria-label` ("Notifications, 3 new").
+- **Page control** (`.hig-page-control[data-hig-pager="pager-id"]` + `.hig-pager > .hig-pager__page`): ≈ 8 px dots (24 px targets) for ≤ 10 flat pages, centred below; current dot `label`, others `label-3` (`control-border` and a wider current capsule in AA mode). Arrow keys page; dots get "Page n / N" labels. Never colour the dots.
+
+### Progress, gauges, ratings
+- **Activity indicator** (`span.hig-activity[role="progressbar"]`, `--lg`): CSS-only 8 spokes in `label-2`; for unknown durations only, no label on macOS. **Circular progress** (`.hig-progress-ring`, `--value: 40%`) fills clockwise; never switch between bar and ring for one task.
+- **Gauge** (`.hig-gauge[role="meter"]`, `--value: 0–100`): a 270° capacity ring with the value centred and both endpoints labelled; `.hig-gauge-bar` is a linear gauge with an indicator (`--heat` gradient for meaning like temperature). Give `aria-valuetext`.
+- **Rating** (`.hig-rating[role="img"]`, `--value`): whole stars only, `aria-label="4 of 5 stars"`.
+
+### Empty states, loading, notifications
+- **Empty state** (`.hig-empty`: icon, title, one-line explanation, optional button) — say what will appear and how to get it ("No Homework · Assignments from your teachers appear here."). Never a blank screen.
+- **Skeletons** (`.hig-skeleton`, `--text`, `--title`, `--circle`) mirror the real layout; the container gets `aria-busy="true"`; the shimmer stops with Reduce Motion.
+- **Notification banner** (`.hig-banner`): icon square, bold title, time, text. Solid when shown inside content; add `.hig-glass .hig-glass--large` only when it floats.
+- **HUD toast** (`showToast('Added to Library', { icon })`): a glass capsule at the top for brief confirmation of something the person just did — `role="status"`, ≥ 4 s, pauses while hovered, never the only way to learn about an error (use inline messages or an alert).
+
+### Tables and collections
+- **Table** (`.hig-table-wrap > table.hig-table`): column headings are Title Case nouns; `th > button.hig-table__sort` sorts (click again to reverse, `aria-sort`); numbers right-aligned (`.is-num`, tabular figures); alternating rows for wide tables; sticky header. Tables are for desktop/regular width — on phones prefer a list.
+- **Collection** (`ul.hig-grid > li > button.hig-grid__item`): photos edge to edge with 2 px gaps; `.hig-grid--cards` for captioned tiles. Selection shows an accent check badge (`aria-pressed`). Animate insert/remove.
+- **Avatar** (`.hig-avatar`, `--sm/--lg/--xl`): photo or monogram initials on a gray gradient (darker in AA mode so white initials reach 4.5:1); `.hig-avatar-stack` overlaps with a ring. Decorative avatars get `aria-hidden`; a stack gets one `role="img"` label listing the people.
+- **Card / widget** (`.hig-card`, `.hig-widget`, `--medium`, `--tinted`): content layer, so solid `grouped-bg-2`, never glass. Widgets lead with one glanceable value (rounded bold, tabular), a label and a caption; radius ≈ 24 px with concentric content.
 
 ---
 
@@ -570,6 +608,12 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 - [ ] `outline: none` with no replacement; hover-only controls; drag-only reordering.
 - [ ] Refraction via `backdrop-filter: url()` without engine detection; dozens of backdrop-filtered elements.
 - [ ] Ant Design: antd's derived `colorPrimary` used in AA dark mode (pin it, as `higAntd` does); more than one `type="primary"`.
+- [ ] Glass on cards, widgets, tables or an inline banner (content layer); a popover in compact width instead of a sheet.
+- [ ] Checkboxes on iPhone-style settings rows (use switches); a pop-up button with actions, or a pull-down with < 3 items.
+- [ ] Actions available only by swipe, long press or right-click; information only in a tooltip.
+- [ ] Coloured page dots, > 10 dots, or a page control without paging by keyboard.
+- [ ] A blank screen while loading or when empty (use skeletons and an empty state); a toast for errors.
+- [ ] Table on a phone where a list would do; headings that aren't Title Case nouns; numbers left-aligned.
 
 ## 14. Icons
 

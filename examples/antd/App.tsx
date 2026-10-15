@@ -3,7 +3,7 @@
 //   npm i antd hig-web-kit
 //   main.tsx: import 'hig-web-kit/hig.css'; import 'hig-web-kit/glass.css'; import 'hig-web-kit/antd-glass.css';
 import { useEffect, useState } from 'react';
-import { App as AntApp, Button, Card, ConfigProvider, Form, Input, Segmented, Select, Space, Switch, Typography } from 'antd';
+import { App as AntApp, Avatar, Badge, Breadcrumb, Button, Card, Checkbox, Collapse, ConfigProvider, Empty, Form, Input, Popover, Radio, Segmented, Select, Skeleton, Space, Switch, Table, Tag, Tooltip, Typography } from 'antd';
 import { higAntd, type HigAntdOptions } from 'hig-web-kit/antd';
 import { getPreferences, restorePreferences, setMode, watchPreferences, type HigPreferences } from 'hig-web-kit/a11y';
 
@@ -52,8 +52,51 @@ export default function App() {
               </Space>
             </Form>
           </Card>
+
+          <Library />
         </main>
       </AntApp>
     </ConfigProvider>
+  );
+}
+
+const students = [
+  { key: 1, name: 'Adam', course: 'Robotics', score: 94 },
+  { key: 2, name: 'Bára', course: 'Python', score: 88 },
+  { key: 3, name: 'Eliška', course: '3D Printing', score: 97 },
+];
+
+/** The extended components: everything here picks up the HIG theme from higAntd(). */
+function Library() {
+  const { message, notification } = AntApp.useApp();
+  const [loading, setLoading] = useState(false);
+  return (
+    <Card title="Library" style={{ marginTop: 24 }}>
+      <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <Breadcrumb separator="›" items={[{ title: <a href="#courses">Courses</a> }, { title: <a href="#robotics">Robotics</a> }, { title: 'Traffic Light' }]} />
+        <Checkbox.Group options={['Bold', 'Italic', 'Underline']} defaultValue={['Bold']} />
+        <Radio.Group options={['Beginner', 'Intermediate', 'Advanced']} defaultValue="Beginner" />
+        <Space wrap>
+          <Tag>Robotics</Tag><Tag>Python</Tag>
+          <Badge count={3}><Avatar>PP</Avatar></Badge>
+          <Avatar.Group><Avatar>AD</Avatar><Avatar>BA</Avatar><Avatar>EL</Avatar></Avatar.Group>
+        </Space>
+        <Space wrap>
+          <Popover title="Traffic Light" content="Thursday 16:30 · Room 2" trigger="click"><Button>Lesson Info</Button></Popover>
+          <Tooltip title="Copies the lesson link"><Button>Copy Link</Button></Tooltip>
+          <Button onClick={() => message.success('Added to Library')}>Add to Library</Button>
+          <Button onClick={() => notification.info({ message: 'Lesson starts in 15 minutes', description: 'Robotics · Room 2' })}>Notify</Button>
+        </Space>
+        <Collapse ghost expandIconPlacement="end" items={[{ key: 'm', label: 'Materials', children: 'micro:bit, 3 LEDs, breadboard.' }]} />
+        <Table className="hig-striped" size="middle" pagination={false} dataSource={students}
+          columns={[
+            { title: 'Student', dataIndex: 'name', sorter: (a, b) => a.name.localeCompare(b.name) },
+            { title: 'Course', dataIndex: 'course' },
+            { title: 'Score', dataIndex: 'score', align: 'right', sorter: (a, b) => a.score - b.score },
+          ]} />
+        {loading ? <Skeleton avatar active paragraph={{ rows: 2 }} />
+          : <Empty description="No homework yet"><Button onClick={() => { setLoading(true); setTimeout(() => setLoading(false), 2000); }}>Check Again</Button></Empty>}
+      </Space>
+    </Card>
   );
 }

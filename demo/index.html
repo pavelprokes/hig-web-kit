@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../dist/components.css">
 <style>
 /* Demo-only layout. Everything visual comes from the kit's tokens and classes. */
-body { background: var(--hig-grouped-bg); }
+body { background: var(--hig-grouped-bg); --hig-toast-offset: 64px; } /* toasts sit below the floating toolbar */
 main { max-width: 720px; margin-inline: auto; padding: calc(env(safe-area-inset-top, 0px) + 64px) 16px calc(env(safe-area-inset-bottom, 0px) + 120px); }
 .view { display: grid; gap: 28px; }
 .lede { margin: -18px 4px 0; color: var(--hig-label-2); max-width: 60ch; }
@@ -39,6 +39,13 @@ main { max-width: 720px; margin-inline: auto; padding: calc(env(safe-area-inset-
 .ct-verdict { min-width: 5.2em; display: inline-flex; gap: 4px; justify-content: flex-end; align-items: center; font: 600 .8125rem/1 var(--hig-font-sans); }
 .ct-verdict.bad { color: var(--hig-destructive-text); }
 .ct-need { display: block; font: var(--hig-text-footnote); color: var(--hig-label-2); }
+.window-demo { background: linear-gradient(160deg, color-mix(in srgb, var(--hig-blue) 22%, var(--hig-grouped-bg-2)), var(--hig-grouped-bg-2) 60%); border-radius: 34px; padding: 8px; }
+.detail-demo { display: grid; gap: 14px; align-content: start; padding: 12px 8px; }
+@media (min-width: 600px) { .feature { aspect-ratio: 21 / 9 !important; } }
+.feature { aspect-ratio: 16 / 9; border-radius: var(--hig-radius-card); padding: 18px 20px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; background: linear-gradient(135deg, var(--a), var(--b)); }
+.feature b { font: var(--hig-text-title-2); }
+.ctx-card { cursor: context-menu; }
+.hig-row__title .ct-need { margin-top: 2px; }
 code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--hig-fill-3); padding: 1px 5px; border-radius: 6px; }
 </style>
 </head>
@@ -71,6 +78,16 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
     <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
     <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8L3.5 9.7l5.9-.8z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5zM4 20.5A2.5 2.5 0 006.5 23H20v-5"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M2 13v2M22 13v2"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v10h14V9M10 13h4"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-tray" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3zM3 13h5l1.5 2.5h5L16 13h5"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
   </defs>
 </svg>
@@ -213,6 +230,67 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
       </div>
     </section>
 
+
+    <section>
+      <p class="hig-section-head">Checkboxes and radios</p>
+      <div class="panel">
+        <fieldset class="hig-choices">
+          <legend>Text style</legend>
+          <label class="hig-check"><input type="checkbox" class="hig-checkbox" aria-controls="cbBold cbItalic cbUnder"> All styles</label>
+          <div class="hig-choices hig-choices--nested">
+            <label class="hig-check"><input type="checkbox" class="hig-checkbox" id="cbBold" checked> Bold</label>
+            <label class="hig-check"><input type="checkbox" class="hig-checkbox" id="cbItalic"> Italic</label>
+            <label class="hig-check"><input type="checkbox" class="hig-checkbox" id="cbUnder" disabled> Underline</label>
+          </div>
+        </fieldset>
+        <fieldset class="hig-choices hig-choices--row">
+          <legend>Difficulty</legend>
+          <label class="hig-check"><input type="radio" class="hig-radio" name="lvl" checked> Beginner</label>
+          <label class="hig-check"><input type="radio" class="hig-radio" name="lvl"> Intermediate</label>
+          <label class="hig-check"><input type="radio" class="hig-radio" name="lvl"> Advanced</label>
+        </fieldset>
+      </div>
+      <p class="hig-section-foot">Checkboxes and radios belong to desktop forms; a parent shows a dash when its children differ. On iPhone, use switches in list rows. More than five options → a pop-up button.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Pickers and editors</p>
+      <div class="hig-list">
+        <div class="hig-row"><span class="hig-row__title" id="lbl-size">Group Size</span>
+          <div class="hig-menu-anchor">
+            <button class="hig-btn hig-popup" aria-haspopup="menu" aria-expanded="false" aria-controls="sizeMenu" aria-labelledby="lbl-size sizeVal" data-hig-popup><span class="hig-popup__value" id="sizeVal">Medium</span></button>
+            <div class="hig-glass hig-glass--large hig-menu" id="sizeMenu" role="menu" aria-label="Group size" hidden style="left:auto;right:0">
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="false"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Small</span></button>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="true"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Medium</span></button>
+              <button class="hig-menu__item" role="menuitemradio" aria-checked="false"><svg class="hig-icon hig-menu__check"><use href="#i-check"/></svg><span class="hig-menu__label">Large</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="hig-row"><label class="hig-row__title" for="startDate">Starts</label><span class="row-wrap" style="gap:8px;justify-content:flex-end"><input type="date" class="hig-date" id="startDate" value="2026-11-03"><input type="time" class="hig-date" aria-label="Start time" value="16:30" step="900"></span></div>
+      </div>
+      <div class="panel" style="margin-top:16px">
+        <div class="hig-field">
+          <label for="city">City</label>
+          <div class="hig-select"><select id="city"><option>Prague</option><option>Brno</option><option>Ostrava</option><option>Plzeň</option></select></div>
+        </div>
+        <div class="hig-field">
+          <label for="tagInput">Topics</label>
+          <div class="hig-input hig-tokens" data-hig-tokens>
+            <span class="hig-token">Robotics<button type="button" class="hig-token__remove" aria-label="Remove Robotics"></button></span>
+            <span class="hig-token">Python<button type="button" class="hig-token__remove" aria-label="Remove Python"></button></span>
+            <input id="tagInput" placeholder="Add topic" aria-describedby="tagHint" enterkeyhint="done">
+          </div>
+          <div class="hig-field__hint" id="tagHint">Press Return or type a comma to add a topic.</div>
+        </div>
+        <div class="hig-field">
+          <label for="note">Note for parents</label>
+          <div class="hig-input hig-input--multiline"><textarea id="note" rows="3" maxlength="200" aria-describedby="noteCount" placeholder="What should they bring?"></textarea></div>
+          <div class="hig-field__count" id="noteCount" aria-live="polite">0 / 200</div>
+        </div>
+      </div>
+      <p class="hig-section-foot">A pop-up button holds one exclusive choice and shows it. The compact date picker is a capsule with the value; the system calendar opens from it.</p>
+    </section>
+
     <section>
       <p class="hig-section-head">Menus, sheets and alerts</p>
       <div class="panel">
@@ -233,6 +311,180 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
         </div>
       </div>
       <p class="hig-section-foot">The menu grows out of its button. A medium sheet floats inset from the edges and becomes more opaque at full height.</p>
+    </section>
+  </div>
+
+  <!-- 4 · Library -->
+  <div class="view" id="v-library" role="tabpanel" aria-labelledby="t-library" hidden>
+    <h1 class="hig-large-title" data-title>Library</h1>
+
+    <section>
+      <p class="hig-section-head">Sidebar and split view</p>
+      <div class="hig-split window-demo">
+        <div class="hig-split__layout">
+          <nav class="hig-glass hig-glass--large hig-sidebar" aria-label="Library">
+            <p class="hig-sidebar__heading">Courses</p>
+            <a class="hig-sidebar__item" href="#" aria-current="page"><svg class="hig-icon"><use href="#i-book"/></svg>All Lessons<span class="hig-sidebar__count">24</span></a>
+            <a class="hig-sidebar__item" href="#"><svg class="hig-icon"><use href="#i-bot"/></svg>Robotics<span class="hig-sidebar__count">9</span></a>
+            <a class="hig-sidebar__item" href="#"><svg class="hig-icon"><use href="#i-code"/></svg>Python<span class="hig-sidebar__count">8</span></a>
+            <details class="hig-sidebar__group" open>
+              <summary>Workshops</summary>
+              <a class="hig-sidebar__item" href="#"><svg class="hig-icon"><use href="#i-cube"/></svg>3D Printing</a>
+              <a class="hig-sidebar__item" href="#"><svg class="hig-icon"><use href="#i-star"/></svg>Favorites</a>
+            </details>
+          </nav>
+          <div class="hig-split__detail detail-demo">
+            <nav class="hig-path" aria-label="Location"><ol><li><a href="#">Courses</a></li><li><a href="#">Robotics</a></li><li aria-current="page">Traffic Light</li></ol></nav>
+            <div class="hig-scope" role="radiogroup" aria-label="Show">
+              <button class="hig-chip" role="radio" aria-checked="true">All</button>
+              <button class="hig-chip" role="radio" aria-checked="false">Upcoming</button>
+              <button class="hig-chip" role="radio" aria-checked="false">Done</button>
+            </div>
+            <div class="hig-list">
+              <details class="hig-disclosure"><summary>Materials</summary><div class="hig-disclosure__body">micro:bit, 3 LEDs, breadboard and jumper wires.</div></details>
+              <details class="hig-disclosure"><summary>Advanced Options</summary><div class="hig-disclosure__body"><label class="hig-check"><input type="checkbox" class="hig-checkbox" checked> Show solutions after class</label></div></details>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="hig-section-foot">The sidebar floats in the glass layer and stacks above the content in compact width. Disclosure chevrons point to the trailing side when closed and down when open.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Paged content</p>
+      <div class="hig-pager" id="featured" tabindex="0" aria-label="Featured courses (use arrow keys)">
+        <div class="hig-pager__page"><div class="feature" style="--a:#2a5bd7;--b:#7a3bd1"><span class="hig-text-footnote">New this term</span><b>Robotics with micro:bit</b></div></div>
+        <div class="hig-pager__page"><div class="feature" style="--a:#0f8a6b;--b:#2f6fd0"><span class="hig-text-footnote">Ages 11–15</span><b>Python Games</b></div></div>
+        <div class="hig-pager__page"><div class="feature" style="--a:#c2477a;--b:#e3803a"><span class="hig-text-footnote">Weekend workshop</span><b>3D Printing</b></div></div>
+        <div class="hig-pager__page"><div class="feature" style="--a:#5b3c9e;--b:#1f7fa8"><span class="hig-text-footnote">Summer camp</span><b>Build a Drone</b></div></div>
+      </div>
+      <div class="hig-page-control" data-hig-pager="featured" style="margin-top:8px"></div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Progress, gauges and badges</p>
+      <div class="panel">
+        <div class="row-wrap" style="gap:20px">
+          <span class="hig-activity" role="progressbar" aria-label="Loading"></span>
+          <span class="hig-activity hig-activity--lg" role="progressbar" aria-label="Loading"></span>
+          <div class="hig-progress-ring" id="ring" role="progressbar" aria-label="Upload" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" style="--value:40%"></div>
+          <div class="hig-gauge" role="meter" aria-label="Attendance" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" aria-valuetext="72 percent" style="--value:72"><span class="hig-gauge__value">72</span><span class="hig-gauge__min" aria-hidden="true">0</span><span class="hig-gauge__max" aria-hidden="true">100</span></div>
+          <span class="hig-rating" role="img" aria-label="4 of 5 stars" style="--value:4"></span>
+          <span class="hig-badge-anchor"><button class="hig-glass hig-icon-btn" aria-label="Notifications, 3 new"><svg class="hig-icon"><use href="#i-bell"/></svg></button><span class="hig-badge" aria-hidden="true">3</span></span>
+        </div>
+        <div>
+          <div class="panel-label" style="margin-bottom:10px">Classroom temperature: 23 °C</div>
+          <div class="hig-gauge-bar hig-gauge-bar--heat" role="meter" aria-label="Classroom temperature" aria-valuemin="15" aria-valuemax="30" aria-valuenow="23" aria-valuetext="23 degrees" style="--value:53"></div>
+        </div>
+      </div>
+      <p class="hig-section-foot">Prefer determinate progress. Badges are red and only for things that need attention.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Popovers, tooltips and notifications</p>
+      <div class="panel">
+        <div class="row-wrap">
+          <button class="hig-btn" popovertarget="infoPop">Lesson Info</button>
+          <button class="hig-btn" data-hig-tooltip="Copies the lesson link to the clipboard"><svg class="hig-icon"><use href="#i-copy"/></svg>Copy Link</button>
+          <button class="hig-btn" id="toastBtn">Add to Library</button>
+        </div>
+        <div class="hig-banner">
+          <span class="hig-banner__icon" style="background:var(--hig-accent-fill)"><svg class="hig-icon"><use href="#i-bell"/></svg></span>
+          <span class="hig-banner__title">Lesson starts in 15 minutes</span><span class="hig-banner__time">now</span>
+          <span class="hig-banner__text">Robotics · Room 2. Bring your micro:bit.</span>
+        </div>
+      </div>
+      <p class="hig-section-foot">Popovers point at their source and save work when dismissed; under 600 px they become a sheet. Tooltips appear on hover or keyboard focus and Esc closes them.</p>
+      <div class="hig-glass hig-glass--large hig-popover" id="infoPop" popover>
+        <span class="hig-popover__arrow" aria-hidden="true"></span>
+        <h3 class="hig-popover__title">Traffic Light</h3>
+        <p style="margin:0 0 12px;color:var(--hig-label-2)">Thursday 16:30 · 90 min · Room 2</p>
+        <label class="hig-check" style="width:100%;justify-content:space-between"><span id="lbl-pop">Remind Me</span><button class="hig-switch" role="switch" aria-checked="true" aria-labelledby="lbl-pop"><span class="hig-switch__thumb"></span></button></label>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Empty and loading states</p>
+      <div class="panel" id="stateBox" aria-live="polite">
+        <div class="hig-empty" id="emptyState">
+          <svg class="hig-icon hig-empty__icon" aria-hidden="true"><use href="#i-tray"/></svg>
+          <h3 class="hig-empty__title">No Homework</h3>
+          <p class="hig-empty__text">Assignments from your teachers appear here.</p>
+          <button class="hig-btn" id="loadBtn">Check Again</button>
+        </div>
+        <div id="skeleton" hidden aria-busy="true" aria-label="Loading assignments" style="display:grid;gap:14px">
+          <div style="display:flex;gap:12px;align-items:center"><span class="hig-skeleton hig-skeleton--circle" style="width:44px"></span><div style="flex:1"><span class="hig-skeleton hig-skeleton--title"></span><span class="hig-skeleton hig-skeleton--text" style="width:80%"></span></div></div>
+          <div style="display:flex;gap:12px;align-items:center"><span class="hig-skeleton hig-skeleton--circle" style="width:44px"></span><div style="flex:1"><span class="hig-skeleton hig-skeleton--title" style="width:40%"></span><span class="hig-skeleton hig-skeleton--text" style="width:65%"></span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Table</p>
+      <div class="hig-table-wrap">
+        <table class="hig-table">
+          <thead><tr><th scope="col" aria-sort="ascending"><button class="hig-table__sort">Student</button></th><th scope="col"><button class="hig-table__sort">Course</button></th><th scope="col" class="is-num"><button class="hig-table__sort">Lessons</button></th><th scope="col" class="is-num"><button class="hig-table__sort">Score</button></th></tr></thead>
+          <tbody>
+            <tr><td>Adam</td><td>Robotics</td><td class="is-num">12</td><td class="is-num">94</td></tr>
+            <tr><td>Bára</td><td>Python</td><td class="is-num">9</td><td class="is-num">88</td></tr>
+            <tr><td>Eliška</td><td>3D Printing</td><td class="is-num">6</td><td class="is-num">97</td></tr>
+            <tr><td>Matěj</td><td>Robotics</td><td class="is-num">11</td><td class="is-num">79</td></tr>
+            <tr><td>Tereza</td><td>Python</td><td class="is-num">14</td><td class="is-num">91</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hig-section-foot">Click a column heading to sort; click again to reverse. Alternating rows help on wide tables.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Swipe actions and context menus</p>
+      <ul class="hig-list" style="--hig-sep-inset:68px">
+        <li class="hig-swipe">
+          <div class="hig-swipe__actions"><button class="hig-swipe__action"><svg class="hig-icon"><use href="#i-flag"/></svg>Flag</button><button class="hig-swipe__action hig-swipe__action--destructive"><svg class="hig-icon"><use href="#i-trash"/></svg>Delete</button></div>
+          <div class="hig-row hig-swipe__content"><span class="hig-avatar" aria-hidden="true">EN</span><span class="hig-row__title">Eliška Nováková<span class="ct-need">Can we move Thursday's lesson?</span></span><span class="hig-row__value">9:41</span></div>
+        </li>
+        <li class="hig-swipe">
+          <div class="hig-swipe__actions"><button class="hig-swipe__action hig-swipe__action--accent"><svg class="hig-icon"><use href="#i-archive"/></svg>Archive</button></div>
+          <div class="hig-row hig-swipe__content"><span class="hig-avatar" aria-hidden="true">MK</span><span class="hig-row__title">Matěj Kříž<span class="ct-need">Thanks for the robotics kit!</span></span><span class="hig-row__value">Mon</span></div>
+        </li>
+      </ul>
+      <p class="hig-section-foot">Swipe a row left (or Tab to its actions). Right-click or long-press the card below; Shift+F10 opens it from the keyboard.</p>
+      <div class="hig-card ctx-card" tabindex="0" data-hig-contextmenu="ctxMenu" aria-describedby="ctxHint" style="margin-top:12px">
+        <span class="hig-card__eyebrow">Lesson 3</span>
+        <h3 class="hig-card__title">Traffic Light with micro:bit</h3>
+        <p class="hig-card__text" id="ctxHint">Press and hold for options.</p>
+      </div>
+      <div class="hig-glass hig-glass--large hig-menu" id="ctxMenu" role="menu" aria-label="Lesson actions" hidden>
+        <button class="hig-menu__item" role="menuitem"><span class="hig-menu__label">Copy Link</span><svg class="hig-icon"><use href="#i-copy"/></svg></button>
+        <button class="hig-menu__item" role="menuitem"><span class="hig-menu__label">Add to Favorites</span><svg class="hig-icon"><use href="#i-star"/></svg></button>
+        <div class="hig-menu__separator" role="separator"></div>
+        <button class="hig-menu__item hig-menu__item--destructive" role="menuitem"><span class="hig-menu__label">Delete Lesson</span><svg class="hig-icon"><use href="#i-trash"/></svg></button>
+      </div>
+    </section>
+
+    <section>
+      <p class="hig-section-head">People, widgets and photos</p>
+      <div class="panel">
+        <div class="row-wrap" style="gap:16px">
+          <span class="hig-avatar hig-avatar--lg" aria-hidden="true">PP</span>
+          <span class="hig-avatar-stack" role="img" aria-label="4 students: Adam, Bára, Eliška and Matěj">
+            <span class="hig-avatar" aria-hidden="true">AD</span><span class="hig-avatar" aria-hidden="true">BA</span><span class="hig-avatar" aria-hidden="true">EL</span><span class="hig-avatar" aria-hidden="true">MA</span>
+          </span>
+        </div>
+      </div>
+      <div class="hig-widgets" style="margin-top:16px">
+        <div class="hig-widget"><span class="hig-widget__label">Next Lesson</span><span class="hig-widget__value">16:30</span><span class="hig-widget__caption">Robotics · Room 2</span></div>
+        <div class="hig-widget hig-widget--tinted"><span class="hig-widget__label">This Week</span><span class="hig-widget__value">4/5</span><span class="hig-widget__caption">Lessons attended</span></div>
+      </div>
+      <ul class="hig-grid" style="margin-top:16px;border-radius:var(--hig-radius-card);overflow:hidden" aria-label="Class photos">
+        <li><button class="hig-grid__item" aria-pressed="false" aria-label="Photo 1" style="background:linear-gradient(135deg,#f59a4a,#c2477a)"></button></li>
+        <li><button class="hig-grid__item" aria-pressed="true" aria-label="Photo 2" style="background:linear-gradient(135deg,#2a5bd7,#33c3c9)"></button></li>
+        <li><button class="hig-grid__item" aria-pressed="false" aria-label="Photo 3" style="background:linear-gradient(135deg,#0f8a6b,#b8d04a)"></button></li>
+        <li><button class="hig-grid__item" aria-pressed="false" aria-label="Photo 4" style="background:linear-gradient(135deg,#5b3c9e,#e05a9a)"></button></li>
+        <li><button class="hig-grid__item" aria-pressed="false" aria-label="Photo 5" style="background:linear-gradient(135deg,#1f2a44,#5d7fb3)"></button></li>
+        <li><button class="hig-grid__item" aria-pressed="false" aria-label="Photo 6" style="background:linear-gradient(135deg,#e3803a,#f2c84b)"></button></li>
+      </ul>
+      <p class="hig-section-foot">Widgets and cards are content, so they stay solid; glass is only for the controls above them. Tap photos to select them.</p>
     </section>
   </div>
 
@@ -289,6 +541,7 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
     <span class="hig-tabbar__lens" aria-hidden="true"></span>
     <button class="hig-tab" role="tab" id="t-glass" aria-selected="true" aria-controls="v-glass"><svg class="hig-icon"><use href="#i-drop"/></svg><span>Glass</span></button>
     <button class="hig-tab" role="tab" id="t-controls" aria-selected="false" aria-controls="v-controls"><svg class="hig-icon"><use href="#i-sliders"/></svg><span>Controls</span></button>
+    <button class="hig-tab" role="tab" id="t-library" aria-selected="false" aria-controls="v-library"><svg class="hig-icon"><use href="#i-grid"/></svg><span>Library</span></button>
     <button class="hig-tab" role="tab" id="t-settings" aria-selected="false" aria-controls="v-settings"><svg class="hig-icon"><use href="#i-list"/></svg><span>Settings</span></button>
   </div>
   <button class="hig-glass hig-search-tab hig-press-scale" data-hig-adapt aria-label="Search" id="searchTab"><svg class="hig-icon"><use href="#i-search"/></svg></button>
@@ -333,7 +586,7 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
 <script type="module">
 import { initGlass, observeScrolled, minimizeOnScroll } from '../dist/glass.js';
 import { restorePreferences, setMode, setScheme, setContrast, setTransparency, setMotion, watchPreferences, checkContrast } from '../dist/a11y.js';
-import { initComponents, layoutSegmented } from '../dist/components.js';
+import { initComponents, layoutSegmented, showToast } from '../dist/components.js';
 
 restorePreferences();
 initComponents();
@@ -427,6 +680,24 @@ document.getElementById('busyBtn').addEventListener('click', e => {
   b.innerHTML = '<span class="hig-spinner" aria-hidden="true">' + Array.from({ length: 8 }, (_, i) => `<i style="rotate:${i * 45}deg;animation-delay:${-0.8 + i * .1}s"></i>`).join('') + '</span><span>Sending…</span>';
   setTimeout(() => { b.innerHTML = '<span>Sent</span>'; b.removeAttribute('aria-busy'); setTimeout(() => { b.innerHTML = '<span>Send</span>'; }, 1600); }, 1800);
 });
+const note = document.getElementById('note'), noteCount = document.getElementById('noteCount');
+note.addEventListener('input', () => { noteCount.textContent = `${note.value.length} / 200`; });
+document.getElementById('toastBtn').addEventListener('click', () => showToast('Added to Library', { icon: '<svg class="hig-icon" aria-hidden="true"><use href="#i-check"/></svg>' }));
+document.querySelectorAll('.hig-grid__item').forEach(b => b.addEventListener('click', () => b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))));
+document.getElementById('loadBtn').addEventListener('click', () => {
+  const empty = document.getElementById('emptyState'), sk = document.getElementById('skeleton');
+  empty.hidden = true; sk.hidden = false;
+  setTimeout(() => { sk.hidden = true; empty.hidden = false; document.getElementById('loadBtn').focus(); }, 2200);
+});
+document.getElementById('ctxMenu').addEventListener('hig:select', e => showToast(e.detail.item.textContent.trim()));
+document.querySelectorAll('.hig-sidebar__item').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  document.querySelectorAll('.hig-sidebar__item').forEach(x => x.toggleAttribute('aria-current', x === a));
+  a.setAttribute('aria-current', 'page');
+}));
+document.querySelectorAll('.hig-path a').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+let ringV = 40; const ring = document.getElementById('ring');
+setInterval(() => { ringV = ringV >= 100 ? 0 : ringV + 5; ring.style.setProperty('--value', `${ringV}%`); ring.setAttribute('aria-valuenow', ringV); }, 900);
 const email = document.getElementById('email'), ef = document.getElementById('emailField'), eh = document.getElementById('emailHint');
 email.addEventListener('blur', () => {
   const bad = !!email.value && !email.checkValidity();

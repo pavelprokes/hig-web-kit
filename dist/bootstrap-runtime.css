@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 [data-bs-theme], :root {
   --bs-body-bg: var(--hig-bg); --bs-body-color: var(--hig-label); --bs-secondary-color: var(--hig-label-2);
   --bs-border-color: var(--hig-sep); --bs-link-color: var(--hig-link); --bs-link-hover-color: var(--hig-link);

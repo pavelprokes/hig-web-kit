@@ -127,6 +127,7 @@ export function getAntdTheme(options = {}) {
       controlHeight: h.md,
       controlHeightSM: h.sm,
       controlHeightLG: h.lg,
+      controlInteractiveSize: touch ? 22 : 16, // checkbox & radio box
       wireframe: false,
       // motion
       motionEaseOut: 'cubic-bezier(.22, 1, .36, 1)',
@@ -181,7 +182,30 @@ export function getAntdTheme(options = {}) {
         handleColor: c.accent, handleActiveColor: c.accent, handleActiveOutlineColor: c.focusRing,
         railSize: 6, handleSize: touch ? 22 : 16, handleSizeHover: touch ? 26 : 18,
       },
-      Checkbox: { borderRadiusSM: 6 },
+      Checkbox: { borderRadiusSM: touch ? 7 : 5, colorBorder: aa ? c.controlBorder : c.label3 },
+      Radio: {
+        radioSize: touch ? 22 : 16, dotSize: touch ? 9 : 7, colorBorder: aa ? c.controlBorder : c.label3,
+        buttonSolidCheckedBg: c.accentFill, buttonSolidCheckedHoverBg: darken(c.accentFill, 0.08), buttonSolidCheckedActiveBg: darken(c.accentFill, 0.16),
+        buttonSolidCheckedColor: c.onAccent,
+      },
+      Breadcrumb: {
+        itemColor: c.label2, linkColor: c.label2, linkHoverColor: c.label, lastItemColor: c.label,
+        separatorColor: aa ? c.label2 : c.label3, separatorMargin: 6,
+      },
+      Collapse: {
+        headerBg: 'transparent', contentBg: 'transparent', borderRadiusLG: r.card,
+        headerPadding: touch ? '14px 16px' : '8px 12px', contentPadding: touch ? '4px 16px 16px' : '4px 12px 12px',
+      },
+      Avatar: {
+        // Contacts-style monogram; the darker AA gray keeps white initials at 4.5:1
+        colorTextPlaceholder: aa ? '#5f636b' : '#8e929b', groupBorderColor: c.groupedBg2,
+        containerSize: touch ? 40 : 32, containerSizeLG: touch ? 64 : 48, containerSizeSM: touch ? 28 : 24,
+        textFontSize: touch ? 16 : 13,
+      },
+      Skeleton: { gradientFromColor: c.fill3, gradientToColor: c.fill4, blockRadius: r.sm },
+      Carousel: { dotWidth: 8, dotHeight: 8, dotActiveWidth: aa ? 18 : 8, dotGap: 8 },
+      Empty: { colorTextDescription: c.label2 },
+      Pagination: { itemActiveBg: c.fill3, itemBg: 'transparent' },
       Card: { borderRadiusLG: r.card, headerFontSize: type.headline.size },
       Modal: {
         borderRadiusLG: r.alert, contentBg: c.bgElevated, headerBg: 'transparent', footerBg: 'transparent',
@@ -203,14 +227,16 @@ export function getAntdTheme(options = {}) {
         headerBg: c.bg2, headerColor: c.label2, borderColor: c.sep, rowHoverBg: c.fill4,
         rowSelectedBg: c.fill3, rowSelectedHoverBg: c.fill2, headerSplitColor: 'transparent',
         cellPaddingBlock: touch ? 14 : 6,
+        headerSortActiveBg: c.fill3, headerSortHoverBg: c.fill4, bodySortBg: 'transparent',
       },
-      Tooltip: { colorBgSpotlight: scheme === 'dark' ? c.bg3 : '#1c1c1e', borderRadius: r.md },
+      // macOS help tag: a small light surface with label-colored text
+      Tooltip: { colorBgSpotlight: c.bgElevated, colorTextLightSolid: c.label, borderRadius: r.sm },
       Popover: { borderRadiusLG: r.lg },
-      Tag: { borderRadiusSM: 999 },
-      Badge: { colorError: c.red },
-      Progress: { remainingColor: aa ? c.controlBorder : c.fill, defaultColor: c.accent },
-      Notification: { borderRadiusLG: r.lg },
-      Message: { borderRadiusLG: 999 },
+      Tag: { borderRadiusSM: 999, defaultBg: c.fill2, defaultColor: c.label },
+      Badge: { colorError: aa ? c.destructiveFill : c.red, colorTextLightSolid: aa ? c.onDestructive : '#ffffff', indicatorHeight: 18, indicatorHeightSM: 14, dotSize: 10, textFontSize: 12, textFontWeight: 600 },
+      Progress: { remainingColor: aa ? c.controlBorder : c.fill, defaultColor: c.accent, lineBorderRadius: 999 },
+      Notification: { borderRadiusLG: r.card, width: 360 },
+      Message: { borderRadiusLG: 999, contentPadding: '10px 18px' },
       Alert: { borderRadiusLG: r.md },
       Layout: { bodyBg: c.groupedBg, headerBg: 'transparent', siderBg: c.bg2, footerBg: 'transparent' },
     },

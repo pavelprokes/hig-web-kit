@@ -9,7 +9,7 @@ Apple's Human Interface Guidelines and the Liquid Glass design language, package
 
   Each mode comes in light, dark and increased-contrast variants, switched by OS settings or by attributes on `<html>`.
 - **Liquid Glass**: CSS material classes. Optional JS adds real edge refraction (Chromium), lighting from the touch point, and a light/dark flip over dark content. Reduce Transparency, Increase Contrast and Reduce Motion are respected.
-- **Framework-free components**: buttons, switch, segmented control, slider, stepper, fields, inset lists, toolbar, floating tab bar, menu, sheet, alert and action sheet.
+- **Framework-free components** (50+): see the [component list](#components) below.
 - **Guidelines as a skill**: `skill/SKILL.md` condenses the HIG (layering, components, patterns, writing, accessibility) for designers and AI assistants.
 
 ![Demo: Liquid Glass bars and media controls, dark scroll edge, controls in AA mode, sheet](docs/screenshots/hero.png)
@@ -123,6 +123,24 @@ Color is only part of WCAG. The kit also provides:
 - reduced motion and transparency handling.
 
 Your own content, labels and flows still need review. See [docs/accessibility.md](docs/accessibility.md).
+
+## Components
+
+Plain HTML classes from `components.css`, with behaviour, keyboard support and ARIA from `initComponents()` in `hig-web-kit/components`.
+
+| Group | Components |
+|---|---|
+| Actions | buttons (prominent, gray, plain, destructive; 5 sizes; busy state), icon buttons, toggle buttons |
+| Choices and values | switch, segmented control, slider, stepper, checkbox and radio (mixed parent state), pop-up button, select, compact date/time picker |
+| Text | text field with inline validation, search field, multiline field with counter, token field |
+| Navigation | toolbar with glass groups, floating tab bar, sidebar, split view, page control, disclosure, scope bar and filter chips, path control |
+| Menus and overlays | menu, context menu (right-click, long press, Shift+F10), popover (a sheet in compact width), tooltip, sheet, alert, action sheet |
+| Status | linear and circular progress, activity indicator, gauges, rating, badges, empty state, skeleton, notification banner, HUD toast (`showToast()`) |
+| Content | inset grouped list, swipe actions, sortable table, avatar and stack, card, widget, photo grid |
+
+![Library tab of the demo: sidebar, page control, gauges, table, swipe actions; and the new form controls](docs/screenshots/components.png)
+
+<sub>Left to right: sidebar, path control, scope bar and disclosure; page control, gauges and badges in AA dark mode; checkboxes, radios and pickers; sortable table and swipe actions.</sub>
 
 ## Liquid Glass
 

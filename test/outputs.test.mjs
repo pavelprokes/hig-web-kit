@@ -103,9 +103,38 @@ test('Ant Design in AA mode: resolved antd tokens meet WCAG 2.2 AA', async () =>
       ['input border on container', t.colorBorder, t.colorBgContainer, 3],
       ['focus outline on container', t.controlOutline, t.colorBgContainer, 3],
     ];
+    const comp = getAntdTheme({ mode: 'aa', scheme, contrast: contrastPref }).components;
+    checks.push(
+      ['avatar initials', '#ffffff', comp.Avatar.colorTextPlaceholder, 4.5],
+      ['badge count', comp.Badge.colorTextLightSolid, comp.Badge.colorError, 4.5],
+      ['tooltip text', comp.Tooltip.colorTextLightSolid, comp.Tooltip.colorBgSpotlight, 4.5],
+      ['breadcrumb link', comp.Breadcrumb.linkColor, t.colorBgContainer, 4.5],
+      ['breadcrumb separator', comp.Breadcrumb.separatorColor, t.colorBgContainer, 3],
+      ['checkbox outline', comp.Checkbox.colorBorder, t.colorBgContainer, 3],
+      ['radio outline', comp.Radio.colorBorder, t.colorBgContainer, 3],
+      ['tag text', comp.Tag.defaultColor, flatten(comp.Tag.defaultBg, t.colorBgContainer), 4.5],
+      ['solid radio button label', comp.Radio.buttonSolidCheckedColor, comp.Radio.buttonSolidCheckedBg, 4.5],
+    );
     for (const [label, fg, bg, min] of checks) {
       const r = on(fg, bg);
       assert.ok(r >= min, `${scheme}/${contrastPref}: ${label} ${r.toFixed(2)} < ${min} (${fg} on ${bg})`);
     }
   }
+});
+
+test('extended components: fixed colors used by components.css meet AA where the AA mode relies on them', async () => {
+  const { contrast } = await import(dist('color.js'));
+  assert.ok(contrast('#ffffff', '#6e737d') >= 4.5, 'AA avatar initials (gradient top)');
+  assert.ok(contrast('#ffffff', '#555960') >= 4.5, 'AA avatar initials (gradient bottom)');
+  assert.ok(contrast('#ffffff', '#636366') >= 4.5, 'swipe action label');
+});
+
+test('components.css ships the extended components', () => {
+  const css = readFileSync(dist('components.css'), 'utf8');
+  for (const cls of ['.hig-checkbox', '.hig-radio', '.hig-popup', '.hig-select', '.hig-date', '.hig-tokens', '.hig-sidebar', '.hig-split', '.hig-page-control',
+    '.hig-disclosure', '.hig-chip', '.hig-path', '.hig-activity', '.hig-progress-ring', '.hig-gauge', '.hig-rating', '.hig-popover', '.hig-tooltip',
+    '.hig-empty', '.hig-skeleton', '.hig-banner', '.hig-toast', '.hig-table', '.hig-swipe', '.hig-menu--context', '.hig-avatar', '.hig-card', '.hig-widget', '.hig-grid']) {
+    assert.ok(css.includes(cls), `missing ${cls}`);
+  }
+  assert.ok(!/:is\([^)]*::/.test(css), 'pseudo-elements inside :is() invalidate the whole rule');
 });

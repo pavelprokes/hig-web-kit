@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 /* Liquid Glass material for the floating control layer (bars, floating buttons, menus, sheets, alerts).
    Rules: never on content (cards, rows), never glass on glass, tint only the primary action.
    Requires hig.css. Optional JS: initGlass() from hig-web-kit/glass (refraction, press light, adaptivity). */

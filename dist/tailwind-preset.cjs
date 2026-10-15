@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.1.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // Tailwind CSS v3 preset: module.exports = { presets: [require('hig-web-kit/tailwind-preset')], … }
 // Requires dist/hig.css to be loaded (it defines the --hig-* variables).
 module.exports = {

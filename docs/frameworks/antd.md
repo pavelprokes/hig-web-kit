@@ -83,6 +83,30 @@ For SSR (Next.js), render with `restorePreferences` guarded by `typeof document`
 | Radii 8 / 12 / 20 / 26 / 32 | `borderRadius*`, `Card`, `Modal`, `Dropdown` |
 | Switch 64×28, green "on" | `Switch` component tokens |
 | Segmented capsule track | `Segmented` component tokens |
+| Checkbox / radio: 22 px (touch) or 16 px boxes, visible outline | `controlInteractiveSize`, `Checkbox`, `Radio` |
+| Path control colors | `Breadcrumb` |
+| Disclosure rows | `Collapse` (use `ghost`) |
+| Monogram avatar (AA-safe gray), red badge | `Avatar`, `Badge` (`on-destructive` text in AA) |
+| Light help tag | `Tooltip` |
+| Skeleton, page dots, table sort states, capsule tags | `Skeleton`, `Carousel`, `Table`, `Tag` |
+| Glass banner and HUD capsule | `Notification`, `Message` + `antd-glass.css` |
+
+### Which antd component for which HIG component
+
+| HIG | Ant Design |
+|---|---|
+| Pop-up button (one exclusive choice) | `Select` |
+| Pull-down button (actions) | `Dropdown` with a `Button` |
+| Context menu | `Dropdown trigger={['contextMenu']}` — keep every item reachable elsewhere |
+| Popover | `Popover` (switch to a bottom `Drawer` under 600 px) |
+| Disclosure | `Collapse ghost expandIconPlacement="end"` (chevron on the trailing side; `expandIconPosition` before antd 6) |
+| Scope bar / filter chips | `Segmented`, or `Radio.Group optionType="button"`; `Tag.CheckableTag` for independent filters |
+| Path control | `Breadcrumb` with a chevron `separator` |
+| Sidebar | `Layout.Sider` + `Menu` (`theme="light"`) |
+| Page control | `Carousel` dots |
+| HUD toast / notification banner | `message` / `notification` (from `App.useApp()`) |
+| Empty state, loading | `Empty`, `Skeleton`, `Spin` |
+| Table with alternating rows | `Table className="hig-striped"` |
 
 ## HIG rules antd won't enforce for you
 
