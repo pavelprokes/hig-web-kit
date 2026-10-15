@@ -7,16 +7,25 @@
 // Returns plain ThemeOptions (no MUI import), so it works with any MUI version that accepts palette /
 // typography / shape / components.styleOverrides.
 import { tokens } from './tokens.js';
+import { deriveAccent } from './theme-derive.js';
 
-const pick = (mode, scheme, contrast) => {
+const kebab = s => s.replace(/[A-Z]/g, c => '-' + c.toLowerCase()).replace(/([a-z])(\d)/g, '$1-$2');
+const camel = s => s.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+const pick = (mode, scheme, contrast, accent) => {
   const key = scheme === 'dark' ? (contrast === 'more' ? 'darkHc' : 'dark') : (contrast === 'more' ? 'lightHc' : 'light');
-  return tokens.color[mode === 'aa' ? 'aa' : 'apple'][key];
+  const m = mode === 'aa' ? 'aa' : 'apple';
+  const base = tokens.color[m][key];
+  if (!accent) return base;
+  if (typeof accent === 'string' && tokens.themes?.[accent]) return { ...base, ...tokens.themes[accent].color[m][key] };
+  const set = Object.fromEntries(Object.entries(base).map(([k, v]) => [kebab(k), v]));
+  const derived = deriveAccent(accent, set, { strict: m === 'aa' || contrast === 'more', dark: scheme === 'dark' });
+  return { ...base, ...Object.fromEntries(Object.entries(derived).map(([k, v]) => [camel(k), v])) };
 };
 
 /** @param {import('./mui').HigMuiOptions} [options] */
 export function higMui(options = {}) {
-  const { mode = 'apple', scheme = 'light', contrast = 'standard', density = 'touch' } = options;
-  const c = pick(mode, scheme, contrast);
+  const { mode = 'apple', scheme = 'light', contrast = 'standard', density = 'touch', accent } = options;
+  const c = pick(mode, scheme, contrast, accent);
   const touch = density !== 'desktop';
   const t = touch ? tokens.font.ios : tokens.font.macos;
   const aa = mode === 'aa' || contrast === 'more';

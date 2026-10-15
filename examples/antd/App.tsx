@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { App as AntApp, Avatar, Badge, Breadcrumb, Button, Card, Checkbox, Collapse, ConfigProvider, Empty, Form, Input, Popover, Radio, Segmented, Select, Skeleton, Space, Switch, Table, Tag, Tooltip, Typography } from 'antd';
 import { higAntd, type HigAntdOptions } from 'hig-web-kit/antd';
 import { getPreferences, restorePreferences, setMode, watchPreferences, type HigPreferences } from 'hig-web-kit/a11y';
+import { getTheme, listThemes, restoreTheme, setTheme } from 'hig-web-kit/theme';
 
 /** Re-renders whenever mode, color scheme or contrast changes (attributes or OS settings). */
 export function useHigPreferences(): HigPreferences {
@@ -17,7 +18,10 @@ const getDefault = (): HigPreferences => ({ mode: 'apple', scheme: 'light', cont
 
 export default function App() {
   const prefs = useHigPreferences();
-  const options: HigAntdOptions = { mode: prefs.mode, scheme: prefs.scheme, contrast: prefs.contrast, density: 'touch' };
+  // the same accent theme drives hig.css (data-hig-theme) and the antd tokens
+  const [accent, setAccent] = useState<string | null>(() => (typeof document === 'undefined' ? null : restoreTheme()));
+  const chooseAccent = (name: string) => { setTheme(name || null); setAccent(getTheme()); };
+  const options: HigAntdOptions = { mode: prefs.mode, scheme: prefs.scheme, contrast: prefs.contrast, density: 'touch', accent: accent ?? undefined };
 
   return (
     <ConfigProvider {...higAntd(options)}>
@@ -30,6 +34,11 @@ export default function App() {
               <Space style={{ justifyContent: 'space-between', width: '100%' }}>
                 <label htmlFor="aa">WCAG 2.2 AA mode</label>
                 <Switch id="aa" checked={prefs.mode === 'aa'} onChange={on => setMode(on ? 'aa' : 'apple')} />
+              </Space>
+              <Space style={{ justifyContent: 'space-between', width: '100%' }}>
+                <label htmlFor="accent">Accent color</label>
+                <Select id="accent" style={{ minWidth: 200 }} value={accent ?? ''} onChange={chooseAccent}
+                  options={[{ value: '', label: 'Blue (system)' }, ...listThemes().map(t => ({ value: t.name, label: t.label }))]} />
               </Space>
               <Segmented block options={['Day', 'Week', 'Month', 'Year']} />
             </Space>

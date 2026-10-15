@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.3.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // Runtime switches for hig-web-kit: mode (apple | aa), color scheme, contrast, transparency and motion.
 // All state lives in data-hig-* attributes on <html>, so any CSS (or framework theme) can react to it.
 //

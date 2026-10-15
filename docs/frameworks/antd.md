@@ -68,6 +68,10 @@ export function Root() {
 
 For SSR (Next.js), render with `restorePreferences` guarded by `typeof document`, or read a cookie on the server; the attributes on `<html>` keep the CSS side in sync without JS.
 
+## Brand color
+
+`higAntd({ accent: 'vzb' })` uses a built-in theme; `accent: '#c8102e'` or `{ light, dark }` derives AA-safe variants for the current mode and scheme. Keep it in sync with the page by passing the value of `getTheme()` from `hig-web-kit/theme` (see `examples/antd/App.tsx`).
+
 ## What the adapter maps
 
 | HIG | Ant Design |

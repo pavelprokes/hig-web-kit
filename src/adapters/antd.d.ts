@@ -8,6 +8,9 @@ export interface HigAntdOptions {
   contrast?: 'standard' | 'more';
   /** 'touch' = iOS scale (17px body, 44px controls); 'desktop' = macOS scale (13px body, 28px controls). */
   density?: 'touch' | 'desktop';
+  /** Accent theme: a built-in name ('vzb', 'indigo', 'purple', 'pink', 'orange', 'green', 'teal', 'graphite')
+   *  or any brand color / { light, dark }. AA-safe variants are derived per mode and scheme. */
+  accent?: string | { light: string; dark: string };
   /** Extra antd algorithms, e.g. theme.compactAlgorithm. */
   algorithm?: ThemeConfig['algorithm'];
 }

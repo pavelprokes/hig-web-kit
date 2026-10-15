@@ -362,22 +362,53 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
     </section>
 
     <section>
-      <p class="hig-section-head">Progress, gauges and badges</p>
+      <p class="hig-section-head">Progress</p>
+      <ul class="hig-list">
+        <li class="hig-row"><span class="hig-row__title">Syncing lessons<span class="hig-row__subtitle">Duration unknown → activity indicator</span></span><span class="hig-activity" role="progressbar" aria-label="Syncing lessons"></span></li>
+        <li class="hig-row"><span class="hig-row__title">Traffic Light.mp4<span class="hig-row__subtitle" id="ringLbl">Uploading · 40 %</span></span>
+          <div class="hig-progress-ring hig-progress-ring--label" id="ring" role="progressbar" aria-labelledby="ringLbl" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" style="--value:40%"><span id="ringVal">40</span></div></li>
+        <li class="hig-row"><div class="hig-row__body">
+          <div class="hig-row__line"><span id="dlLbl">Downloading course</span><span class="hig-row__value" id="dlVal">8 of 12</span></div>
+          <div class="hig-progress" role="progressbar" aria-labelledby="dlLbl" aria-valuemin="0" aria-valuemax="12" aria-valuenow="8" aria-valuetext="8 of 12 lessons" id="dl"><i style="--value:66.7%"></i></div>
+        </div></li>
+      </ul>
+      <p class="hig-section-foot">Prefer determinate progress, and keep one style per task: a ring never turns into a bar.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Gauges and ratings</p>
       <div class="panel">
-        <div class="row-wrap" style="gap:20px">
-          <span class="hig-activity" role="progressbar" aria-label="Loading"></span>
-          <span class="hig-activity hig-activity--lg" role="progressbar" aria-label="Loading"></span>
-          <div class="hig-progress-ring" id="ring" role="progressbar" aria-label="Upload" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" style="--value:40%"></div>
-          <div class="hig-gauge" role="meter" aria-label="Attendance" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" aria-valuetext="72 percent" style="--value:72"><span class="hig-gauge__value">72</span><span class="hig-gauge__min" aria-hidden="true">0</span><span class="hig-gauge__max" aria-hidden="true">100</span></div>
-          <span class="hig-rating" role="img" aria-label="4 of 5 stars" style="--value:4"></span>
-          <span class="hig-badge-anchor"><button class="hig-glass hig-icon-btn" aria-label="Notifications, 3 new"><svg class="hig-icon"><use href="#i-bell"/></svg></button><span class="hig-badge" aria-hidden="true">3</span></span>
+        <div class="hig-meters">
+          <figure class="hig-gauge-item"><div class="hig-gauge" role="meter" aria-label="Attendance" aria-valuemin="0" aria-valuemax="100" aria-valuenow="92" aria-valuetext="92 percent" style="--value:92"><span class="hig-gauge__value">92<small>%</small></span><span class="hig-gauge__min" aria-hidden="true">0</span><span class="hig-gauge__max" aria-hidden="true">100</span></div><figcaption><b>Attendance</b>this term</figcaption></figure>
+          <figure class="hig-gauge-item"><div class="hig-gauge" role="meter" aria-label="Homework done" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-valuetext="4 of 5" style="--value:80;--color:var(--hig-green)"><span class="hig-gauge__value">4<small>/5</small></span><span class="hig-gauge__min" aria-hidden="true">0</span><span class="hig-gauge__max" aria-hidden="true">5</span></div><figcaption><b>Homework</b>this week</figcaption></figure>
+          <figure class="hig-gauge-item"><div class="hig-gauge" role="meter" aria-label="Course progress" aria-valuemin="0" aria-valuemax="24" aria-valuenow="9" aria-valuetext="9 of 24 lessons" style="--value:37.5;--color:var(--hig-orange)"><span class="hig-gauge__value">9</span><span class="hig-gauge__min" aria-hidden="true">0</span><span class="hig-gauge__max" aria-hidden="true">24</span></div><figcaption><b>Lessons</b>of 24</figcaption></figure>
         </div>
         <div>
-          <div class="panel-label" style="margin-bottom:10px">Classroom temperature: 23 °C</div>
-          <div class="hig-gauge-bar hig-gauge-bar--heat" role="meter" aria-label="Classroom temperature" aria-valuemin="15" aria-valuemax="30" aria-valuenow="23" aria-valuetext="23 degrees" style="--value:53"></div>
+          <div class="hig-row__line" style="margin-bottom:10px"><span>Classroom temperature</span><span class="hig-row__value">23 °C</span></div>
+          <div class="hig-gauge-bar hig-gauge-bar--heat" role="meter" aria-label="Classroom temperature" aria-valuemin="15" aria-valuemax="30" aria-valuenow="23" aria-valuetext="23 degrees Celsius" style="--value:53"></div>
+          <div class="hig-gauge-scale" aria-hidden="true"><span>15 °C</span><span>30 °C</span></div>
         </div>
       </div>
-      <p class="hig-section-foot">Prefer determinate progress. Badges are red and only for things that need attention.</p>
+      <ul class="hig-list" style="margin-top:16px">
+        <li class="hig-row"><span class="hig-row__title">Course rating<span class="hig-row__subtitle">128 ratings from parents</span></span><span class="hig-rating" role="img" aria-label="4 of 5 stars" style="--value:4"></span><span class="hig-row__value">4.0</span></li>
+      </ul>
+      <p class="hig-section-foot">Label the value and both ends of every gauge. A color can carry meaning (cold → hot), but the number always says it too.</p>
+    </section>
+
+    <section>
+      <p class="hig-section-head">Badges</p>
+      <div class="panel">
+        <div class="row-wrap" style="gap:22px">
+          <span class="hig-badge-anchor"><button class="hig-glass hig-icon-btn" aria-label="Notifications, 3 new"><svg class="hig-icon"><use href="#i-bell"/></svg></button><span class="hig-badge" aria-hidden="true">3</span></span>
+          <span class="hig-badge-anchor"><button class="hig-glass hig-icon-btn" aria-label="Messages, 12 unread"><svg class="hig-icon"><use href="#i-tray"/></svg></button><span class="hig-badge" aria-hidden="true">12</span></span>
+          <span class="hig-badge-anchor" role="img" aria-label="Eliška, has unread messages"><span class="hig-avatar" aria-hidden="true">EN</span><span class="hig-badge hig-badge--dot" aria-hidden="true"></span></span>
+        </div>
+      </div>
+      <ul class="hig-list" style="margin-top:16px">
+        <li><a class="hig-row" href="#"><span class="hig-row__title">Inbox</span><span class="hig-count" aria-label="12 unread">12</span><svg class="hig-icon hig-row__chevron" aria-hidden="true"><use href="#i-chev-r"/></svg></a></li>
+        <li><a class="hig-row" href="#"><span class="hig-row__title">Homework to grade</span><span class="hig-badge" aria-label="2 overdue">2</span><svg class="hig-icon hig-row__chevron" aria-hidden="true"><use href="#i-chev-r"/></svg></a></li>
+      </ul>
+      <p class="hig-section-foot">Red badges are for things that need attention now. Plain counts in lists stay neutral. Put the number in the control's label too.</p>
     </section>
 
     <section>
@@ -516,6 +547,13 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
       <p class="hig-section-foot">Apple recommends following the system setting. Keep an in-app switch only with System as the default.</p>
     </section>
     <section>
+      <p class="hig-section-head">Accent color</p>
+      <div class="hig-list"><div class="hig-row" style="padding-block:10px">
+        <div class="hig-swatches" role="radiogroup" aria-label="Accent color" id="accentPicker"></div>
+      </div></div>
+      <p class="hig-section-foot" id="accentNote">One accent tints primary buttons, links, selection and focus. Themes keep the brand's hue and adjust only its lightness, so the AA mode stays AA. Add <code>#theme=vzb</code> to the URL to open with a theme.</p>
+    </section>
+    <section>
       <p class="hig-section-head">System accessibility settings (simulated)</p>
       <div class="hig-list">
         <div class="hig-row hig-row--icon"><span class="hig-icon-square" style="background:var(--hig-indigo)"><svg class="hig-icon"><use href="#i-eye"/></svg></span><span class="hig-row__title" id="lbl-hc">Increase Contrast</span><button class="hig-switch" role="switch" aria-checked="false" aria-labelledby="lbl-hc" data-pref="contrast"><span class="hig-switch__thumb"></span></button></div>
@@ -587,8 +625,26 @@ code { font-family: var(--hig-font-mono); font-size: .875em; background: var(--h
 import { initGlass, observeScrolled, minimizeOnScroll } from '../dist/glass.js';
 import { restorePreferences, setMode, setScheme, setContrast, setTransparency, setMotion, watchPreferences, checkContrast } from '../dist/a11y.js';
 import { initComponents, layoutSegmented, showToast } from '../dist/components.js';
+import { listThemes, setTheme, getTheme, restoreTheme, applyBrandColor } from '../dist/theme.js';
 
 restorePreferences();
+restoreTheme();
+
+/* accent picker built from the kit's theme list */
+(() => {
+  const picker = document.getElementById('accentPicker');
+  const sw = (value, label, color, extra = '') => `<button class="hig-swatch${extra}" role="radio" aria-checked="false" value="${value}" aria-label="${label}" style="--swatch:${color}"></button>`;
+  picker.innerHTML = sw('', 'Blue (system)', '#0088ff') +
+    listThemes().map(t => sw(t.name, t.label, typeof t.brand === 'string' ? t.brand : t.brand.light)).join('') +
+    `<button class="hig-swatch hig-swatch--custom" role="radio" aria-checked="false" value="custom" aria-label="Custom color"><input type="color" value="#01497c" tabindex="-1" aria-hidden="true"></button>`;
+  const sync = () => { const cur = getTheme() || ''; picker.querySelectorAll('.hig-swatch').forEach(b => b.setAttribute('aria-checked', String(b.value === cur))); };
+  picker.addEventListener('hig:change', e => {
+    if (e.detail.value === 'custom') { picker.querySelector('input[type=color]').click(); return; }
+    setTheme(e.detail.value || null);
+  });
+  picker.querySelector('input[type=color]').addEventListener('input', e => { applyBrandColor(e.target.value, { name: 'custom' }); sync(); });
+  sync();
+})();
 initComponents();
 initGlass();
 minimizeOnScroll(document.getElementById('dock'));
@@ -695,9 +751,14 @@ document.querySelectorAll('.hig-sidebar__item').forEach(a => a.addEventListener(
   document.querySelectorAll('.hig-sidebar__item').forEach(x => x.toggleAttribute('aria-current', x === a));
   a.setAttribute('aria-current', 'page');
 }));
-document.querySelectorAll('.hig-path a').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+document.querySelectorAll('.hig-path a, a.hig-row[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
 let ringV = 40; const ring = document.getElementById('ring');
-setInterval(() => { ringV = ringV >= 100 ? 0 : ringV + 5; ring.style.setProperty('--value', `${ringV}%`); ring.setAttribute('aria-valuenow', ringV); }, 900);
+setInterval(() => {
+  ringV = ringV >= 100 ? 0 : ringV + 5;
+  ring.style.setProperty('--value', `${ringV}%`); ring.setAttribute('aria-valuenow', ringV);
+  document.getElementById('ringVal').textContent = ringV;
+  document.getElementById('ringLbl').textContent = ringV >= 100 ? 'Uploaded' : `Uploading · ${ringV} %`;
+}, 900);
 const email = document.getElementById('email'), ef = document.getElementById('emailField'), eh = document.getElementById('emailHint');
 email.addEventListener('blur', () => {
   const bad = !!email.value && !email.checkValidity();

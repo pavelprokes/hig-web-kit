@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 — 2026-10-15
+
+- **Accent themes.** `data-hig-theme` with built-in themes `vzb` (Vzdělání budoucnosti), `indigo`, `purple`, `pink`, `orange`, `green`, `teal` and `graphite`; `hig-web-kit/theme` with `setTheme()`, `restoreTheme()` (`#theme=vzb`), `applyBrandColor()` and `deriveBrandTheme()`. Derived colors keep the brand hue and only move lightness, so AA holds for any brand; the contrast gate checks every theme on every set.
+- **Adapters:** `accent` option for Ant Design and MUI.
+- **Progress, gauges and badges:** progress rows with subtitles and stacked bars, a labelled progress ring, gauges with endpoint labels, captions and sizes (`.hig-gauge-item`, `.hig-meters`, `--sm`, `--lg`), a scale under linear gauges, neutral counts (`.hig-count`), badges on avatars.
+- **Accent color picker** component (`.hig-swatches`).
+- **Demo:** accent picker in Settings; reworked Progress, Gauges and Badges sections.
+
 ## 0.2.0 — 2026-10-15
 
 - **New components** (CSS + behaviour in `components.js`):

@@ -8,6 +8,7 @@ Apple's Human Interface Guidelines and the Liquid Glass design language, package
   - `aa`: every text pair meets 4.5:1, and every control boundary and focus indicator meets 3:1.
 
   Each mode comes in light, dark and increased-contrast variants, switched by OS settings or by attributes on `<html>`.
+- **Accent themes**: built-in brand themes (including Vzdělání budoucnosti) and `applyBrandColor()` for any color, with AA-safe variants derived for every mode and scheme.
 - **Liquid Glass**: CSS material classes. Optional JS adds real edge refraction (Chromium), lighting from the touch point, and a light/dark flip over dark content. Reduce Transparency, Increase Contrast and Reduce Motion are respected.
 - **Framework-free components** (50+): see the [component list](#components) below.
 - **Guidelines as a skill**: `skill/SKILL.md` condenses the HIG (layering, components, patterns, writing, accessibility) for designers and AI assistants.
@@ -61,6 +62,20 @@ setMode('aa');                    // or 'apple'
 watchPreferences(p => console.log(p)); // { mode, scheme, contrast, transparency, motion }
 ```
 
+### Accent themes
+
+```html
+<html data-hig-theme="vzb">   <!-- vzb · indigo · purple · pink · orange · green · teal · graphite -->
+```
+```js
+import { setTheme, applyBrandColor } from 'hig-web-kit/theme';
+setTheme('vzb');               // or applyBrandColor('#c8102e') for any brand color
+```
+
+Themes keep the brand's hue and move only its lightness where needed, so the AA mode stays WCAG 2.2 AA with any brand. See [docs/themes.md](docs/themes.md).
+
+![Vzdělání budoucnosti theme: progress, gauges, badges, controls and the accent picker, in light and in AA dark](docs/screenshots/themes.png)
+
 ## Framework guides
 
 | Stack | Entry point | Guide |
@@ -81,7 +96,7 @@ import 'hig-web-kit/antd-glass.css';         // optional: glass dropdowns, popov
 import { ConfigProvider } from 'antd';
 import { higAntd } from 'hig-web-kit/antd';
 
-<ConfigProvider {...higAntd({ mode: 'aa', scheme: 'dark', density: 'touch' })}>
+<ConfigProvider {...higAntd({ mode: 'aa', scheme: 'dark', density: 'touch', accent: 'vzb' })}>
   <App />
 </ConfigProvider>
 ```
@@ -131,11 +146,11 @@ Plain HTML classes from `components.css`, with behaviour, keyboard support and A
 | Group | Components |
 |---|---|
 | Actions | buttons (prominent, gray, plain, destructive; 5 sizes; busy state), icon buttons, toggle buttons |
-| Choices and values | switch, segmented control, slider, stepper, checkbox and radio (mixed parent state), pop-up button, select, compact date/time picker |
+| Choices and values | accent color picker, switch, segmented control, slider, stepper, checkbox and radio (mixed parent state), pop-up button, select, compact date/time picker |
 | Text | text field with inline validation, search field, multiline field with counter, token field |
 | Navigation | toolbar with glass groups, floating tab bar, sidebar, split view, page control, disclosure, scope bar and filter chips, path control |
 | Menus and overlays | menu, context menu (right-click, long press, Shift+F10), popover (a sheet in compact width), tooltip, sheet, alert, action sheet |
-| Status | linear and circular progress, activity indicator, gauges, rating, badges, empty state, skeleton, notification banner, HUD toast (`showToast()`) |
+| Status | linear and circular progress (with label), activity indicator, gauges with captions, rating, badges and neutral counts, empty state, skeleton, notification banner, HUD toast (`showToast()`) |
 | Content | inset grouped list, swipe actions, sortable table, avatar and stack, card, widget, photo grid |
 
 ![Library tab of the demo: sidebar, page control, gauges, table, swipe actions; and the new form controls](docs/screenshots/components.png)

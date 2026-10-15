@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.3.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // Liquid Glass behaviours that CSS alone can't do:
 //  • edge refraction (SVG displacement inside backdrop-filter — Chromium only, enabled by engine detection)
 //  • illumination from the touch point, spreading to sibling glass in the same group

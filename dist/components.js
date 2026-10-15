@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.3.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // Behaviour for the framework-free components in components.css. Markup contracts:
 //   <button class="hig-switch" role="switch" aria-checked="false"><span class="hig-switch__thumb"></span></button>
 //   <div class="hig-segmented" role="radiogroup"><span class="hig-segmented__thumb"></span><button role="radio" aria-checked="true">…</button>…</div>
@@ -514,7 +514,7 @@ export function initComponents(root = document) {
   each('.hig-input', initClearable);
   each('input.hig-checkbox', initCheckbox);
   each('.hig-chip[aria-pressed], .hig-toggle-btn[aria-pressed]', initToggle);
-  each('.hig-scope[role="radiogroup"], .hig-scope[role="tablist"]', initSegmented);
+  each('.hig-scope[role="radiogroup"], .hig-scope[role="tablist"], .hig-swatches[role="radiogroup"]', initSegmented);
   each('[data-hig-tokens]', initTokens);
   each('[data-hig-pager]', initPageControl);
   each('.hig-popover[popover]', initPopover);

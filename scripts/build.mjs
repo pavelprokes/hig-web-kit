@@ -16,10 +16,12 @@
 //   dist/demo.html            Self-contained demo (built from demo/index.html)
 import { mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, SETS, loadTokens, resolveSets } from './resolve.mjs';
+import { ROOT, SETS, loadTokens, resolveSets, resolveThemes } from './resolve.mjs';
+import { themeCss } from '../src/theme-derive.js';
 
 const tokens = loadTokens();
 const sets = resolveSets(tokens);
+const themes = await resolveThemes(tokens, sets);
 const DIST = join(ROOT, 'dist');
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
@@ -77,6 +79,9 @@ for (const mode of ['apple', 'aa']) {
   }
   css += '\n';
 }
+css += `/* ── Accent themes: <html data-hig-theme="${Object.keys(themes).join(' | ')}"> (setTheme() in hig-web-kit/theme) ── */\n`;
+for (const [name, th] of Object.entries(themes)) css += `/* ${th.label} */\n` + themeCss(name, th.sets);
+css += '\n';
 css += `/* Glass shadow composed from the scheme-aware color */
 :root { --hig-glass-shadow: 0 8px 28px var(--hig-glass-shadow-color), 0 1px 3px var(--hig-glass-shadow-color); }
 
@@ -99,6 +104,11 @@ const data = {
   color: nested,
   font: { family: tokens.font.family, ios: tokens.font.ios, macos: tokens.font.macos },
   radius: tokens.radius, space: tokens.space, size: tokens.size, motion: tokens.motion, glass: tokens.glass,
+  themes: Object.fromEntries(Object.entries(themes).map(([n, th]) => [n, {
+    label: th.label, brand: th.brand,
+    color: Object.fromEntries(['apple', 'aa'].map(m => [m, Object.fromEntries(['light', 'dark', 'light-hc', 'dark-hc'].map(v => [camel(v),
+      Object.fromEntries(Object.entries(th.sets[`${m}.${v}`]).map(([k, val]) => [camel(k), val]))]))])),
+  }])),
 };
 const json = JSON.stringify(data, null, 2);
 write('tokens.json', json + '\n');
@@ -119,6 +129,14 @@ export interface HigTokens {
   size: Record<${Object.keys(tokens.size).map(k => `'${k}'`).join(' | ')}, number>;
   motion: Record<${Object.keys(tokens.motion).map(k => `'${k}'`).join(' | ')}, string>;
   glass: Record<${Object.keys(tokens.glass).map(k => `'${k}'`).join(' | ')}, string>;
+  themes: Record<HigThemeName, HigTheme>;
+}
+export type HigThemeName = ${Object.keys(themes).map(k => `'${k}'`).join(' | ')};
+export type HigAccentName = 'accent' | 'accentFill' | 'accentText' | 'onAccent' | 'link' | 'focusRing';
+export interface HigTheme {
+  label: string;
+  brand: string | { light: string; dark: string };
+  color: Record<'apple' | 'aa', Record<'light' | 'dark' | 'lightHc' | 'darkHc', Record<HigAccentName, string>>>;
 }
 export declare const tokens: HigTokens;
 export default tokens;
@@ -251,6 +269,7 @@ const jsFiles = {
   'color.js': 'color.js', 'color.d.ts': 'color.d.ts', 'contrast-pairs.js': 'contrast-pairs.js',
   'a11y.js': 'a11y.js', 'a11y.d.ts': 'a11y.d.ts', 'glass.js': 'glass.js', 'glass.d.ts': 'glass.d.ts',
   'components.js': 'components.js', 'components.d.ts': 'components.d.ts',
+  'theme-derive.js': 'theme-derive.js', 'theme.js': 'theme.js', 'theme.d.ts': 'theme.d.ts',
   'antd.js': 'adapters/antd.js', 'antd.d.ts': 'adapters/antd.d.ts', 'mui.js': 'adapters/mui.js', 'mui.d.ts': 'adapters/mui.d.ts',
 };
 for (const [out, from] of Object.entries(jsFiles)) writeFileSync(join(DIST, out), (out.endsWith('.js') ? banner : '') + src(from));
@@ -272,14 +291,14 @@ function inlineModule(file) {
   return `const { ${names.join(', ')} } = (() => {\n${code}\nreturn { ${names.join(', ')} };\n})();\n`;
 }
 const demoSrc = readFileSync(join(ROOT, 'demo/index.html'), 'utf8');
-const runtime = ['color.js', 'contrast-pairs.js', 'glass.js', 'a11y.js', 'components.js'].map(inlineModule).join('\n');
+const runtime = ['color.js', 'contrast-pairs.js', 'tokens.js', 'theme-derive.js', 'glass.js', 'a11y.js', 'theme.js', 'components.js'].map(inlineModule).join('\n');
 const demo = demoSrc
   .replace(/<link rel="stylesheet" href="\.\.\/dist\/([\w.-]+\.css)">/g, (_, f) => `<style>\n${readFileSync(join(DIST, f), 'utf8')}\n</style>`)
   .replace(/(<script type="module">\n)((?:import [^\n]+ from '\.\.\/dist\/[\w.-]+';\n)+)/, (_, open) => `${open}${runtime}\n`);
 if (/from '\.\.\/dist\//.test(demo)) throw new Error('demo: unresolved dist import');
 write('demo.html', demo);
 
-console.log(`Built ${SETS.length} color sets → dist/`);
+console.log(`Built ${SETS.length} color sets and ${Object.keys(themes).length} themes → dist/`);
 
 /* ───────────── docs/tokens.md (reference table, regenerated on every build) ───────────── */
 {

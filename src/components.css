@@ -144,7 +144,11 @@
 button.hig-row, a.hig-row { cursor: pointer; text-decoration: none; }
 button.hig-row:active, a.hig-row:active { background: var(--hig-fill-3); }
 .hig-row__title { flex: 1; min-width: 0; }
-.hig-row__value { color: var(--hig-label-2); }
+.hig-row__value { color: var(--hig-label-2); font-variant-numeric: tabular-nums; }
+.hig-row__subtitle { display: block; margin-top: 2px; font: var(--hig-text-footnote); color: var(--hig-label-2); }
+/* a row whose body stacks a title and a full-width control (e.g. a progress bar) */
+.hig-row__body { flex: 1; min-width: 0; display: grid; gap: 8px; padding-block: 4px; }
+.hig-row__line { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
 .hig-row__chevron { color: var(--hig-label-3); width: 14px; height: 14px; stroke-width: 2.6; }
 [data-hig-mode="aa"] .hig-row__chevron { color: var(--hig-label-2); }
 .hig-icon-square { width: 30px; height: 30px; flex: none; display: grid; place-items: center; border-radius: 8px; color: #fff; }
@@ -484,6 +488,14 @@ button.hig-row:active, a.hig-row:active { background: var(--hig-fill-3); }
   -webkit-mask: radial-gradient(closest-side, transparent calc(100% - var(--track) - .5px), #000 calc(100% - var(--track)));
           mask: radial-gradient(closest-side, transparent calc(100% - var(--track) - .5px), #000 calc(100% - var(--track)));
 }
+.hig-progress-ring--label { --size: 44px; --track: 4px; position: relative; display: inline-grid; place-items: center; -webkit-mask: none; mask: none; background: none; }
+.hig-progress-ring--label::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--hig-accent) var(--value, 0%), var(--hig-fill) 0);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - var(--track) - .5px), #000 calc(100% - var(--track))); mask: radial-gradient(closest-side, transparent calc(100% - var(--track) - .5px), #000 calc(100% - var(--track))); }
+[data-hig-mode="aa"] .hig-progress-ring.hig-progress-ring--label { background: none; }
+[data-hig-mode="aa"] .hig-progress-ring--label::before { background: conic-gradient(var(--hig-accent) var(--value, 0%), var(--hig-control-border) 0); }
+.hig-progress-ring--label > span { font: 600 .6875rem/1 var(--hig-font-sans); font-variant-numeric: tabular-nums; }
+/* stop button inside a ring (App Store download style) */
+.hig-progress-ring--stop > span { width: 10px; height: 10px; border-radius: 2px; background: var(--hig-accent); }
 [data-hig-mode="aa"] .hig-progress-ring { background: conic-gradient(var(--hig-accent) var(--value, 0%), var(--hig-control-border) 0); }
 
 /* ── Gauges ──
@@ -499,13 +511,23 @@ button.hig-row:active, a.hig-row:active { background: var(--hig-fill-3); }
 }
 [data-hig-mode="aa"] .hig-gauge::before { background: conic-gradient(from 225deg, var(--color) calc(var(--value, 0) * 2.7deg), var(--hig-control-border) 0 270deg, transparent 0); }
 .hig-gauge__value { font: 600 1.25rem/1 var(--hig-font-rounded); font-variant-numeric: tabular-nums; }
-.hig-gauge__min, .hig-gauge__max { position: absolute; bottom: 2px; font: 600 .6875rem/1 var(--hig-font-sans); color: var(--hig-label-2); }
-.hig-gauge__min { left: 10%; } .hig-gauge__max { right: 10%; }
+.hig-gauge__value small { font-size: .6em; font-weight: 600; color: var(--hig-label-2); margin-left: 1px; }
+/* endpoint labels sit just below the two ends of the 270° arc */
+.hig-gauge__min, .hig-gauge__max { position: absolute; top: calc(85.4% + 2px); translate: -50% 0; font: 600 .6875rem/1 var(--hig-font-sans); color: var(--hig-label-2); font-variant-numeric: tabular-nums; }
+.hig-gauge__min { left: 14.6%; } .hig-gauge__max { left: 85.4%; }
+.hig-gauge--sm { --size: 52px; --track: 5px; } .hig-gauge--sm .hig-gauge__value { font-size: 1rem; }
+.hig-gauge--lg { --size: 104px; --track: 9px; } .hig-gauge--lg .hig-gauge__value { font-size: 1.75rem; }
+/* a gauge with its caption: <figure class="hig-gauge-item"><div class="hig-gauge">…</div><figcaption>Attendance</figcaption></figure> */
+.hig-gauge-item { margin: 0; display: grid; justify-items: center; gap: 14px; text-align: center; }
+.hig-gauge-item > figcaption { font: var(--hig-text-footnote); color: var(--hig-label-2); }
+.hig-gauge-item > figcaption b { display: block; font: var(--hig-text-subhead); font-weight: 600; color: var(--hig-label); }
+.hig-meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 20px 12px; }
 .hig-gauge-bar { --color: var(--hig-accent); position: relative; height: 6px; border-radius: 999px; background: var(--hig-gauge-gradient, var(--hig-fill)); box-shadow: inset 0 0 0 1px var(--hig-control-border); }
 .hig-gauge-bar::after {
   content: ""; position: absolute; top: 50%; left: clamp(0px, calc(var(--value, 0) * 1% - 8px), calc(100% - 16px)); width: 16px; height: 16px; translate: 0 -50%;
   border-radius: 50%; background: #fff; box-shadow: 0 0 0 1.5px var(--hig-control-border), 0 1px 4px rgb(0 0 0 / .3);
 }
+.hig-gauge-scale { display: flex; justify-content: space-between; margin-top: 8px; font: var(--hig-text-footnote); color: var(--hig-label-2); font-variant-numeric: tabular-nums; }
 .hig-gauge-bar--heat { --hig-gauge-gradient: linear-gradient(90deg, var(--hig-blue), var(--hig-green), var(--hig-yellow), var(--hig-orange), var(--hig-red)); }
 
 /* ── Rating indicator (whole stars only) ── <span class="hig-rating" role="img" aria-label="4 of 5 stars" style="--value:4"></span> */
@@ -520,6 +542,11 @@ button.hig-row:active, a.hig-row:active { background: var(--hig-fill-3); }
 .hig-badge-anchor { position: relative; display: inline-flex; }
 .hig-badge-anchor > .hig-badge { position: absolute; top: -2px; right: -4px; box-shadow: 0 0 0 2px var(--hig-bg); }
 .hig-badge--dot { min-width: 10px; width: 10px; height: 10px; padding: 0; }
+.hig-badge-anchor > .hig-badge--dot { top: 0; right: 0; }
+.hig-badge-anchor > .hig-avatar + .hig-badge { top: auto; bottom: 0; right: 0; }
+/* neutral count used inside list rows and sidebars (Mail-style), not red */
+.hig-count { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; display: inline-grid; place-items: center; background: var(--hig-fill-3); color: var(--hig-label-2); font: 600 .8125rem/1 var(--hig-font-sans); font-variant-numeric: tabular-nums; }
+[data-hig-mode="aa"] .hig-count { color: var(--hig-label); }
 
 /* ── Popover (Popover API; becomes a bottom sheet in compact width) ──
    <button popovertarget="p1">…</button>
@@ -675,6 +702,23 @@ a.hig-card, button.hig-card { text-decoration: none; border: 0; text-align: left
 .hig-grid--cards .hig-grid__item { border-radius: var(--hig-radius-md); aspect-ratio: 4 / 3; }
 .hig-grid__caption { font: var(--hig-text-subhead); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hig-grid__meta { font: var(--hig-text-footnote); color: var(--hig-label-2); margin-top: -4px; }
+
+/* ── Accent color picker (Settings → Accent Color, like macOS) ──
+   <div class="hig-swatches" role="radiogroup" aria-label="Accent color">
+     <button class="hig-swatch" role="radio" aria-checked="true" aria-label="Blue" style="--swatch:#0088ff"></button>… */
+.hig-swatches { display: flex; flex-wrap: wrap; gap: 6px; }
+.hig-swatch {
+  width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; display: grid; place-items: center; position: relative; flex: none;
+}
+.hig-swatch::before { content: ""; width: 28px; height: 28px; border-radius: 50%; background: var(--swatch); box-shadow: inset 0 0 0 1px rgb(0 0 0 / .12); transition: scale .3s var(--hig-ease-spring); }
+.hig-swatch[aria-checked="true"]::before { box-shadow: 0 0 0 3px var(--hig-bg-elevated), 0 0 0 5px var(--swatch); }
+[data-hig-mode="aa"] .hig-swatch[aria-checked="true"]::before { box-shadow: 0 0 0 3px var(--hig-bg-elevated), 0 0 0 5px var(--hig-label); }
+.hig-swatch[aria-checked="true"]::after { content: ""; position: absolute; width: 12px; height: 12px; background: #fff; -webkit-mask: var(--hig-i-check) center / contain no-repeat; mask: var(--hig-i-check) center / contain no-repeat; }
+.hig-swatch:active::before { scale: .9; }
+.hig-swatch:focus-visible { outline: none; }
+.hig-swatch:focus-visible::before { outline: 3px solid var(--hig-focus-ring); outline-offset: 5px; }
+.hig-swatch--custom::before { background: conic-gradient(#ff383c, #ffcc00, #34c759, #00c3d0, #0088ff, #cb30e0, #ff383c); }
+.hig-swatch--custom > input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 
 /* hidden attribute wins for the new pieces too */
 :where(.hig-tooltip, .hig-toast, .hig-swipe__actions, .hig-sidebar)[hidden] { display: none !important; }

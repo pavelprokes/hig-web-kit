@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.3.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // The color pairs that must meet WCAG 2.2 AA in "aa" mode (and in increased-contrast sets).
 // Each pair: [label, foregroundLayers, backgroundLayers, minimumRatio].
 // Layers are token names or literal colors, topmost first; they are flattened before measuring.

@@ -1,6 +1,6 @@
 {
   "name": "hig-web-kit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Apple Human Interface Guidelines and Liquid Glass for the web — design tokens, CSS, adapters for Ant Design, Tailwind, MUI, shadcn/ui and Bootstrap, with an opt-in WCAG 2.2 AA mode.",
   "type": "module",
   "license": "MIT",
@@ -72,6 +72,10 @@
     "./components": {
       "types": "./dist/components.d.ts",
       "import": "./dist/components.js"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.js"
     },
     "./color": {
       "types": "./dist/color.d.ts",

@@ -1,0 +1,10 @@
+export type HigSetName = `${'apple' | 'aa'}.${'light' | 'dark' | 'light-hc' | 'dark-hc'}`;
+export type HigAccentTokens = Record<'accent' | 'accent-fill' | 'accent-text' | 'on-accent' | 'link' | 'focus-ring', string>;
+export type HigBrand = string | { light: string; dark: string };
+export declare function baseSets(): Record<HigSetName, Record<string, string>>;
+export declare function listThemes(): { name: string; label: string; brand: HigBrand }[];
+export declare function getTheme(): string | null;
+export declare function setTheme(name: string | null, options?: { persist?: boolean }): void;
+export declare function restoreTheme(options?: { hash?: boolean }): string | null;
+export declare function deriveBrandTheme(brand: HigBrand, overrides?: Partial<Record<HigSetName, Partial<HigAccentTokens>>>): Record<HigSetName, HigAccentTokens>;
+export declare function applyBrandColor(brand: HigBrand, options?: { name?: string; activate?: boolean; persist?: boolean }): Record<HigSetName, HigAccentTokens>;

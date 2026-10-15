@@ -153,12 +153,24 @@ In CSS: `font: var(--hig-text-body)` or `var(--hig-text-mac-body)`.
 
 | Stack | Use |
 |---|---|
-| **Ant Design 5/6** | `<ConfigProvider {...higAntd({ mode, scheme, contrast, density })}>` from `hig-web-kit/antd`, plus `antd-glass.css` for glass popups. It pins antd's derived brand colors so AA holds in dark mode and on hover/active. Re-render on `watchPreferences()`. |
+| **Ant Design 5/6** | `<ConfigProvider {...higAntd({ mode, scheme, contrast, density, accent })}>` from `hig-web-kit/antd`, plus `antd-glass.css` for glass popups. It pins antd's derived brand colors so AA holds in dark mode and on hover/active. Re-render on `watchPreferences()`. |
 | Tailwind 4 | `@import "hig-web-kit/hig.css"; @import "hig-web-kit/tailwind.css";` gives `bg-hig-grouped-bg-2 text-hig-label-2 rounded-hig-card text-hig-body`. Tailwind 3: `presets: [require('hig-web-kit/tailwind-preset')]`. |
 | shadcn/ui | `@import "hig-web-kit/shadcn.css"` maps `--background`, `--primary`, `--ring`… onto `--hig-*`; delete the generated `.dark {}` block. |
-| MUI | `createTheme(higMui({ mode, scheme }))` |
+| MUI | `createTheme(higMui({ mode, scheme, accent }))` |
 | Bootstrap 5 | `$hig-set: "aa.light"; @import "hig-bootstrap"; @import "bootstrap/scss/bootstrap";`, plus `bootstrap-runtime.css` |
 | Anything else | CSS variables, or `import { tokens } from 'hig-web-kit'` → `tokens.color.aa.dark.accentFill` for Vuetify, Chakra, Mantine, PrimeVue and the like |
+
+### 3.5 Accent themes (brand color)
+
+HIG: one app accent tints primary buttons, links, selection, the slider fill and the focus ring. Labels, fills, system colors and the green switch don't change. Never use a second "primary" color on controls; secondary brand colors live in content (illustrations, cards, tags).
+
+- **Built-in:** `<html data-hig-theme="vzb">` (Vzdělání budoucnosti navy `#01497c`, dark scheme from `#1768ac`), `indigo`, `purple`, `pink`, `orange`, `green`, `teal`, `graphite`. No attribute = Apple system blue.
+- **Runtime:** `import { setTheme, restoreTheme, applyBrandColor } from 'hig-web-kit/theme'`. `restoreTheme()` reads the saved choice and `#theme=vzb`; `applyBrandColor('#c8102e')` derives and injects a theme for any color.
+- **Derivation:** keep hue and saturation, move only lightness, minimally:
+  - Apple mode: accent ≥ 3:1 on the page; white `on-accent` (black only for yellow-like brands).
+  - AA mode and Increase Contrast: accent text and link ≥ 4.5:1 on page, card, secondary background and gray button; filled button label ≥ 4.5:1 (white preferred); fill, indicator and focus ring ≥ 3:1 on page and card.
+- **Settings UI:** an accent picker (`.hig-swatches[role="radiogroup"] > button.hig-swatch[style="--swatch:…"]`), 28 px dots in 44 px targets, the selected one ringed with a check; a "custom" swatch wraps `<input type="color">`.
+- **Without the kit:** override only `--hig-accent`, `--hig-accent-fill`, `--hig-accent-text`, `--hig-on-accent`, `--hig-link`, `--hig-focus-ring` per mode/scheme, and verify the AA pairs (§12).
 
 Ant Design specifics:
 
@@ -169,6 +181,7 @@ Ant Design specifics:
 - In `Modal.confirm`, give the destructive button `okButtonProps={{ danger: true }}` and set `autoFocusButton="cancel"`.
 - Already themed by `higAntd()`: Checkbox/Radio (22/16 px, visible outline), Breadcrumb (path control colors), Collapse (ghost disclosure rows), Avatar (Contacts-style monogram, AA-safe gray), Badge (`on-destructive` text in AA), Tag (`fill-2` capsule), Tooltip (light help tag), Skeleton, Carousel dots (8 px; wider current dot in AA), Table sort states, Progress, Notification and Message.
 - `antd-glass.css` also turns notifications and messages into glass (banner and HUD capsule); add `className="hig-striped"` to a `Table` for alternating rows.
+- Brand color: `accent: 'vzb'` (built-in theme) or `accent: '#c8102e'`; keep it in sync with `data-hig-theme` via `getTheme()`.
 - Mapping: pop-up button → `Select`; pull-down → `Dropdown`; context menu → `Dropdown trigger={['contextMenu']}`; popover → `Popover`; disclosure → `Collapse ghost`; scope bar → `Segmented` or `Radio.Group optionType="button"`; HUD toast → `message`; sidebar → `Layout.Sider` + `Menu`; page control → `Carousel`; empty state → `Empty`.
 
 ---
@@ -512,12 +525,15 @@ Defaults marked ≈ are web values tuned to match iOS 26/27; the rules come from
 
 ### Labels, badges, page controls
 - Use the label hierarchy (`label` → `label-4`); make useful text selectable.
-- Badges are 18 px tall and red, for things that need attention; position with `.hig-badge-anchor`, `.hig-badge--dot` for a dot. Put the count in the button's `aria-label` ("Notifications, 3 new").
+- Badges are 18 px tall and red, for things that need attention; position with `.hig-badge-anchor` (icon buttons, avatars), `.hig-badge--dot` for a dot. Put the count in the control's `aria-label` ("Notifications, 3 new").
+- Plain counts in lists and sidebars are neutral, not red: `.hig-count` (gray capsule) or `label-2` text.
 - **Page control** (`.hig-page-control[data-hig-pager="pager-id"]` + `.hig-pager > .hig-pager__page`): ≈ 8 px dots (24 px targets) for ≤ 10 flat pages, centred below; current dot `label`, others `label-3` (`control-border` and a wider current capsule in AA mode). Arrow keys page; dots get "Page n / N" labels. Never colour the dots.
 
 ### Progress, gauges, ratings
-- **Activity indicator** (`span.hig-activity[role="progressbar"]`, `--lg`): CSS-only 8 spokes in `label-2`; for unknown durations only, no label on macOS. **Circular progress** (`.hig-progress-ring`, `--value: 40%`) fills clockwise; never switch between bar and ring for one task.
-- **Gauge** (`.hig-gauge[role="meter"]`, `--value: 0–100`): a 270° capacity ring with the value centred and both endpoints labelled; `.hig-gauge-bar` is a linear gauge with an indicator (`--heat` gradient for meaning like temperature). Give `aria-valuetext`.
+- **Activity indicator** (`span.hig-activity[role="progressbar"]`, `--lg`): CSS-only 8 spokes in `label-2`; for unknown durations only, no label on macOS. Put it trailing in the row that describes the work.
+- **Circular progress** (`.hig-progress-ring`, `--value: 40%`; `--label` shows the number inside, `--stop` a stop square) fills clockwise; never switch between bar and ring for one task. In lists, title + subtitle ("Uploading · 40 %") on the leading side, ring trailing.
+- **Bar in a row:** `.hig-row > .hig-row__body > .hig-row__line (title + value "8 of 12") + .hig-progress`.
+- **Gauge** (`.hig-gauge[role="meter"]`, `--value: 0–100`, `--color`, sizes `--sm`/`--lg`): a 270° capacity ring, value centred (unit in `<small>`), endpoint labels under the two ends of the arc. Wrap in `figure.hig-gauge-item` with a `figcaption` (bold name + context) and lay several out in `.hig-meters`. `.hig-gauge-bar` is linear with an indicator (`--heat` gradient when color carries meaning) and `.hig-gauge-scale` for its end labels. Always `aria-valuetext`.
 - **Rating** (`.hig-rating[role="img"]`, `--value`): whole stars only, `aria-label="4 of 5 stars"`.
 
 ### Empty states, loading, notifications

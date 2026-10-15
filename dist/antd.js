@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.3.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 // Ant Design (v5 and v6) adapter.
 //
 //   import { ConfigProvider } from 'antd';
@@ -10,6 +10,7 @@
 // in hig-web-kit/a11y or the useHigAntd() recipe in docs/frameworks/antd.md.
 import { theme as antdTheme } from 'antd';
 import { tokens } from './tokens.js';
+import { deriveAccent } from './theme-derive.js';
 
 // Mix a hex color toward black by `amount` (0..1) — used for hover/active states that keep white labels legible.
 const darken = (hex, amount) => {
@@ -18,9 +19,18 @@ const darken = (hex, amount) => {
   return `#${ch(16)}${ch(8)}${ch(0)}`;
 };
 
-const pick = (mode, scheme, contrast) => {
+const kebab = s => s.replace(/[A-Z]/g, c => '-' + c.toLowerCase()).replace(/([a-z])(\d)/g, '$1-$2');
+const camel = s => s.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+// accent: a built-in theme name ('vzb', 'indigo', …) or any brand color / { light, dark }
+const pick = (mode, scheme, contrast, accent) => {
   const key = scheme === 'dark' ? (contrast === 'more' ? 'darkHc' : 'dark') : (contrast === 'more' ? 'lightHc' : 'light');
-  return tokens.color[mode === 'aa' ? 'aa' : 'apple'][key];
+  const m = mode === 'aa' ? 'aa' : 'apple';
+  const base = tokens.color[m][key];
+  if (!accent) return base;
+  if (typeof accent === 'string' && tokens.themes?.[accent]) return { ...base, ...tokens.themes[accent].color[m][key] };
+  const set = Object.fromEntries(Object.entries(base).map(([k, v]) => [kebab(k), v]));
+  const derived = deriveAccent(accent, set, { strict: m === 'aa' || contrast === 'more', dark: scheme === 'dark' });
+  return { ...base, ...Object.fromEntries(Object.entries(derived).map(([k, v]) => [camel(k), v])) };
 };
 
 /**
@@ -29,8 +39,8 @@ const pick = (mode, scheme, contrast) => {
  * @returns {import('antd').ThemeConfig}
  */
 export function getAntdTheme(options = {}) {
-  const { mode = 'apple', scheme = 'light', contrast = 'standard', density = 'touch', algorithm = [] } = options;
-  const c = pick(mode, scheme, contrast);
+  const { mode = 'apple', scheme = 'light', contrast = 'standard', density = 'touch', algorithm = [], accent } = options;
+  const c = pick(mode, scheme, contrast, accent);
   const touch = density !== 'desktop';
   const type = touch ? tokens.font.ios : tokens.font.macos;
   const h = touch ? { sm: 32, md: 44, lg: 52 } : { sm: 22, md: 28, lg: 32 };

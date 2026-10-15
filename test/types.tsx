@@ -28,3 +28,15 @@ const cleanup = initGlass({ refraction: 'auto' });
 initComponents(); openDialog('sheet');
 const ratio: number = contrast('#000', '#fff');
 export { cfg, mui, accent, stop, failing, cleanup, ratio };
+
+// accent themes
+import { applyBrandColor, deriveBrandTheme, listThemes, setTheme } from 'hig-web-kit/theme';
+import type { HigThemeName } from 'hig-web-kit';
+const themeName: HigThemeName = 'vzb';
+setTheme(themeName);
+const derived = deriveBrandTheme({ light: '#01497c', dark: '#1768ac' });
+const fill: string = derived['aa.dark']['accent-fill'];
+applyBrandColor('#c8102e', { name: 'red' });
+listThemes().map(t => t.label);
+getAntdThemeForAccent();
+function getAntdThemeForAccent() { return fill; }

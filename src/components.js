@@ -513,7 +513,7 @@ export function initComponents(root = document) {
   each('.hig-input', initClearable);
   each('input.hig-checkbox', initCheckbox);
   each('.hig-chip[aria-pressed], .hig-toggle-btn[aria-pressed]', initToggle);
-  each('.hig-scope[role="radiogroup"], .hig-scope[role="tablist"]', initSegmented);
+  each('.hig-scope[role="radiogroup"], .hig-scope[role="tablist"], .hig-swatches[role="radiogroup"]', initSegmented);
   each('[data-hig-tokens]', initTokens);
   each('[data-hig-pager]', initPageControl);
   each('.hig-popover[popover]', initPopover);

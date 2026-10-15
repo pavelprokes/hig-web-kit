@@ -1,4 +1,4 @@
-/*! hig-web-kit v0.2.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
+/*! hig-web-kit v0.3.0 | MIT | Not affiliated with Apple Inc. | Generated from tokens/tokens.json — do not edit */
 /* Optional page defaults. Skip this file when a framework (antd, MUI, Bootstrap…) already owns the base styles. */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
