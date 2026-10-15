@@ -34,9 +34,11 @@
     "dist",
     "tokens",
     "skill",
+    "!skill/SKILL.template.md",
     "README.md",
     "LICENSE",
-    "NOTICE.md"
+    "NOTICE.md",
+    "CHANGELOG.md"
   ],
   "exports": {
     ".": {
@@ -98,7 +100,8 @@
     "test": "node --test test/*.test.mjs",
     "typecheck": "tsc -p test/tsconfig.json",
     "verify": "npm run build && npm run check:contrast && npm test && npm run typecheck",
-    "example:antd": "esbuild examples/antd/main.tsx --bundle --format=esm --outdir=examples/antd/dist --jsx=automatic --minify --define:process.env.NODE_ENV='\"production\"' --loader:.css=css"
+    "example:antd": "esbuild examples/antd/main.tsx --bundle --format=esm --outdir=examples/antd/dist --jsx=automatic --minify --define:process.env.NODE_ENV='\"production\"' --loader:.css=css",
+    "prepublishOnly": "npm run verify"
   },
   "peerDependencies": {
     "antd": ">=5.12"
@@ -125,5 +128,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
